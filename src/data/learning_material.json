@@ -1,0 +1,92 @@
+[
+  {
+    "chapter_id": "comparing_quantities",
+    "subtopics": [
+      {
+        "subtopic_id": "ratios_percentages",
+        "story_hook": "Imagine it's Diwali, and your family has bought 20 laddoos and 5 boxes of sweets. Your little sister asks, 'How many laddoos for each box?' You realize you need to compare them - that's where ratios come in! And when you want to know what part of all the sweets are laddoos, percentages help you see it clearly, just like knowing how much of your pocket money you spend on treats.",
+        "learning_material": "### 8.1 Recalling Ratios and Percentages\n\n![Ratio Illustration](/images/img1.png)\n\n**Ratio** means comparing two quantities. For example, if a basket has 20 apples and 5 oranges, the ratio of oranges to apples is 5:20, which simplifies to 1:4.\n\n**Percentage** is another way of comparing quantities. It means 'per hundred'. \n- To convert a fraction to a percentage, multiply by 100.\n- To find a percentage of a quantity, multiply the quantity by the percentage rate.\n\n**Example:** If there are 5 oranges out of 25 fruits:\n- Percentage of oranges = $(5/25) \\times 100 = 20\\%$.\n- Percentage of apples = $100\\% - 20\\% = 80\\%$.\n\n**Unitary Method:** You can also find percentages by finding the value for 1 unit first. If 25 fruits have 5 oranges, then 100 fruits would have $(5/25) \\times 100 = 20$ oranges."
+      },
+      {
+        "subtopic_id": "percentage_increase_decrease",
+        "story_hook": "During mango season in summer, your favorite fruit stall owner tells you the price of mangoes went up from ₹50 per kg to ₹60 per kg. 'How much more is it?' you wonder. That's percentage increase! And if the price drops back to ₹45 during the end of season, that's percentage decrease. Just like how cricket scores change during a match!",
+        "learning_material": "### 8.2 Finding the Increase or Decrease Per cent\n\nWe often see price hikes or discounts in daily life. \n\n**Percentage Increase:**\n1. Find the actual increase (New Price - Old Price).\n2. Percentage Increase = $\\frac{\\text{Increase}}{\\text{Original Price}} \\times 100$.\n\n**Percentage Decrease:**\n1. Find the actual decrease (Old Price - New Price).\n2. Percentage Decrease = $\\frac{\\text{Decrease}}{\\text{Original Price}} \\times 100$.\n\n**Example:** A scooter's price was ₹34,000 last year and increased by 20% this year.\n- Increase = $20\\%$ of ₹34,000 = ₹6,800.\n- New Price = ₹34,000 + ₹6,800 = ₹40,800."
+      },
+      {
+        "subtopic_id": "discounts",
+        "story_hook": "Your mom takes you shopping for new school shoes. The shopkeeper says the shoes are marked ₹2000, but with festival discount, you get them for ₹1700. 'How much did we save?' you ask. That's discount! Just like how stores give offers during Diwali or Independence Day to make shopping more fun.",
+        "learning_material": "### 8.3 Finding Discounts\n\n**Discount** is a reduction given on the **Marked Price (MP)** of an article. \n- **Discount = Marked Price – Sale Price**\n- **Discount % = $\\frac{\\text{Discount}}{\\text{Marked Price}} \\times 100$\n\n**Estimation in Percentages:**\nSometimes we need to estimate discounts quickly. For a 15% discount on a bill of ₹577.80:\n1. Round ₹577.80 to ₹580.\n2. 10% of ₹580 is ₹58. \n3. 5% is half of 10%, so ₹29.\n4. Total discount $\\approx$ ₹58 + ₹29 = ₹87.\n5. Estimated bill $\\approx$ ₹580 - ₹87 $\\approx$ ₹493."
+      },
+      {
+        "subtopic_id": "profit_loss",
+        "story_hook": "Your friend sells homemade lemonade at the school fair. He bought lemons for ₹50 and sold the lemonade for ₹80. 'Did he make money or lose?' you wonder. That's profit and loss! Just like shopkeepers calculate if their business is doing well, or farmers check if their crops gave good returns.",
+        "learning_material": "### 8.4 Prices Related to Buying and Selling (Profit and Loss)\n\n- **Cost Price (CP):** The price at which an item is bought. It includes overhead charges like repairs, transportation, etc.\n- **Selling Price (SP):** The price at which an item is sold.\n\n**Formulas:**\n- If SP > CP, it is a **Profit**. Profit = SP - CP.\n- If CP > SP, it is a **Loss**. Loss = CP - SP.\n- **Profit % = $\\frac{\\text{Profit}}{\\text{CP}} \\times 100$\n- **Loss % = $\\frac{\\text{Loss}}{\\text{CP}} \\times 100$\n\n**Overhead Charges:** Expenses like repairs or labor must be added to the buying price to get the effective Cost Price."
+      },
+      {
+        "subtopic_id": "taxes_gst",
+        "story_hook": "When your family buys a new TV, the bill shows the TV price plus some extra money called GST. 'Why do we pay this?' you ask your dad. It's tax that the government collects, just like the toll you pay on highways. GST helps build schools, roads, and hospitals in India!",
+        "learning_material": "### 8.5 Sales Tax / VAT / GST\n\n**Sales Tax (ST)** is charged by the government on the sale of an item and added to the bill amount. \n- **VAT (Value Added Tax)** and **GST (Goods and Services Tax)** work similarly.\n- **Bill Amount = Cost of Item + Tax**\n\n**Example:** If GST is 12% on an item costing ₹700:\n- Tax = $12\\%$ of ₹700 = ₹84.\n- Bill Amount = ₹700 + ₹84 = ₹784.\n\nIf you know the price including tax, you can find the original price by assuming the original price is ₹100 and the price with tax is ₹(100 + rate)."
+      },
+      {
+        "subtopic_id": "simple_interest",
+        "story_hook": "Your grandparents put some money in the bank for your education. After one year, they get extra money called interest. 'How does the bank know how much to give?' you wonder. That's simple interest - like a reward for letting the bank use your money to help others!",
+        "learning_material": "### Recalling Simple Interest\n\n**Interest** is extra money paid by institutions like banks for keeping money, or paid by borrowers for using money.\n\n**Formula:**\n- **Simple Interest (SI) = $\\frac{P \\times R \\times T}{100}$**\n  - $P$ = Principal (Amount borrowed/deposited)\n  - $R$ = Rate of interest per annum\n  - $T$ = Time period in years\n\n**Amount (A) = Principal (P) + Interest (I)**"
+      },
+      {
+        "subtopic_id": "compound_interest",
+        "story_hook": "Imagine planting a money tree! You put ₹100 in the bank, and next year you get ₹10 interest, making it ₹110. The year after, you get interest on ₹110, not just ₹100. That's compound interest - like how trees grow bigger each year, or how your cricket skills improve with practice!",
+        "learning_material": "### 8.6 Compound Interest (CI)\n\nUnlike Simple Interest, **Compound Interest** is calculated on the amount of the previous year. This means the interest itself earns interest in the next period.\n\n**Deducing the Formula:**\nIf $P$ is the principal, $R$ is the rate, and $n$ is the number of years:\n- **Amount (A) = $P(1 + \\frac{R}{100})^n$**\n- **Compound Interest (CI) = A - P**\n\nIn CI, the principal changes every year as the interest from the previous year is added to it."
+      },
+      {
+        "subtopic_id": "compounding_variations",
+        "story_hook": "Banks sometimes give interest twice a year instead of once! If you get interest every 6 months, your money grows faster. Just like how farmers harvest crops twice a year, or how you get pocket money weekly instead of monthly - more frequent means more growth!",
+        "learning_material": "### 8.8 Rate Compounded Annually or Half Yearly\n\nInterest can be compounded at different intervals:\n- **Annually:** Once a year.\n- **Half-Yearly (Semi-Annually):** Twice a year. \n  - The rate becomes half (R/2).\n  - The time period becomes double (2n).\n  - **Formula:** $A = P(1 + \\frac{R}{200})^{2n}$\n- **Quarterly:** Four times a year.\n  - The rate becomes one-fourth (R/4).\n  - The time period becomes four times (4n).\n\n**Conversion Period:** The time period after which the interest is added each time to form a new principal."
+      },
+      {
+        "subtopic_id": "applications_compound_interest",
+        "story_hook": "Compound interest isn't just for money! It helps us understand how populations grow - like how the number of people in your city increases each year. Or how bacteria multiply in food. Even how the value of your cricket bat decreases over time. It's everywhere in nature and life!",
+        "learning_material": "### 8.9 Applications of Compound Interest Formula\n\nThe CI formula can be used for:\n1. **Population Growth:** $P_n = P_0(1 + \\frac{R}{100})^n$\n2. **Bacteria Growth:** If the rate of growth is known.\n3. **Depreciation:** When the value of an item decreases over time (e.g., machinery, vehicles).\n   - **Formula for Depreciation:** $A = P(1 - \\frac{R}{100})^n$ (Note the minus sign)."
+      }
+    ]
+  },
+  {
+    "chapter_id": "direct_inverse_proportion",
+    "subtopics": [
+      {
+        "subtopic_id": "introduction_variation",
+        "story_hook": "In cricket, if you score more runs, you win more matches. In studies, more hours of practice means better grades. But if you cycle faster, you reach home sooner. Some things go together, others go opposite - that's variation! Just like how more rain means more crops, but more homework means less playtime.",
+        "learning_material": "### 13.1 Introduction to Variation\n\nIn daily life, we see how change in one quantity leads to change in another:\n- More articles purchased $\\rightarrow$ More total cost.\n- More speed $\\rightarrow$ Less time to cover a distance.\n- More workers $\\rightarrow$ Less time to complete a job.\n\nThere are two main types of variation: **Direct Proportion** and **Inverse Proportion**."
+      },
+      {
+        "subtopic_id": "direct_proportion",
+        "story_hook": "When you buy more bananas, you pay more money. When you study more hours, you learn more topics. That's direct proportion - both things increase together! Just like how more petrol in your scooter means you can travel farther, or more players in kho-kho means more fun.",
+        "learning_material": "### 13.2 Direct Proportion\n\nTwo quantities $x$ and $y$ are said to be in **direct proportion** if they increase or decrease together such that the ratio $\\frac{x}{y}$ remains constant.\n\n- **$\\frac{x}{y} = k$** (where $k$ is a constant)\n- This can be written as **$x_1/y_1 = x_2/y_2$**.\n\n**Examples:**\n- Weight of sugar and its cost.\n- Distance travelled by a car and petrol consumed.\n- Scale of a map (Map distance : Actual distance)."
+      },
+      {
+        "subtopic_id": "testing_direct_proportion",
+        "story_hook": "Your teacher gives you a list: 2 pencils cost ₹10, 4 pencils cost ₹20, 6 pencils cost ₹30. Are they in direct proportion? Check if the ratio stays the same! Just like checking if more practice really means better scores in your math test.",
+        "learning_material": "### Testing for Direct Proportion\n\nTo check if two variables $x$ and $y$ are in direct proportion:\n1. Calculate the ratio $\\frac{x}{y}$ for all given pairs.\n2. If the ratio is the same for all pairs, they are in direct proportion.\n\n**Note:** Variables increasing together doesn't always mean direct proportion. For example, your age and your height increase together but not in a constant ratio."
+      },
+      {
+        "subtopic_id": "applications_direct_proportion",
+        "story_hook": "Maps help you find your way! If 1 cm on the map means 30,000,000 cm in real life, that's direct proportion. Just like how your toy car travels shorter distances compared to a real car, but follows the same path.",
+        "learning_material": "### Applications of Direct Proportion\n\n**Map Scales:** A scale of 1:30,000,000 means 1 cm on the map represents 30,000,000 cm (or 300 km) in reality.\n\n**Unitary Method vs Proportion:** While the unitary method works for simple cases, the proportion method ($x_1/y_1 = x_2/y_2$) is often more systematic for complex problems."
+      },
+      {
+        "subtopic_id": "inverse_proportion",
+        "story_hook": "If you run faster, you reach school sooner. If more friends help with homework, each does less work. That's inverse proportion - when one goes up, the other goes down! Like sharing a pizza - more people means smaller slices for each.",
+        "learning_material": "### 13.3 Inverse Proportion\n\nTwo quantities $x$ and $y$ are said to be in **inverse proportion** if an increase in $x$ causes a proportional decrease in $y$ (and vice versa) such that their product $xy$ remains constant.\n\n- **$xy = k$** (where $k$ is a constant)\n- This can be written as **$x_1 y_1 = x_2 y_2$** or **$x_1/x_2 = y_2/y_1$**.\n\n**Examples:**\n- Speed and time taken for a fixed distance.\n- Number of workers and time taken to finish a job.\n- Number of spokes and the angle between consecutive spokes in a wheel."
+      },
+      {
+        "subtopic_id": "testing_inverse_proportion",
+        "story_hook": "Check this: 2 workers build a wall in 10 days, 4 workers in 5 days, 8 workers in 2.5 days. Is the product the same? That's how you test inverse proportion! Just like verifying if more speed really means less time for your cycle ride home.",
+        "learning_material": "### Testing for Inverse Proportion\n\nTo check if two variables $x$ and $y$ are in inverse proportion:\n1. Calculate the product $x \\times y$ for all given pairs.\n2. If the product is the same for all pairs, they are in inverse proportion.\n\n**Reciprocal Relationship:** $x$ is inversely proportional to $y$ is written as $x \\propto \\frac{1}{y}$."
+      },
+      {
+        "subtopic_id": "applications_inverse_proportion",
+        "story_hook": "If 15 workers build a wall in 48 hours, how many workers for 30 hours? That's inverse proportion in action! Just like in cricket - more fielders might catch the ball faster, or in traffic - more lanes might reduce waiting time.",
+        "learning_material": "### Applications of Inverse Proportion\n\n**Work and Time:** If 15 workers build a wall in 48 hours, how many workers are needed for 30 hours?\n- $x_1 = 15, y_1 = 48$\n- $x_2 = ?, y_2 = 30$\n- $15 \\times 48 = x_2 \\times 30 \\rightarrow x_2 = \\frac{15 \\times 48}{30} = 24$ workers.\n\n**Speed and Time:** Doubling the speed reduces the time to half for the same distance."
+      }
+    ]
+  }
+]

@@ -1,0 +1,1296 @@
+[
+  {
+    "chapter_id": "comparing_quantities",
+    "subtopics": [
+      {
+        "subtopic_id": "ratios_percentages",
+        "problems": [
+          {
+            "problem_id": "rp_001",
+            "question": "Ratio of boys to girls is 2:3 in a class of 50. Find number of girls.",
+            "hints": [
+              "Consider the total number of parts in the ratio.",
+              "How many students represent one part?",
+              "Multiply the value of one part by the number of parts for girls."
+            ],
+            "polya_steps": {
+              "understand": "The ratio 2:3 means for every 2 boys there are 3 girls. Together, that's 2 + 3 = 5 parts. The whole class has 50 students.",
+              "plan": "If 5 parts = 50 students, figure out what 1 part equals. Then girls get 3 parts.",
+              "solve": "1 part = 50 ÷ 5 = 10. Girls = 3 × 10 = 30.",
+              "review": "Boys = 2 × 10 = 20. Does 20 + 30 = 50? ✓ Great, your answer is correct!"
+            },
+            "correct_answer": "30",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "rp_002",
+            "question": "Convert ratio 4:5 into percentage.",
+            "hints": [
+              "Write the ratio as a fraction.",
+              "Multiply by 100 to get percentage."
+            ],
+            "polya_steps": {
+              "understand": "The ratio 4:5 means 4 out of every 5. To express this as a percentage, we need to find how much 4 is out of 5 in terms of 100.",
+              "plan": "First write the ratio as a fraction (4/5), then multiply by 100 to convert to percentage.",
+              "solve": "(4 ÷ 5) × 100 = 0.8 × 100 = 80%.",
+              "review": "Does 80% feel right? 4 is slightly less than 5, so slightly less than 100% makes sense. ✓"
+            },
+            "correct_answer": "80%",
+            "difficulty": 0.2
+          },
+          {
+            "problem_id": "rp_003",
+            "question": "30% of 150 students like sports. How many do not?",
+            "hints": [
+              "Find 30% of 150 first.",
+              "Subtract that from 150."
+            ],
+            "polya_steps": {
+              "understand": "30% like sports. You need to find how many do NOT like sports out of 150 students.",
+              "plan": "First find how many students like sports (30% of 150). Then subtract that from the total.",
+              "solve": "30% of 150 = (30/100) × 150 = 45 students like sports. Students who don't = 150 − 45 = 105.",
+              "review": "45 + 105 = 150. That's the total! ✓"
+            },
+            "correct_answer": "105",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "rp_004",
+            "question": "If 25% of a number is 75, find the number.",
+            "hints": [
+              "25% is 1/4 of a number.",
+              "If 1/4 is 75, what is the whole?"
+            ],
+            "polya_steps": {
+              "understand": "You know a part (75) and what percentage it is (25%). You need to find the whole number.",
+              "plan": "Since 25% = 1/4, if 1/4 of the number is 75, then the whole number = 75 × 4.",
+              "solve": "The number = 75 × 4 = 300.",
+              "review": "Find 25% of 300 → (25/100) × 300 = 75. ✓ That matches!"
+            },
+            "correct_answer": "300",
+            "difficulty": 0.4
+          },
+          {
+            "problem_id": "rp_005",
+            "question": "Out of 40 items, 10 are defective. Find percentage defective.",
+            "hints": [
+              "Use the formula: (Part / Total) * 100."
+            ],
+            "polya_steps": {
+              "understand": "10 items out of 40 are defective. You need to express this as a percentage.",
+              "plan": "Use the formula: Percentage = (Part ÷ Total) × 100. Here, part = 10 and total = 40.",
+              "solve": "(10 ÷ 40) × 100 = 0.25 × 100 = 25%.",
+              "review": "25% of 40 = 10. ✓ That's exactly the number of defective items!"
+            },
+            "correct_answer": "25%",
+            "difficulty": 0.2
+          }
+        ]
+      },
+      {
+        "subtopic_id": "percentage_increase_decrease",
+        "problems": [
+          {
+            "problem_id": "pid_001",
+            "question": "Price increases from ₹100 to ₹120. Find % increase.",
+            "hints": [
+              "Find the difference between new and old price.",
+              "Divide increase by original price."
+            ],
+            "polya_steps": {
+              "understand": "The price went up from ₹100 to ₹120. You need to find by what percentage it increased.",
+              "plan": "First find the actual increase (new − old). Then compare it to the original price and multiply by 100.",
+              "solve": "Increase = 120 − 100 = ₹20. % Increase = (20 ÷ 100) × 100 = 20%.",
+              "review": "20% of ₹100 = ₹20. ₹100 + ₹20 = ₹120. ✓"
+            },
+            "correct_answer": "20%",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "pid_002",
+            "question": "Price decreases from ₹200 to ₹150. Find % decrease.",
+            "hints": [
+              "Find the decrease (old - new).",
+              "Divide decrease by original price."
+            ],
+            "polya_steps": {
+              "understand": "The price dropped from ₹200 to ₹150. You need to find the percentage by which it fell.",
+              "plan": "Find the decrease (old − new). Then divide by the original price and multiply by 100.",
+              "solve": "Decrease = 200 − 150 = ₹50. % Decrease = (50 ÷ 200) × 100 = 25%.",
+              "review": "25% of ₹200 = ₹50. ₹200 − ₹50 = ₹150. ✓"
+            },
+            "correct_answer": "25%",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "pid_003",
+            "question": "Population grows from 1000 to 1100. Find % increase.",
+            "hints": [
+              "Find the population growth.",
+              "Divide growth by initial population."
+            ],
+            "polya_steps": {
+              "understand": "The population went up from 1000 to 1100. You need to find the percentage increase.",
+              "plan": "Find the difference first, then compare it to the original population.",
+              "solve": "Increase = 1100 − 1000 = 100. % Increase = (100 ÷ 1000) × 100 = 10%.",
+              "review": "10% of 1000 = 100. 1000 + 100 = 1100. ✓"
+            },
+            "correct_answer": "10%",
+            "difficulty": 0.2
+          },
+          {
+            "problem_id": "pid_004",
+            "question": "A number reduces by 20%. What percent remains?",
+            "hints": [
+              "Subtract the decrease from 100%."
+            ],
+            "polya_steps": {
+              "understand": "If something goes down by 20%, you still have the rest of it left. The whole is always 100%.",
+              "plan": "Subtract the decrease from the total percentage: 100% − 20%.",
+              "solve": "Remaining = 100% − 20% = 80%.",
+              "review": "If you start with 100 and remove 20, you have 80 left. 80 out of 100 = 80%. ✓"
+            },
+            "correct_answer": "80%",
+            "difficulty": 0.2
+          },
+          {
+            "problem_id": "pid_005",
+            "question": "If salary becomes ₹2200 after 10% increase, find original salary.",
+            "hints": [
+              "110% of original salary is ₹2200.",
+              "Divide by 1.1 to find original."
+            ],
+            "polya_steps": {
+              "understand": "The salary was increased by 10% and became ₹2200. You need to find what it was before the increase.",
+              "plan": "After a 10% increase, the new salary is 110% of the original. So ₹2200 = 110% of original. Reverse this to find 100%.",
+              "solve": "Original salary = (2200 ÷ 110) × 100 = 20 × 100 = ₹2000.",
+              "review": "10% of ₹2000 = ₹200. ₹2000 + ₹200 = ₹2200. ✓"
+            },
+            "correct_answer": "2000",
+            "difficulty": 0.5
+          }
+        ]
+      },
+      {
+        "subtopic_id": "discounts",
+        "problems": [
+          {
+            "problem_id": "d_001",
+            "question": "MP = ₹1000, discount = 20%. Find SP.",
+            "hints": [
+              "Discount = 20% of MP.",
+              "SP = MP - Discount."
+            ],
+            "polya_steps": {
+              "understand": "The Marked Price (MP) is ₹1000 and there's a 20% discount. You need to find the Selling Price (SP) after the discount.",
+              "plan": "Find the discount amount (20% of MP), then subtract it from MP to get SP.",
+              "solve": "Discount = 20% of 1000 = ₹200. SP = 1000 − 200 = ₹800.",
+              "review": "SP is 80% of MP. 80% of 1000 = ₹800. ✓"
+            },
+            "correct_answer": "800",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "d_002",
+            "question": "SP = ₹850 after ₹150 discount. Find MP.",
+            "hints": [
+              "MP = SP + Discount."
+            ],
+            "polya_steps": {
+              "understand": "After a ₹150 discount, the item sells for ₹850. You need to find the original Marked Price.",
+              "plan": "Discount is subtracted from MP to get SP. So MP = SP + Discount.",
+              "solve": "MP = 850 + 150 = ₹1000.",
+              "review": "₹1000 − ₹150 = ₹850. ✓ That's the given SP!"
+            },
+            "correct_answer": "1000",
+            "difficulty": 0.2
+          },
+          {
+            "problem_id": "d_003",
+            "question": "Find discount % if MP ₹500 and SP ₹400.",
+            "hints": [
+              "Discount = MP - SP.",
+              "Discount % = (Discount / MP) * 100."
+            ],
+            "polya_steps": {
+              "understand": "MP is ₹500 and it was sold for ₹400. You need to find what percentage discount was given.",
+              "plan": "First find the discount amount, then express it as a percentage of the MP.",
+              "solve": "Discount = 500 − 400 = ₹100. Discount % = (100 ÷ 500) × 100 = 20%.",
+              "review": "20% of ₹500 = ₹100. ₹500 − ₹100 = ₹400. ✓"
+            },
+            "correct_answer": "20%",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "d_004",
+            "question": "A ₹2000 item has 10% discount. Find saving.",
+            "hints": [
+              "Saving = 10% of ₹2000."
+            ],
+            "polya_steps": {
+              "understand": "An item costs ₹2000 and there's a 10% discount. The saving is the discount amount.",
+              "plan": "Calculate 10% of ₹2000.",
+              "solve": "Saving = 10% of 2000 = (10/100) × 2000 = ₹200.",
+              "review": "₹200 is 1/10 of ₹2000. 2000 ÷ 10 = 200. ✓"
+            },
+            "correct_answer": "200",
+            "difficulty": 0.2
+          },
+          {
+            "problem_id": "d_005",
+            "question": "If SP is ₹900 after 10% discount, find MP.",
+            "hints": [
+              "90% of MP is ₹900.",
+              "Divide by 0.9 to find MP."
+            ],
+            "polya_steps": {
+              "understand": "After a 10% discount, the item sells for ₹900. You need to find the original Marked Price.",
+              "plan": "A 10% discount means the SP is 90% of the MP. So ₹900 = 90% of MP. Reverse to find 100%.",
+              "solve": "MP = (900 ÷ 90) × 100 = 10 × 100 = ₹1000.",
+              "review": "10% of ₹1000 = ₹100. ₹1000 − ₹100 = ₹900. ✓"
+            },
+            "correct_answer": "1000",
+            "difficulty": 0.5
+          }
+        ]
+      },
+      {
+        "subtopic_id": "profit_loss",
+        "problems": [
+          {
+            "problem_id": "pl_001",
+            "question": "CP ₹400, SP ₹500. Find profit%.",
+            "hints": [
+              "Profit = SP - CP.",
+              "Profit% = (Profit / CP) * 100."
+            ],
+            "polya_steps": {
+              "understand": "You bought something for ₹400 (Cost Price) and sold it for ₹500 (Selling Price). You need to find the profit percentage.",
+              "plan": "First find the profit amount (SP − CP). Then express it as a percentage of the CP.",
+              "solve": "Profit = 500 − 400 = ₹100. Profit% = (100 ÷ 400) × 100 = 25%.",
+              "review": "25% of ₹400 = ₹100. CP + Profit = 400 + 100 = ₹500 = SP. ✓"
+            },
+            "correct_answer": "25%",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "pl_002",
+            "question": "CP ₹800, SP ₹720. Find loss%.",
+            "hints": [
+              "Loss = CP - SP.",
+              "Loss% = (Loss / CP) * 100."
+            ],
+            "polya_steps": {
+              "understand": "You bought something for ₹800 but sold it for only ₹720. SP < CP, so this is a loss.",
+              "plan": "Find the loss amount (CP − SP), then express it as a percentage of the CP.",
+              "solve": "Loss = 800 − 720 = ₹80. Loss% = (80 ÷ 800) × 100 = 10%.",
+              "review": "10% of ₹800 = ₹80. ₹800 − ₹80 = ₹720 = SP. ✓"
+            },
+            "correct_answer": "10%",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "pl_003",
+            "question": "Find SP if CP ₹1000 with 20% profit.",
+            "hints": [
+              "Profit = 20% of CP.",
+              "SP = CP + Profit."
+            ],
+            "polya_steps": {
+              "understand": "Something costs ₹1000 and is sold at a 20% profit. Find the Selling Price.",
+              "plan": "SP = CP + Profit. Profit = 20% of CP. Or directly: SP = 120% of CP.",
+              "solve": "SP = 120% of 1000 = (120/100) × 1000 = ₹1200.",
+              "review": "Profit = 1200 − 1000 = ₹200. Is ₹200 = 20% of ₹1000? Yes! ✓"
+            },
+            "correct_answer": "1200",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "pl_004",
+            "question": "SP ₹900 with 10% loss. Find CP.",
+            "hints": [
+              "Understand: Something was sold for ₹900 at a 10% loss. You need to find the original Cost Price.",
+              "Plan: A 10% loss means SP = 90% of CP. So ₹900 = 90% of CP. Reverse this to find CP.",
+              "Solve: CP = (900 ÷ 90) × 100 = 10 × 100 = ₹1000.",
+              "Check: 10% of ₹1000 = ₹100. ₹1000 − ₹100 = ₹900 = SP. ✓"
+            ],
+            "correct_answer": "1000",
+            "difficulty": 0.5
+          },
+          {
+            "problem_id": "pl_005",
+            "question": "CP ₹500 + ₹50 overhead, SP ₹660. Find profit%.",
+            "hints": [
+              "Understand: The item cost ₹500 but there's also ₹50 in extra expenses (overhead). SP is ₹660. The true CP includes everything spent.",
+              "Plan: Total CP = 500 + 50 = ₹550. Then find profit and profit%.",
+              "Solve: Profit = 660 − 550 = ₹110. Profit% = (110 ÷ 550) × 100 = 20%.",
+              "Check: 20% of ₹550 = ₹110. 550 + 110 = ₹660 = SP. ✓"
+            ],
+            "correct_answer": "20%",
+            "difficulty": 0.6
+          }
+        ]
+      },
+      {
+        "subtopic_id": "taxes_gst",
+        "problems": [
+          {
+            "problem_id": "tax_001",
+            "question": "Price ₹1000, GST 18%. Find total.",
+            "hints": [
+              "Understand: An item costs ₹1000 and GST of 18% is added on top. You need to find the total amount to be paid.",
+              "Plan: Calculate 18% of ₹1000 (that's the tax), then add it to the original price.",
+              "Solve: GST = 18% of 1000 = ₹180. Total = 1000 + 180 = ₹1180.",
+              "Check: The total should be more than ₹1000. ₹1180 seems right. You can also check: 118% of 1000 = 1180. ✓"
+            ],
+            "correct_answer": "1180",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "tax_002",
+            "question": "Total ₹1180 includes 18% GST. Find original.",
+            "hints": [
+              "Understand: The bill is ₹1180, which already includes 18% GST. You need to find the original price before tax.",
+              "Plan: The total ₹1180 = 118% of original price. To find 100%, reverse the calculation.",
+              "Solve: Original = (1180 ÷ 118) × 100 = 10 × 100 = ₹1000.",
+              "Check: 18% of ₹1000 = ₹180. ₹1000 + ₹180 = ₹1180. ✓"
+            ],
+            "correct_answer": "1000",
+            "difficulty": 0.5
+          },
+          {
+            "problem_id": "tax_003",
+            "question": "Find tax amount on ₹500 at 10%.",
+            "hints": [
+              "Understand: You have a price of ₹500 and a tax rate of 10%. Find the actual tax amount in rupees.",
+              "Plan: Tax amount = 10% of ₹500.",
+              "Solve: Tax = (10/100) × 500 = ₹50.",
+              "Check: ₹50 is 1/10 of ₹500. 500 ÷ 10 = 50. ✓"
+            ],
+            "correct_answer": "50",
+            "difficulty": 0.2
+          },
+          {
+            "problem_id": "tax_004",
+            "question": "₹220 includes 10% tax. Find base price.",
+            "hints": [
+              "Understand: ₹220 is the total after 10% tax was added. You need to find the price before the tax.",
+              "Plan: ₹220 = 110% of the base price. Reverse to find 100%.",
+              "Solve: Base price = (220 ÷ 110) × 100 = 2 × 100 = ₹200.",
+              "Check: 10% of ₹200 = ₹20. ₹200 + ₹20 = ₹220. ✓"
+            ],
+            "correct_answer": "200",
+            "difficulty": 0.5
+          },
+          {
+            "problem_id": "tax_005",
+            "question": "Tax increases from ₹50 to ₹75. Find % increase.",
+            "hints": [
+              "Understand: Tax went up from ₹50 to ₹75. You need to find the percentage by which it increased.",
+              "Plan: Find the increase (₹75 − ₹50), then express it as a percentage of the original tax (₹50).",
+              "Solve: Increase = 75 − 50 = ₹25. % Increase = (25 ÷ 50) × 100 = 50%.",
+              "Check: 50% of ₹50 = ₹25. ₹50 + ₹25 = ₹75. ✓"
+            ],
+            "correct_answer": "50%",
+            "difficulty": 0.4
+          }
+        ]
+      },
+      {
+        "subtopic_id": "simple_interest",
+        "problems": [
+          {
+            "problem_id": "si_001",
+            "question": "Find SI on ₹1000 at 10% for 2 years.",
+            "hints": [
+              "Understand: You deposited ₹1000 (Principal) at 10% interest per year for 2 years. Find the Simple Interest earned.",
+              "Plan: Use the formula SI = (P × R × T) / 100, where P = 1000, R = 10, T = 2.",
+              "Solve: SI = (1000 × 10 × 2) / 100 = 20000 / 100 = ₹200.",
+              "Check: ₹100 interest per year × 2 years = ₹200. ✓"
+            ],
+            "correct_answer": "200",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "si_002",
+            "question": "Find SI on ₹2000 at 5% for 3 years.",
+            "hints": [
+              "Understand: Principal = ₹2000, Rate = 5% per year, Time = 3 years. Find the Simple Interest.",
+              "Plan: Apply the formula SI = (P × R × T) / 100.",
+              "Solve: SI = (2000 × 5 × 3) / 100 = 30000 / 100 = ₹300.",
+              "Check: ₹100 interest per year (5% of 2000) × 3 years = ₹300. ✓"
+            ],
+            "correct_answer": "300",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "si_003",
+            "question": "Find amount if SI ₹200 on ₹1000.",
+            "hints": [
+              "Understand: You earned ₹200 as Simple Interest on a principal of ₹1000. Find the total Amount.",
+              "Plan: Amount = Principal + Simple Interest.",
+              "Solve: Amount = 1000 + 200 = ₹1200.",
+              "Check: The amount is always greater than the principal. ₹1200 > ₹1000. ✓"
+            ],
+            "correct_answer": "1200",
+            "difficulty": 0.2
+          },
+          {
+            "problem_id": "si_004",
+            "question": "Find rate if SI ₹100 on ₹1000 for 1 year.",
+            "hints": [
+              "Understand: SI = ₹100, P = ₹1000, T = 1 year. You need to find the rate R.",
+              "Plan: From SI = (P × R × T) / 100, rearrange to R = (SI × 100) / (P × T).",
+              "Solve: R = (100 × 100) / (1000 × 1) = 10000 / 1000 = 10%.",
+              "Check: SI = (1000 × 10 × 1) / 100 = ₹100. ✓"
+            ],
+            "correct_answer": "10%",
+            "difficulty": 0.5
+          },
+          {
+            "problem_id": "si_005",
+            "question": "Find time if SI ₹200, P ₹1000, R 10%.",
+            "hints": [
+              "Understand: SI = ₹200, P = ₹1000, R = 10%. You need to find the Time T.",
+              "Plan: Rearrange the SI formula to T = (SI × 100) / (P × R).",
+              "Solve: T = (200 × 100) / (1000 × 10) = 20000 / 10000 = 2 years.",
+              "Check: SI = (1000 × 10 × 2) / 100 = ₹200. ✓"
+            ],
+            "correct_answer": "2",
+            "difficulty": 0.5
+          }
+        ]
+      },
+      {
+        "subtopic_id": "compound_interest",
+        "problems": [
+          {
+            "problem_id": "ci_001",
+            "question": "Find amount on ₹1000 at 10% for 2 years.",
+            "hints": [
+              "Understand: ₹1000 is compounded at 10% yearly for 2 years. With compound interest, each year's interest is added to the principal before calculating next year's interest.",
+              "Plan: Year 1: New amount = 1000 + 10% of 1000. Year 2: New amount = Year 1 amount + 10% of Year 1 amount.",
+              "Solve: After Year 1: 1000 × 1.1 = ₹1100. After Year 2: 1100 × 1.1 = ₹1210.",
+              "Check: This is more than SI for 2 years (₹200), because interest was earned on interest too. ✓"
+            ],
+            "correct_answer": "1210",
+            "difficulty": 0.5
+          },
+          {
+            "problem_id": "ci_002",
+            "question": "Find CI on ₹1000 at 10% for 2 years.",
+            "hints": [
+              "Understand: You need the Compound Interest (CI), not the total amount. CI = Amount − Principal.",
+              "Plan: First find the Amount after 2 years of compounding, then subtract the Principal.",
+              "Solve: Amount = ₹1210 (from previous result). CI = 1210 − 1000 = ₹210.",
+              "Check: SI for 2 years = ₹200. CI = ₹210. CI > SI, which is always true! ✓"
+            ],
+            "correct_answer": "210",
+            "difficulty": 0.5
+          },
+          {
+            "problem_id": "ci_003",
+            "question": "Which grows faster: SI or CI?",
+            "hints": [
+              "Understand: In SI, interest is always calculated on the original principal. In CI, interest is added to the principal each year, so next year's interest is bigger.",
+              "Plan: Think about what happens in Year 2. With SI, interest = same as Year 1. With CI, interest = slightly more than Year 1 (because of interest-on-interest).",
+              "Solve: CI grows faster because interest is calculated on an ever-growing amount.",
+              "Check: For ₹1000 at 10% for 2 years — SI earns ₹200, CI earns ₹210. CI wins! ✓"
+            ],
+            "correct_answer": "Compound Interest",
+            "difficulty": 0.2,
+            "mcq_options": [
+              "Compound Interest",
+              "Both grow equally",
+              "Simple Interest",
+              "Neither grows"
+            ],
+            "correct_answer_index": 0
+          },
+          {
+            "problem_id": "ci_004",
+            "question": "Find amount on ₹2000 at 5% for 2 years.",
+            "hints": [
+              "Understand: ₹2000 is invested at 5% compound interest for 2 years. Find the total amount at the end.",
+              "Plan: Apply compounding twice. Each year, multiply by (1 + 5/100) = 1.05.",
+              "Solve: After Year 1: 2000 × 1.05 = ₹2100. After Year 2: 2100 × 1.05 = ₹2205.",
+              "Check: SI for 2 years = (2000 × 5 × 2)/100 = ₹200. Amount by SI = ₹2200. Our answer ₹2205 > ₹2200. ✓"
+            ],
+            "correct_answer": "2205",
+            "difficulty": 0.5
+          },
+          {
+            "problem_id": "ci_005",
+            "question": "Find CI on ₹2000 at 5% for 2 years.",
+            "hints": [
+              "Understand: Find the Compound Interest earned on ₹2000 at 5% for 2 years.",
+              "Plan: Find the Amount first (using compound interest), then CI = Amount − Principal.",
+              "Solve: Amount = ₹2205. CI = 2205 − 2000 = ₹205.",
+              "Check: SI = ₹200, CI = ₹205. CI is slightly more. This is always expected. ✓"
+            ],
+            "correct_answer": "205",
+            "difficulty": 0.5
+          }
+        ]
+      },
+      {
+        "subtopic_id": "compounding_variations",
+        "problems": [
+          {
+            "problem_id": "cv_001",
+            "question": "If compounded half-yearly, how many periods in 1 year?",
+            "hints": [
+              "Understand: 'Half-yearly' means interest is added every half year (every 6 months). How many times does that happen in 1 full year?",
+              "Plan: 1 year = 12 months. Half year = 6 months. How many 6-month periods fit in 12 months?",
+              "Solve: 12 ÷ 6 = 2 periods.",
+              "Check: 2 half-years = 1 full year. ✓"
+            ],
+            "correct_answer": "2",
+            "difficulty": 0.2
+          },
+          {
+            "problem_id": "cv_002",
+            "question": "If rate is 10% yearly, what is half-yearly rate?",
+            "hints": [
+              "Understand: The annual rate is 10%. When compounding half-yearly, we split this rate equally between the 2 periods in a year.",
+              "Plan: Divide the annual rate by the number of compounding periods per year (which is 2 for half-yearly).",
+              "Solve: Half-yearly rate = 10% ÷ 2 = 5%.",
+              "Check: 5% per period × 2 periods = 10% per year. ✓"
+            ],
+            "correct_answer": "5%",
+            "difficulty": 0.2
+          },
+          {
+            "problem_id": "cv_003",
+            "question": "If quarterly, how many periods per year?",
+            "hints": [
+              "Understand: 'Quarterly' means every quarter, i.e., every 3 months. Count how many quarters fit in a year.",
+              "Plan: 1 year = 12 months. 1 quarter = 3 months. How many 3-month periods are there in 12 months?",
+              "Solve: 12 ÷ 3 = 4 periods.",
+              "Check: 4 quarters = 1 year (Jan–Mar, Apr–Jun, Jul–Sep, Oct–Dec). ✓"
+            ],
+            "correct_answer": "4",
+            "difficulty": 0.2
+          },
+          {
+            "problem_id": "cv_004",
+            "question": "Quarterly rate if annual rate is 12%?",
+            "hints": [
+              "Understand: The annual interest rate is 12%. When compounding quarterly, this is split equally among 4 periods per year.",
+              "Plan: Divide the annual rate by 4 (the number of quarterly periods).",
+              "Solve: Quarterly rate = 12% ÷ 4 = 3%.",
+              "Check: 3% per quarter × 4 quarters = 12% per year. ✓"
+            ],
+            "correct_answer": "3%",
+            "difficulty": 0.2
+          },
+          {
+            "problem_id": "cv_005",
+            "question": "Why does CI increase faster with more compounding?",
+            "hints": [
+              "Understand: Think about what happens when interest is added more often — does it get to 'earn more' interest itself?",
+              "Plan: Compare yearly vs half-yearly compounding. With half-yearly, interest is added after 6 months, and that interest itself starts earning for the next 6 months within the same year.",
+              "Solve: The more frequently interest is added, the sooner it becomes part of the principal and starts earning more interest. This snowball effect speeds up growth.",
+              "Check: For ₹1000 at 10% yearly: CI = ₹100. At 10% half-yearly (5% each): After 6 months = ₹50, after 1 year = ₹50 + ₹52.50 = ₹102.50. More compounding = more interest! ✓"
+            ],
+            "correct_answer": "Interest is added more frequently",
+            "difficulty": 0.4,
+            "mcq_options": [
+              "Interest is calculated only at the end",
+              "Interest is added more frequently",
+              "The rate increases over time",
+              "The principal is reduced each period"
+            ],
+            "correct_answer_index": 1
+          }
+        ]
+      },
+      {
+        "subtopic_id": "applications_compound_interest",
+        "problems": [
+          {
+            "problem_id": "aci_001",
+            "question": "Population 1000 grows 10% yearly. Find after 1 year.",
+            "hints": [
+              "Understand: A town's population is 1000 and grows by 10% every year. Find the population after 1 year.",
+              "Plan: Growth means we add 10% of the current population. New population = 100% + 10% = 110% of original.",
+              "Solve: New population = 110% of 1000 = 1.1 × 1000 = 1100.",
+              "Check: 10% of 1000 = 100. 1000 + 100 = 1100. ✓"
+            ],
+            "correct_answer": "1100",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "aci_002",
+            "question": "Value ₹1000 depreciates 10%. Find after 1 year.",
+            "hints": [
+              "Understand: A machine worth ₹1000 loses 10% of its value each year (this is called depreciation). Find its value after 1 year.",
+              "Plan: Depreciation means we subtract 10%. New value = 100% − 10% = 90% of original.",
+              "Solve: New value = 90% of 1000 = 0.9 × 1000 = ₹900.",
+              "Check: 10% of ₹1000 = ₹100. ₹1000 − ₹100 = ₹900. ✓"
+            ],
+            "correct_answer": "900",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "aci_003",
+            "question": "Population 1000 grows 10% for 2 years.",
+            "hints": [
+              "Understand: Population starts at 1000 and grows at 10% per year for 2 years. Growth in Year 2 is on top of the already-grown Year 1 population.",
+              "Plan: Apply 10% growth twice (compounding). Multiply by 1.1 each year.",
+              "Solve: After Year 1: 1000 × 1.1 = 1100. After Year 2: 1100 × 1.1 = 1210.",
+              "Check: It's more than simple 20% growth (1000 + 200 = 1200) because Year 2 grows on 1100, not 1000. ✓"
+            ],
+            "correct_answer": "1210",
+            "difficulty": 0.5
+          },
+          {
+            "problem_id": "aci_004",
+            "question": "Value ₹2000 depreciates 5% yearly for 2 years.",
+            "hints": [
+              "Understand: A machine worth ₹2000 depreciates (loses value) by 5% each year. Find its value after 2 years.",
+              "Plan: Apply 5% reduction twice. Multiply by 0.95 each year (since 100% − 5% = 95%).",
+              "Solve: After Year 1: 2000 × 0.95 = ₹1900. After Year 2: 1900 × 0.95 = ₹1805.",
+              "Check: The value decreases each year and the Year 2 decrease is slightly less than Year 1. ₹1805 makes sense. ✓"
+            ],
+            "correct_answer": "1805",
+            "difficulty": 0.5
+          },
+          {
+            "problem_id": "aci_005",
+            "question": "Which grows faster: population at 5% yearly or linear increase?",
+            "hints": [
+              "Understand: Linear increase means the same fixed amount is added each year. Compound growth means a percentage is added, so the amount added grows each year.",
+              "Plan: Imagine a population of 1000. Linear: +50 every year. Compound (5%): +50 in Year 1, but +52.5 in Year 2, +55.1 in Year 3...",
+              "Solve: Compound growth (percentage-based) grows faster because each year's increase is bigger than the last.",
+              "Check: After 2 years — Linear: 1000+50+50=1100. Compound: 1000×1.05×1.05=1102.5. Compound wins! ✓"
+            ],
+            "correct_answer": "Compound growth",
+            "difficulty": 0.4,
+            "mcq_options": [
+              "Both grow at the same rate",
+              "Linear growth",
+              "Compound growth",
+              "Linear growth is always faster"
+            ],
+            "correct_answer_index": 2
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "chapter_id": "direct_inverse_proportion",
+    "subtopics": [
+      {
+        "subtopic_id": "introduction_variation",
+        "problems": [
+          {
+            "problem_id": "iv_001",
+            "question": "Does cost increase with number of items?",
+            "hints": [
+              "Understand: Think about buying chocolates. If 1 chocolate costs ₹5, what happens to the total cost when you buy more?",
+              "Plan: Try a few examples — cost of 1, 2, and 3 chocolates. See if cost goes up as quantity goes up.",
+              "Solve: 1 chocolate = ₹5, 2 chocolates = ₹10, 3 chocolates = ₹15. Yes, cost increases!",
+              "Check: Every time items increase, cost increases too. They move in the same direction. ✓"
+            ],
+            "correct_answer": "Yes",
+            "difficulty": 0.1,
+            "mcq_options": [
+              "Cost stays the same",
+              "No",
+              "Yes",
+              "It depends on the type of item"
+            ],
+            "correct_answer_index": 2
+          },
+          {
+            "problem_id": "iv_002",
+            "question": "Does time decrease with increased speed?",
+            "hints": [
+              "Understand: You travel from school to home. If you walk slowly, it takes longer. If you ride a bicycle (faster), it takes less time. The distance stays the same.",
+              "Plan: Think about it — as speed goes up, does the time go up or down?",
+              "Solve: Higher speed → reaches destination sooner → less time. Yes, time decreases when speed increases.",
+              "Check: Imagine covering 10 km at 5 km/h = 2 hrs. At 10 km/h = 1 hr. Faster speed, less time. ✓"
+            ],
+            "correct_answer": "Yes",
+            "difficulty": 0.2,
+            "mcq_options": [
+              "Time stays the same",
+              "No",
+              "Yes",
+              "Time increases with speed"
+            ],
+            "correct_answer_index": 2
+          },
+          {
+            "problem_id": "iv_003",
+            "question": "Does height always increase with age?",
+            "hints": [
+              "Understand: Think about people you know — do older people always keep getting taller? What happens after a certain age?",
+              "Plan: Consider different age groups — children, teenagers, adults, elderly.",
+              "Solve: Height increases during childhood and teenage years, but stops growing after adulthood. Some elderly people may even shrink a little!",
+              "Check: A 40-year-old is not necessarily taller than a 20-year-old. So height does NOT always increase with age. ✓"
+            ],
+            "correct_answer": "No",
+            "difficulty": 0.3,
+            "mcq_options": [
+              "No",
+              "Yes",
+              "Height doubles with age",
+              "Only for children"
+            ],
+            "correct_answer_index": 0
+          },
+          {
+            "problem_id": "iv_004",
+            "question": "Do all increasing quantities show direct proportion?",
+            "hints": [
+              "Understand: Direct proportion means when one quantity increases, the other increases by the SAME ratio. Just increasing together isn't enough!",
+              "Plan: Think of a counterexample — something that increases with another but not in a fixed ratio. Hint: age and height!",
+              "Solve: Age and height both increase, but the ratio is not constant (you don't grow the same amount every year). So they are NOT in direct proportion.",
+              "Check: For direct proportion, the ratio (y/x) must always be the same. If it changes, it's not direct proportion. ✓"
+            ],
+            "correct_answer": "No",
+            "difficulty": 0.3,
+            "mcq_options": [
+              "Increasing quantities always have a fixed ratio",
+              "Yes",
+              "All quantities in proportion increase together",
+              "No"
+            ],
+            "correct_answer_index": 3
+          },
+          {
+            "problem_id": "iv_005",
+            "question": "What changes when one variable affects another?",
+            "hints": [
+              "Understand: A 'variable' is a quantity that can change. When two quantities are related, a change in one causes a change in the other.",
+              "Plan: Think of a simple example — if you eat more food (one variable), what happens to your weight (another variable)?",
+              "Solve: The other variable changes. When one quantity changes, it causes the related quantity to also change.",
+              "Check: Price of petrol goes up → cost of commute goes up. One change leads to another. ✓"
+            ],
+            "correct_answer": "The other variable changes",
+            "difficulty": 0.2,
+            "mcq_options": [
+              "Both variables stay the same",
+              "The other variable changes",
+              "Only one variable can exist",
+              "Variables are always equal"
+            ],
+            "correct_answer_index": 1
+          }
+        ]
+      },
+      {
+        "subtopic_id": "direct_proportion",
+        "problems": [
+          {
+            "problem_id": "dp_001",
+            "question": "If 1 pen costs ₹10, find cost of 6 pens.",
+            "hints": [
+              "Understand: You know the price of 1 pen. You want to find the price of 6 pens. The cost is directly proportional to the number of pens.",
+              "Plan: If 1 pen = ₹10, then 6 pens = 6 times the cost of 1 pen.",
+              "Solve: Cost of 6 pens = 6 × ₹10 = ₹60.",
+              "Check: Cost/pens ratio: 10/1 = 10, and 60/6 = 10. The ratio is constant — it's direct proportion! ✓"
+            ],
+            "correct_answer": "60",
+            "difficulty": 0.2
+          },
+          {
+            "problem_id": "dp_002",
+            "question": "If 5 kg costs ₹100, cost of 15 kg?",
+            "hints": [
+              "Understand: 5 kg costs ₹100. You need to find the cost of 15 kg. The cost and quantity are directly proportional.",
+              "Plan: 15 kg is 3 times 5 kg. So the cost should be 3 times ₹100.",
+              "Solve: Cost of 15 kg = 3 × ₹100 = ₹300.",
+              "Check: Price per kg = 100/5 = ₹20. Cost of 15 kg = 15 × 20 = ₹300. ✓"
+            ],
+            "correct_answer": "300",
+            "difficulty": 0.2
+          },
+          {
+            "problem_id": "dp_003",
+            "question": "Train covers 60 km in 1 hour. Distance in 3 hours?",
+            "hints": [
+              "Understand: The train travels 60 km every hour (constant speed). Find how far it goes in 3 hours.",
+              "Plan: Distance and time are directly proportional at constant speed. 3 hours = 3 times the time, so 3 times the distance.",
+              "Solve: Distance in 3 hours = 3 × 60 = 180 km.",
+              "Check: Speed = Distance/Time = 180/3 = 60 km/h. Same as given. ✓"
+            ],
+            "correct_answer": "180",
+            "difficulty": 0.2
+          },
+          {
+            "problem_id": "dp_004",
+            "question": "Cost of 2 items ₹50, cost of 10 items?",
+            "hints": [
+              "Understand: 2 items cost ₹50. Find the cost of 10 items. Cost is directly proportional to number of items.",
+              "Plan: Find the cost of 1 item, then multiply by 10.",
+              "Solve: Cost of 1 item = ₹50 ÷ 2 = ₹25. Cost of 10 items = 10 × ₹25 = ₹250.",
+              "Check: 10 items / 2 items = 5 times. ₹50 × 5 = ₹250. ✓"
+            ],
+            "correct_answer": "250",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "dp_005",
+            "question": "If petrol doubles, what happens to distance?",
+            "hints": [
+              "Understand: Petrol and distance covered are directly proportional — more petrol means you can travel farther.",
+              "Plan: In direct proportion, if one quantity doubles, what happens to the other?",
+              "Solve: Since petrol and distance are in direct proportion, doubling petrol doubles the distance.",
+              "Check: If 1 litre → 15 km, then 2 litres → 30 km. Distance doubled when petrol doubled. ✓"
+            ],
+            "correct_answer": "Distance doubles",
+            "difficulty": 0.2,
+            "mcq_options": [
+              "Distance triples",
+              "Distance halves",
+              "Distance stays the same",
+              "Distance doubles"
+            ],
+            "correct_answer_index": 3
+          }
+        ]
+      },
+      {
+        "subtopic_id": "testing_direct_proportion",
+        "problems": [
+          {
+            "problem_id": "tdp_001",
+            "question": "If x/y is constant, are they directly proportional?",
+            "hints": [
+              "Understand: The definition of direct proportion is that the ratio of the two quantities stays the same (constant).",
+              "Plan: Check the condition — if x/y = same value for all pairs, then by definition, x and y are in direct proportion.",
+              "Solve: Yes! If x/y = constant (say k), then x = ky, which is the exact definition of direct proportion.",
+              "Check: Example — x: 2, 4, 6 and y: 1, 2, 3. Ratio x/y = 2, 2, 2 → constant → Direct proportion! ✓"
+            ],
+            "correct_answer": "Yes",
+            "difficulty": 0.2,
+            "mcq_options": [
+              "Yes",
+              "Only sometimes",
+              "It depends on the value of x",
+              "No"
+            ],
+            "correct_answer_index": 0
+          },
+          {
+            "problem_id": "tdp_002",
+            "question": "If x increases but ratio changes, direct proportion?",
+            "hints": [
+              "Understand: You know x is increasing. But the key test for direct proportion is not just whether x increases — the ratio x/y must stay constant.",
+              "Plan: If the ratio x/y changes as x increases, can it still be direct proportion?",
+              "Solve: No! Direct proportion requires a constant ratio. If the ratio changes, the relationship is not direct proportion.",
+              "Check: x: 2, 4, 6 and y: 1, 3, 5. Ratios = 2, 4/3, 6/5 — all different. Not direct proportion! ✓"
+            ],
+            "correct_answer": "No",
+            "difficulty": 0.3,
+            "mcq_options": [
+              "Yes",
+              "No",
+              "Only if x is very large",
+              "It depends on the type of quantities"
+            ],
+            "correct_answer_index": 1
+          },
+          {
+            "problem_id": "tdp_003",
+            "question": "Is time and age directly proportional?",
+            "hints": [
+              "Understand: Both time and age increase together — but does age increase by the same amount for every equal increase in time? (Actually, yes — every 1 year passes, age increases by 1.) But is the ratio constant?",
+              "Plan: Check whether age/time stays constant. Note that age depends on when a person was born, not just on time itself.",
+              "Solve: The ratio of age to time is not constant because it depends on the starting age. If you are 10 and 2 years pass, age becomes 12 — but 12/2 ≠ 10/1 if we compare different points.",
+              "Check: Time and age increase at the same fixed rate, but since their ratio is not constant, they are not in direct proportion. ✓"
+            ],
+            "correct_answer": "No",
+            "difficulty": 0.3,
+            "mcq_options": [
+              "Always, until age 18",
+              "Only for children",
+              "No",
+              "Yes"
+            ],
+            "correct_answer_index": 2
+          },
+          {
+            "problem_id": "tdp_004",
+            "question": "Is cost and quantity directly proportional?",
+            "hints": [
+              "Understand: If the price per unit stays the same (constant), buying more items costs more. Is the ratio cost/quantity constant?",
+              "Plan: Check with an example. If 1 kg = ₹20, then cost/quantity = 20/1 = 20. For 3 kg = ₹60, ratio = 60/3 = 20. Constant!",
+              "Solve: Yes! As long as the unit price is fixed, cost and quantity are directly proportional.",
+              "Check: The ratio (cost per kg) = ₹20 throughout. Constant ratio → direct proportion. ✓"
+            ],
+            "correct_answer": "Yes",
+            "difficulty": 0.2,
+            "mcq_options": [
+              "Only for expensive items",
+              "No",
+              "Only when quantity is less than 10",
+              "Yes"
+            ],
+            "correct_answer_index": 3
+          },
+          {
+            "problem_id": "tdp_005",
+            "question": "Does doubling x always double y in direct proportion?",
+            "hints": [
+              "Understand: In direct proportion, y = kx (where k is constant). If x doubles (becomes 2x), what happens to y?",
+              "Plan: Substitute 2x in place of x in the equation y = kx and see what y becomes.",
+              "Solve: New y = k × (2x) = 2(kx) = 2y. Yes, y doubles!",
+              "Check: This is the key property of direct proportion — same multiple applies to both quantities. If x triples, y triples too. ✓"
+            ],
+            "correct_answer": "Yes",
+            "difficulty": 0.2,
+            "mcq_options": [
+              "Only if x is an even number",
+              "Yes",
+              "Doubling x triples y",
+              "No"
+            ],
+            "correct_answer_index": 1
+          }
+        ]
+      },
+      {
+        "subtopic_id": "applications_direct_proportion",
+        "problems": [
+          {
+            "problem_id": "adp_001",
+            "question": "1 cm = 5 km. Find actual distance for 4 cm.",
+            "hints": [
+              "Understand: On a map, 1 cm represents 5 km in real life. Find what 4 cm on the map represents in real life.",
+              "Plan: Map distance and actual distance are directly proportional. If 1 cm = 5 km, then 4 cm = 4 × 5 km.",
+              "Solve: Actual distance = 4 × 5 = 20 km.",
+              "Check: Ratio = actual/map = 5/1 = 5, and 20/4 = 5. Same ratio → direct proportion! ✓"
+            ],
+            "correct_answer": "20",
+            "difficulty": 0.2
+          },
+          {
+            "problem_id": "adp_002",
+            "question": "5 m costs ₹200. Cost of 20 m?",
+            "hints": [
+              "Understand: 5 metres of cloth costs ₹200. Find the cost of 20 metres. Cost and length are directly proportional.",
+              "Plan: 20 m is 4 times 5 m. So the cost is 4 times ₹200.",
+              "Solve: Cost of 20 m = 4 × ₹200 = ₹800.",
+              "Check: Cost per metre = 200/5 = ₹40. Cost of 20 m = 20 × 40 = ₹800. ✓"
+            ],
+            "correct_answer": "800",
+            "difficulty": 0.2
+          },
+          {
+            "problem_id": "adp_003",
+            "question": "Height 10 m gives shadow 5 m. Shadow for 20 m?",
+            "hints": [
+              "Understand: A 10 m tall object has a 5 m shadow. For a 20 m object (same sunlight), what is the shadow length? Height and shadow are directly proportional.",
+              "Plan: 20 m is double 10 m. So the shadow should be double 5 m.",
+              "Solve: Shadow = 2 × 5 = 10 m.",
+              "Check: Ratio shadow/height = 5/10 = 0.5, and 10/20 = 0.5. Constant ratio → direct proportion! ✓"
+            ],
+            "correct_answer": "10",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "adp_004",
+            "question": "Map scale 1:1000, 2 cm → actual?",
+            "hints": [
+              "Understand: A map scale of 1:1000 means every 1 cm on the map = 1000 cm in real life. Find the actual distance for 2 cm on the map.",
+              "Plan: Map distance and actual distance are in direct proportion. Multiply the map distance by the scale factor.",
+              "Solve: Actual distance = 2 × 1000 = 2000 cm.",
+              "Check: 1 cm → 1000 cm. 2 cm → 2000 cm. The ratio is constant (1:1000). ✓"
+            ],
+            "correct_answer": "2000 cm",
+            "difficulty": 0.3,
+            "mcq_options": [
+              "20 cm",
+              "200 cm",
+              "20000 cm",
+              "2000 cm"
+            ],
+            "correct_answer_index": 3
+          },
+          {
+            "problem_id": "adp_005",
+            "question": "Train covers 100 km in 2 hrs. Distance in 6 hrs?",
+            "hints": [
+              "Understand: A train travels 100 km in 2 hours at constant speed. Find how far it travels in 6 hours.",
+              "Plan: Distance and time are directly proportional at constant speed. 6 hours is 3 times 2 hours, so the distance is 3 times 100 km.",
+              "Solve: Distance = 3 × 100 = 300 km.",
+              "Check: Speed = 100/2 = 50 km/h. Distance in 6 hrs = 50 × 6 = 300 km. ✓"
+            ],
+            "correct_answer": "300",
+            "difficulty": 0.3
+          }
+        ]
+      },
+      {
+        "subtopic_id": "inverse_proportion",
+        "problems": [
+          {
+            "problem_id": "ip_001",
+            "question": "If workers double, what happens to time?",
+            "hints": [
+              "Understand: More workers means the same job gets done faster. Workers and time are inversely proportional — as one goes up, the other comes down.",
+              "Plan: If workers double (×2), the work gets done in half the time. In inverse proportion, the product (workers × days) stays constant.",
+              "Solve: If workers double, time becomes half.",
+              "Check: 4 workers × 10 days = 40. 8 workers × 5 days = 40. Same product → inverse proportion! ✓"
+            ],
+            "correct_answer": "Time halves",
+            "difficulty": 0.2,
+            "mcq_options": [
+              "Time becomes one-third",
+              "Time doubles",
+              "Time stays the same",
+              "Time halves"
+            ],
+            "correct_answer_index": 3
+          },
+          {
+            "problem_id": "ip_002",
+            "question": "If speed doubles, what happens to time?",
+            "hints": [
+              "Understand: You travel a fixed distance. If you go faster (speed doubles), you reach sooner. Speed and time are inversely proportional.",
+              "Plan: In inverse proportion, if one quantity doubles, the other becomes half.",
+              "Solve: If speed doubles, time taken is halved.",
+              "Check: Distance = Speed × Time. At 60 km/h for 2 hrs: 60 × 2 = 120 km. At 120 km/h: 120/120 = 1 hr. Time halved! ✓"
+            ],
+            "correct_answer": "Time halves",
+            "difficulty": 0.2,
+            "mcq_options": [
+              "Time becomes one-fourth",
+              "Time doubles",
+              "Time stays the same",
+              "Time halves"
+            ],
+            "correct_answer_index": 3
+          },
+          {
+            "problem_id": "ip_003",
+            "question": "If x increases 3 times, y becomes?",
+            "hints": [
+              "Understand: x and y are inversely proportional (x × y = constant). If x becomes 3 times larger, what happens to y?",
+              "Plan: In inverse proportion, if one quantity is multiplied by 3, the other must be divided by 3 to keep the product constant.",
+              "Solve: y becomes 1/3 of its original value (one-third).",
+              "Check: If x = 2, y = 6 → x × y = 12. If x = 6 (3 times), y = 2 (one-third) → 6 × 2 = 12. Same product! ✓"
+            ],
+            "correct_answer": "One-third",
+            "difficulty": 0.3,
+            "mcq_options": [
+              "One-third",
+              "Three times",
+              "One-half",
+              "Same as before"
+            ],
+            "correct_answer_index": 0
+          },
+          {
+            "problem_id": "ip_004",
+            "question": "If xy is constant, relation type?",
+            "hints": [
+              "Understand: You have two quantities x and y. Their product (x × y) always gives the same value. What type of proportion is this?",
+              "Plan: Recall the definitions — direct proportion: ratio is constant (x/y = k). Inverse proportion: product is constant (x × y = k).",
+              "Solve: Since the product xy is constant, x and y are in inverse proportion.",
+              "Check: Example: x = 2, y = 6 → xy = 12. x = 4, y = 3 → xy = 12. x = 6, y = 2 → xy = 12. All constant → Inverse proportion! ✓"
+            ],
+            "correct_answer": "Inverse proportion",
+            "difficulty": 0.2,
+            "mcq_options": [
+              "Linear proportion",
+              "Inverse proportion",
+              "Direct proportion",
+              "No proportion"
+            ],
+            "correct_answer_index": 1
+          },
+          {
+            "problem_id": "ip_005",
+            "question": "Do inverse quantities move in same direction?",
+            "hints": [
+              "Understand: Think about what 'inverse' means — when one goes up, what happens to the other?",
+              "Plan: In inverse proportion, as one quantity increases, the other decreases. They move in opposite directions.",
+              "Solve: No! Inverse quantities move in opposite directions — when one increases, the other decreases.",
+              "Check: More speed → less time. More workers → fewer days. One up, other down. Opposite directions! ✓"
+            ],
+            "correct_answer": "No",
+            "difficulty": 0.2,
+            "mcq_options": [
+              "Yes",
+              "Sometimes",
+              "Only for large values",
+              "No"
+            ],
+            "correct_answer_index": 3
+          }
+        ]
+      },
+      {
+        "subtopic_id": "testing_inverse_proportion",
+        "problems": [
+          {
+            "problem_id": "tip_001",
+            "question": "If xy = constant, are they inversely proportional?",
+            "hints": [
+              "Understand: The definition of inverse proportion is that the product of the two quantities stays constant.",
+              "Plan: If x × y = same value for all pairs, does that match the definition of inverse proportion?",
+              "Solve: Yes! By definition, if xy = k (constant), then x and y are in inverse proportion.",
+              "Check: x: 2, 4, 6 and y: 6, 3, 2. Products: 12, 12, 12 → all same → Inverse proportion! ✓"
+            ],
+            "correct_answer": "Yes",
+            "difficulty": 0.2,
+            "mcq_options": [
+              "It depends on the value of x",
+              "Only sometimes",
+              "Yes",
+              "No"
+            ],
+            "correct_answer_index": 2
+          },
+          {
+            "problem_id": "tip_002",
+            "question": "If product changes, inverse proportion?",
+            "hints": [
+              "Understand: The key test for inverse proportion is that the product (x × y) must always be the same.",
+              "Plan: If the product x × y is different for different pairs of values, can it be inverse proportion?",
+              "Solve: No! If the product is not constant, the two quantities are not in inverse proportion.",
+              "Check: x: 2, 4 and y: 3, 5. Products: 6 and 20 — different! Not inverse proportion. ✓"
+            ],
+            "correct_answer": "No",
+            "difficulty": 0.3,
+            "mcq_options": [
+              "Yes",
+              "Only if the product doubles",
+              "No",
+              "Only if both increase"
+            ],
+            "correct_answer_index": 2
+          },
+          {
+            "problem_id": "tip_003",
+            "question": "Speed and time for fixed distance relation?",
+            "hints": [
+              "Understand: You travel a fixed distance (say 120 km). As speed changes, time changes. Think about whether their product stays constant.",
+              "Plan: Distance = Speed × Time. Since distance is fixed, Speed × Time = constant. Check the definition of inverse proportion.",
+              "Solve: Since speed × time = fixed distance (constant), speed and time are in inverse proportion.",
+              "Check: 60 km/h × 2 hrs = 120. 120 km/h × 1 hr = 120. Product is constant → Inverse proportion! ✓"
+            ],
+            "correct_answer": "Inverse proportion",
+            "difficulty": 0.3,
+            "mcq_options": [
+              "Equal proportion",
+              "Inverse proportion",
+              "Direct proportion",
+              "No proportion"
+            ],
+            "correct_answer_index": 1
+          },
+          {
+            "problem_id": "tip_004",
+            "question": "Price and number of items (fixed money)?",
+            "hints": [
+              "Understand: You have a fixed amount of money (say ₹120). As the price per item increases, the number of items you can buy decreases.",
+              "Plan: Money = Price × Quantity. Since money is fixed, Price × Quantity = constant. Is this inverse proportion?",
+              "Solve: Yes! Since price × quantity = constant money, price and number of items are in inverse proportion.",
+              "Check: ₹10 per item → 12 items (10 × 12 = 120). ₹20 per item → 6 items (20 × 6 = 120). Constant product! ✓"
+            ],
+            "correct_answer": "Inverse proportion",
+            "difficulty": 0.3,
+            "mcq_options": [
+              "No proportion",
+              "Direct proportion",
+              "Compound proportion",
+              "Inverse proportion"
+            ],
+            "correct_answer_index": 3
+          },
+          {
+            "problem_id": "tip_005",
+            "question": "Height and weight inverse?",
+            "hints": [
+              "Understand: Can you always say that a taller person weighs less, or a shorter person weighs more? Is there a fixed, predictable relationship?",
+              "Plan: For inverse proportion, the product height × weight must always be constant. Is that true in real life?",
+              "Solve: No! Height and weight have no fixed relationship. A tall person can be heavy, a short person can also be heavy. Their product is not constant.",
+              "Check: Think of people you know — is it always true that height goes up when weight goes down? Definitely not! ✓"
+            ],
+            "correct_answer": "No",
+            "difficulty": 0.3,
+            "mcq_options": [
+              "Only for adults",
+              "Yes",
+              "Sometimes",
+              "No"
+            ],
+            "correct_answer_index": 3
+          }
+        ]
+      },
+      {
+        "subtopic_id": "applications_inverse_proportion",
+        "problems": [
+          {
+            "problem_id": "aip_001",
+            "question": "10 workers finish work in 6 days. Days for 5 workers?",
+            "hints": [
+              "Understand: Fewer workers means more days needed to finish the same work. Workers and days are inversely proportional.",
+              "Plan: Use the inverse proportion property: workers × days = constant. Set up the equation: 10 × 6 = 5 × ?",
+              "Solve: 10 × 6 = 60. So 5 × days = 60. Days = 60 ÷ 5 = 12 days.",
+              "Check: Fewer workers (5 vs 10) → more days (12 vs 6). Makes sense! 5 × 12 = 60 = 10 × 6. ✓"
+            ],
+            "correct_answer": "12",
+            "difficulty": 0.4
+          },
+          {
+            "problem_id": "aip_002",
+            "question": "100 students have food for 20 days. Days for 200?",
+            "hints": [
+              "Understand: More students means the same food runs out faster (fewer days). Students and days are inversely proportional.",
+              "Plan: Students × days = constant. Set up: 100 × 20 = 200 × ?",
+              "Solve: 100 × 20 = 2000. So 200 × days = 2000. Days = 2000 ÷ 200 = 10 days.",
+              "Check: Double students → half the days (20 → 10). Makes perfect sense! ✓"
+            ],
+            "correct_answer": "10",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "aip_003",
+            "question": "8 pipes fill tank in 4 hrs. Time for 16 pipes?",
+            "hints": [
+              "Understand: More pipes filling at the same time means the tank fills faster (less time). Pipes and time are inversely proportional.",
+              "Plan: Pipes × time = constant. Set up: 8 × 4 = 16 × ?",
+              "Solve: 8 × 4 = 32. So 16 × time = 32. Time = 32 ÷ 16 = 2 hours.",
+              "Check: Double the pipes → half the time (4 hrs → 2 hrs). ✓"
+            ],
+            "correct_answer": "2",
+            "difficulty": 0.3
+          },
+          {
+            "problem_id": "aip_004",
+            "question": "20 workers → 10 days. Workers for 5 days?",
+            "hints": [
+              "Understand: The same job needs to be done in 5 days instead of 10. You need more workers. Workers and days are inversely proportional.",
+              "Plan: Workers × days = constant. Set up: 20 × 10 = ? × 5",
+              "Solve: 20 × 10 = 200. So workers × 5 = 200. Workers = 200 ÷ 5 = 40.",
+              "Check: Half the days (10 → 5) → double the workers (20 → 40). ✓"
+            ],
+            "correct_answer": "40",
+            "difficulty": 0.4
+          },
+          {
+            "problem_id": "aip_005",
+            "question": "Car takes 2 hrs at 60 km/h. Time at 120 km/h?",
+            "hints": [
+              "Understand: The car covers the same distance. At higher speed, it takes less time. Speed and time are inversely proportional.",
+              "Plan: Speed × time = distance (constant). Set up: 60 × 2 = 120 × ?",
+              "Solve: 60 × 2 = 120. So 120 × time = 120. Time = 120 ÷ 120 = 1 hour.",
+              "Check: Double the speed (60 → 120) → half the time (2 hrs → 1 hr). ✓"
+            ],
+            "correct_answer": "1",
+            "difficulty": 0.3
+          }
+        ]
+      }
+    ]
+  }
+]

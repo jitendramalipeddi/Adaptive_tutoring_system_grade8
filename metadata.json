@@ -1,0 +1,5 @@
+{
+  "name": "PolyaTutor: Grade 8 Math ITS",
+  "description": "An intelligent tutoring system for Grade 8 Mathematics (Comparing Quantities & Proportions) following George Polya's problem-solving method.",
+  "requestFramePermissions": []
+}
