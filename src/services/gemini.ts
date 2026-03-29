@@ -1,8 +1,7 @@
-import { GoogleGenAI } from "@google/genai";
 import { PolyaStep, Problem } from "../types";
 
-const API_KEY = process.env.GEMINI_API_KEY || "";
-const ai = new GoogleGenAI({ apiKey: API_KEY });
+// No external API required for static deployment in Vercel.
+// The app uses local mock problems and local content in `src/data`.
 
 const MOCK_PROBLEMS: Record<string, Problem> = {
   "ratios_percentages": {
@@ -50,27 +49,12 @@ When a new problem is started, begin with Step 1: Understand the Problem.
 `;
 
 export async function generateProblem(chapter: string, subtopic: string): Promise<Problem> {
-  if (!API_KEY) {
-    console.warn("No Gemini API key found. Using mock problem.");
-    return MOCK_PROBLEMS[subtopic] || DEFAULT_MOCK_PROBLEM;
-  }
-
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: `Generate a Grade 8 math problem for the chapter "${chapter}" and subtopic "${subtopic}". 
-      Return it in JSON format: { "problem_id": "uuid", "question": "problem text", "hints": ["hint 1", "hint 2"], "correct_answer": "final answer", "difficulty": 0.5 }`,
-      config: {
-        responseMimeType: "application/json",
-      }
-    });
-
-    const data = JSON.parse(response.text || "{}");
-    return data;
-  } catch (error) {
-    console.error("Gemini API error:", error);
-    return MOCK_PROBLEMS[subtopic] || DEFAULT_MOCK_PROBLEM;
-  }
+  // Use local mock content for static deployment.
+  const problem = MOCK_PROBLEMS[subtopic] || DEFAULT_MOCK_PROBLEM;
+  return {
+    ...problem,
+    problem_id: problem.problem_id || `mock_${subtopic}_${Date.now()}`,
+  };
 }
 
 export async function getTutoringResponse(
@@ -79,55 +63,11 @@ export async function getTutoringResponse(
   history: { role: 'user' | 'model'; text: string }[],
   userInput: string
 ) {
-  if (!API_KEY) {
-    return `[MOCK TUTOR] That's a great start! You're currently in the **${step}** phase. 
-    Based on what you said: "${userInput}", think about how it relates to the problem: "${problem.question.substring(0, 50)}...". 
-    What do you think the next logical step should be?`;
-  }
-
-  const hintsPrompt = problem.hints.length > 0 
-    ? `\n\n**Available Hints:**\n- ${problem.hints.join('\n- ')}`
-    : '';
-
-  const contents = [
-    { role: 'user', parts: [{ text: `Problem: ${problem.question}${hintsPrompt}` }] },
-    ...history.map(h => ({ role: h.role, parts: [{ text: h.text }] })),
-    { role: 'user', parts: [{ text: `Current Polya Step: ${step}. Student says: ${userInput}` }] }
-  ];
-
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: contents as any,
-      config: {
-        systemInstruction: SYSTEM_INSTRUCTION,
-      }
-    });
-
-    return response.text;
-  } catch (error) {
-    console.error("Gemini API error:", error);
-    return "I'm having a bit of trouble connecting to my brain right now. Could you try rephrasing that, or let's try another step?";
-  }
+  // Simple deterministic mock response for client-only deployment.
+  return `[MOCK TUTOR] Great progress! You are on **${step}**. Based on your input "${userInput}", try to connect it to the problem: "${problem.question.substring(0, 50)}..." and explain your next step.`;
 }
 
 export async function generateMCQOptions(question: string, correctAnswer: string) {
-  if (!API_KEY) {
-    return [correctAnswer, "Option B", "Option C", "Option D"].sort(() => Math.random() - 0.5);
-  }
-
-  try {
-    const response = await ai.models.generateContent({
-      model: "gemini-3-flash-preview",
-      contents: `Generate 3 plausible but incorrect distractors for the following question and answer. 
-      Question: ${question}
-      Correct Answer: ${correctAnswer}
-      Return only the 3 distractors separated by commas.`,
-    });
-    const distractors = response.text.split(',').map(s => s.trim());
-    return [correctAnswer, ...distractors].sort(() => Math.random() - 0.5);
-  } catch (error) {
-    console.error("Gemini API error:", error);
-    return [correctAnswer, "Option B", "Option C", "Option D"].sort(() => Math.random() - 0.5);
-  }
+  // Static mock distractors for Vercel static deployment.
+  return [correctAnswer, "Option B", "Option C", "Option D"].sort(() => Math.random() - 0.5);
 }
