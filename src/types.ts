@@ -104,3 +104,23 @@ export interface TutoringState {
     startTime: number;
   };
 }
+
+export interface PoolQuestion {
+  problem_id: string;
+  subtopic: string;
+  question: string;
+  correct_answer: string;
+  difficulty_score: number;
+  hint: string;
+}
+
+export interface ChapterPool {
+  chapter_id: string;
+  chapter_name: string;
+  question_count: number;
+  questions: PoolQuestion[];
+}
+
+export interface PoolData {
+  chapters: ChapterPool[];
+}

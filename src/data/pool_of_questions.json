@@ -1,0 +1,658 @@
+{
+  "chapters": [
+    {
+      "chapter_id": "comparing_quantities",
+      "chapter_name": "Comparing Quantities",
+      "question_count": 45,
+      "questions": [
+        {
+          "problem_id": "rp_001",
+          "subtopic": "Ratios & Percentages",
+          "question": "Ratio of boys to girls is 2:3 in a class of 50. Find number of girls.",
+          "correct_answer": "30",
+          "difficulty_score": 0.3,
+          "hint": "The ratio 2:3 means 5 total parts. Divide 50 by 5 to find one part, then multiply by 3."
+        },
+        {
+          "problem_id": "rp_002",
+          "subtopic": "Ratios & Percentages",
+          "question": "Convert ratio 4:5 into percentage.",
+          "correct_answer": "80%",
+          "difficulty_score": 0.2,
+          "hint": "Write the ratio as 4/5 and multiply by 100."
+        },
+        {
+          "problem_id": "rp_003",
+          "subtopic": "Ratios & Percentages",
+          "question": "30% of 150 students like sports. How many do not?",
+          "correct_answer": "105",
+          "difficulty_score": 0.3,
+          "hint": "If 30% like sports, then 70% do not. Calculate 70% of 150."
+        },
+        {
+          "problem_id": "rp_004",
+          "subtopic": "Ratios & Percentages",
+          "question": "If 25% of a number is 75, find the number.",
+          "correct_answer": "300",
+          "difficulty_score": 0.4,
+          "hint": "25% is 1/4th. If 1/4th of x = 75, then x = 75 * 4."
+        },
+        {
+          "problem_id": "rp_005",
+          "subtopic": "Ratios & Percentages",
+          "question": "Out of 40 items, 10 are defective. Find percentage defective.",
+          "correct_answer": "25%",
+          "difficulty_score": 0.2,
+          "hint": "Divide defective items by total items (10/40) and multiply by 100."
+        },
+        {
+          "problem_id": "pid_001",
+          "subtopic": "Percentage Increase/Decrease",
+          "question": "Price increases from ₹100 to ₹120. Find % increase.",
+          "correct_answer": "20%",
+          "difficulty_score": 0.3,
+          "hint": "Increase is ₹20. Divide this by original price (100) and multiply by 100."
+        },
+        {
+          "problem_id": "pid_002",
+          "subtopic": "Percentage Increase/Decrease",
+          "question": "Price decreases from ₹200 to ₹150. Find % decrease.",
+          "correct_answer": "25%",
+          "difficulty_score": 0.3,
+          "hint": "Decrease is ₹50. Divide by original (200) and multiply by 100."
+        },
+        {
+          "problem_id": "pid_003",
+          "subtopic": "Percentage Increase/Decrease",
+          "question": "Population grows from 1000 to 1100. Find % increase.",
+          "correct_answer": "10%",
+          "difficulty_score": 0.2,
+          "hint": "Growth is 100. (100 / 1000) * 100 = 10%."
+        },
+        {
+          "problem_id": "pid_004",
+          "subtopic": "Percentage Increase/Decrease",
+          "question": "A number reduces by 20%. What percent remains?",
+          "correct_answer": "80%",
+          "difficulty_score": 0.2,
+          "hint": "Total percent is always 100%. Subtract the reduction."
+        },
+        {
+          "problem_id": "pid_005",
+          "subtopic": "Percentage Increase/Decrease",
+          "question": "If salary becomes ₹2200 after 10% increase, find original salary.",
+          "correct_answer": "2000",
+          "difficulty_score": 0.5,
+          "hint": "₹2200 represents 110% of the original salary."
+        },
+        {
+          "problem_id": "d_001",
+          "subtopic": "Discounts",
+          "question": "MP = ₹1000, discount = 20%. Find SP.",
+          "correct_answer": "800",
+          "difficulty_score": 0.3,
+          "hint": "Calculate 20% of 1000 and subtract it from the Marked Price."
+        },
+        {
+          "problem_id": "d_002",
+          "subtopic": "Discounts",
+          "question": "SP = ₹850 after ₹150 discount. Find MP.",
+          "correct_answer": "1000",
+          "difficulty_score": 0.2,
+          "hint": "Marked Price = Selling Price + Discount."
+        },
+        {
+          "problem_id": "d_003",
+          "subtopic": "Discounts",
+          "question": "Find discount % if MP ₹500 and SP ₹400.",
+          "correct_answer": "20%",
+          "difficulty_score": 0.3,
+          "hint": "Discount amount is 100. (100 / 500) * 100 = 20%."
+        },
+        {
+          "problem_id": "d_004",
+          "subtopic": "Discounts",
+          "question": "A ₹2000 item has 10% discount. Find saving.",
+          "correct_answer": "200",
+          "difficulty_score": 0.2,
+          "hint": "Saving is simply the 10% discount amount on ₹2000."
+        },
+        {
+          "problem_id": "d_005",
+          "subtopic": "Discounts",
+          "question": "If SP is ₹900 after 10% discount, find MP.",
+          "correct_answer": "1000",
+          "difficulty_score": 0.5,
+          "hint": "If discount is 10%, then 900 is 90% of the Marked Price."
+        },
+        {
+          "problem_id": "pl_001",
+          "subtopic": "Profit & Loss",
+          "question": "CP ₹400, SP ₹500. Find profit%.",
+          "correct_answer": "25%",
+          "difficulty_score": 0.3,
+          "hint": "Profit = 100. (Profit / CP) * 100 = (100 / 400) * 100."
+        },
+        {
+          "problem_id": "pl_002",
+          "subtopic": "Profit & Loss",
+          "question": "CP ₹800, SP ₹720. Find loss%.",
+          "correct_answer": "10%",
+          "difficulty_score": 0.3,
+          "hint": "Loss = 80. (Loss / CP) * 100 = (80 / 800) * 100."
+        },
+        {
+          "problem_id": "pl_003",
+          "subtopic": "Profit & Loss",
+          "question": "Find SP if CP ₹1000 with 20% profit.",
+          "correct_answer": "1200",
+          "difficulty_score": 0.3,
+          "hint": "SP = CP + 20% of CP. Or CP * 1.2."
+        },
+        {
+          "problem_id": "pl_004",
+          "subtopic": "Profit & Loss",
+          "question": "SP ₹900 with 10% loss. Find CP.",
+          "correct_answer": "1000",
+          "difficulty_score": 0.5,
+          "hint": "At 10% loss, SP is 90% of CP. So 900 / 0.9 = CP."
+        },
+        {
+          "problem_id": "pl_005",
+          "subtopic": "Profit & Loss",
+          "question": "CP ₹500 + ₹50 overhead, SP ₹660. Find profit%.",
+          "correct_answer": "20%",
+          "difficulty_score": 0.6,
+          "hint": "Total CP = 550. Profit = 660 - 550 = 110. Find percent on 550."
+        },
+        {
+          "problem_id": "tax_001",
+          "subtopic": "Taxes & GST",
+          "question": "Price ₹1000, GST 18%. Find total.",
+          "correct_answer": "1180",
+          "difficulty_score": 0.3,
+          "hint": "Add 18% of 1000 to the original price."
+        },
+        {
+          "problem_id": "tax_002",
+          "subtopic": "Taxes & GST",
+          "question": "Total ₹1180 includes 18% GST. Find original.",
+          "correct_answer": "1000",
+          "difficulty_score": 0.5,
+          "hint": "Divide the total by 1.18 to find the pre-tax price."
+        },
+        {
+          "problem_id": "tax_003",
+          "subtopic": "Taxes & GST",
+          "question": "Find tax amount on ₹500 at 10%.",
+          "correct_answer": "50",
+          "difficulty_score": 0.2,
+          "hint": "Calculate 10% of 500."
+        },
+        {
+          "problem_id": "tax_004",
+          "subtopic": "Taxes & GST",
+          "question": "₹220 includes 10% tax. Find base price.",
+          "correct_answer": "200",
+          "difficulty_score": 0.5,
+          "hint": "Divide 220 by 1.10."
+        },
+        {
+          "problem_id": "tax_005",
+          "subtopic": "Taxes & GST",
+          "question": "Tax increases from ₹50 to ₹75. Find % increase.",
+          "correct_answer": "50%",
+          "difficulty_score": 0.4,
+          "hint": "Increase is 25. (25 / 50) * 100 = 50%."
+        },
+        {
+          "problem_id": "si_001",
+          "subtopic": "Simple Interest",
+          "question": "Find SI on ₹1000 at 10% for 2 years.",
+          "correct_answer": "200",
+          "difficulty_score": 0.3,
+          "hint": "Use (P * R * T) / 100."
+        },
+        {
+          "problem_id": "si_002",
+          "subtopic": "Simple Interest",
+          "question": "Find SI on ₹2000 at 5% for 3 years.",
+          "correct_answer": "300",
+          "difficulty_score": 0.3,
+          "hint": "Multiply 2000 * 0.05 * 3."
+        },
+        {
+          "problem_id": "si_003",
+          "subtopic": "Simple Interest",
+          "question": "Find amount if SI ₹200 on ₹1000.",
+          "correct_answer": "1200",
+          "difficulty_score": 0.2,
+          "hint": "Amount = Principal + Interest."
+        },
+        {
+          "problem_id": "si_004",
+          "subtopic": "Simple Interest",
+          "question": "Find rate if SI ₹100 on ₹1000 for 1 year.",
+          "correct_answer": "10%",
+          "difficulty_score": 0.5,
+          "hint": "Rate = (SI * 100) / (P * T)."
+        },
+        {
+          "problem_id": "si_005",
+          "subtopic": "Simple Interest",
+          "question": "Find time if SI ₹200, P ₹1000, R 10%.",
+          "correct_answer": "2",
+          "difficulty_score": 0.5,
+          "hint": "Time = (SI * 100) / (P * R)."
+        },
+        {
+          "problem_id": "ci_001",
+          "subtopic": "Compound Interest",
+          "question": "Find amount on ₹1000 at 10% for 2 years.",
+          "correct_answer": "1210",
+          "difficulty_score": 0.5,
+          "hint": "Calculate Year 1 (1100), then add 10% of 1100 for Year 2."
+        },
+        {
+          "problem_id": "ci_002",
+          "subtopic": "Compound Interest",
+          "question": "Find CI on ₹1000 at 10% for 2 years.",
+          "correct_answer": "210",
+          "difficulty_score": 0.5,
+          "hint": "Compound Interest = Amount - Principal (1210 - 1000)."
+        },
+        {
+          "problem_id": "ci_003",
+          "subtopic": "Compound Interest",
+          "question": "Which grows faster: SI or CI?",
+          "correct_answer": "Compound Interest",
+          "difficulty_score": 0.2,
+          "hint": "CI earns interest on previously earned interest, SI does not."
+        },
+        {
+          "problem_id": "ci_004",
+          "subtopic": "Compound Interest",
+          "question": "Find amount on ₹2000 at 5% for 2 years.",
+          "correct_answer": "2205",
+          "difficulty_score": 0.5,
+          "hint": "Multiply 2000 * 1.05 * 1.05."
+        },
+        {
+          "problem_id": "ci_005",
+          "subtopic": "Compound Interest",
+          "question": "Find CI on ₹2000 at 5% for 2 years.",
+          "correct_answer": "205",
+          "difficulty_score": 0.5,
+          "hint": "Subtract principal from final amount (2205 - 2000)."
+        },
+        {
+          "problem_id": "cv_001",
+          "subtopic": "Compounding Variations",
+          "question": "If compounded half-yearly, how many periods in 1 year?",
+          "correct_answer": "2",
+          "difficulty_score": 0.2,
+          "hint": "Interest is added every 6 months."
+        },
+        {
+          "problem_id": "cv_002",
+          "subtopic": "Compounding Variations",
+          "question": "If rate is 10% yearly, what is half-yearly rate?",
+          "correct_answer": "5%",
+          "difficulty_score": 0.2,
+          "hint": "Divide the annual rate by the number of periods (2)."
+        },
+        {
+          "problem_id": "cv_003",
+          "subtopic": "Compounding Variations",
+          "question": "If quarterly, how many periods per year?",
+          "correct_answer": "4",
+          "difficulty_score": 0.2,
+          "hint": "There are four 3-month segments in a year."
+        },
+        {
+          "problem_id": "cv_004",
+          "subtopic": "Compounding Variations",
+          "question": "Quarterly rate if annual rate is 12%?",
+          "correct_answer": "3%",
+          "difficulty_score": 0.2,
+          "hint": "Divide the annual rate (12%) by 4 periods."
+        },
+        {
+          "problem_id": "cv_005",
+          "subtopic": "Compounding Variations",
+          "question": "Why does CI increase faster with more compounding?",
+          "correct_answer": "Interest is added more frequently",
+          "difficulty_score": 0.4,
+          "hint": "Interest starts earning its own interest sooner."
+        },
+        {
+          "problem_id": "aci_001",
+          "subtopic": "CI Applications",
+          "question": "Population 1000 grows 10% yearly. Find after 1 year.",
+          "correct_answer": "1100",
+          "difficulty_score": 0.3,
+          "hint": "Add 10% of 1000 to the current population."
+        },
+        {
+          "problem_id": "aci_002",
+          "subtopic": "CI Applications",
+          "question": "Value ₹1000 depreciates 10%. Find after 1 year.",
+          "correct_answer": "900",
+          "difficulty_score": 0.3,
+          "hint": "Subtract 10% from the current value."
+        },
+        {
+          "problem_id": "aci_003",
+          "subtopic": "CI Applications",
+          "question": "Population 1000 grows 10% for 2 years.",
+          "correct_answer": "1210",
+          "difficulty_score": 0.5,
+          "hint": "Use the CI formula: 1000 * (1.1)^2."
+        },
+        {
+          "problem_id": "aci_004",
+          "subtopic": "CI Applications",
+          "question": "Value ₹2000 depreciates 5% yearly for 2 years.",
+          "correct_answer": "1805",
+          "difficulty_score": 0.5,
+          "hint": "Calculate 2000 * 0.95 * 0.95."
+        },
+        {
+          "problem_id": "aci_005",
+          "subtopic": "CI Applications",
+          "question": "Which grows faster: population at 5% yearly or linear increase?",
+          "correct_answer": "Compound growth",
+          "difficulty_score": 0.4,
+          "hint": "Percentage-based growth compounds over time."
+        }
+      ]
+    },
+    {
+      "chapter_id": "direct_inverse_proportion",
+      "chapter_name": "Direct and Inverse Proportion",
+      "question_count": 35,
+      "questions": [
+        {
+          "problem_id": "iv_001",
+          "subtopic": "Introduction to Variation",
+          "question": "Does cost increase with number of items?",
+          "correct_answer": "Yes",
+          "difficulty_score": 0.1,
+          "hint": "Think about buying more chocolates; will the total price go up?"
+        },
+        {
+          "problem_id": "iv_002",
+          "subtopic": "Introduction to Variation",
+          "question": "Does time decrease with increased speed?",
+          "correct_answer": "Yes",
+          "difficulty_score": 0.2,
+          "hint": "If you drive faster to the same destination, do you arrive sooner?"
+        },
+        {
+          "problem_id": "iv_003",
+          "subtopic": "Introduction to Variation",
+          "question": "Does height always increase with age?",
+          "correct_answer": "No",
+          "difficulty_score": 0.3,
+          "hint": "Does a 50-year-old keep growing taller than they were at 25?"
+        },
+        {
+          "problem_id": "iv_004",
+          "subtopic": "Introduction to Variation",
+          "question": "Do all increasing quantities show direct proportion?",
+          "correct_answer": "No",
+          "difficulty_score": 0.3,
+          "hint": "Direct proportion requires a constant ratio, not just both going up."
+        },
+        {
+          "problem_id": "iv_005",
+          "subtopic": "Introduction to Variation",
+          "question": "What changes when one variable affects another?",
+          "correct_answer": "The other variable changes",
+          "difficulty_score": 0.2,
+          "hint": "The definition of a relationship between variables involves change."
+        },
+        {
+          "problem_id": "dp_001",
+          "subtopic": "Direct Proportion",
+          "question": "If 1 pen costs ₹10, find cost of 6 pens.",
+          "correct_answer": "60",
+          "difficulty_score": 0.2,
+          "hint": "Multiply the unit cost by the number of pens."
+        },
+        {
+          "problem_id": "dp_002",
+          "subtopic": "Direct Proportion",
+          "question": "If 5 kg costs ₹100, cost of 15 kg?",
+          "correct_answer": "300",
+          "difficulty_score": 0.2,
+          "hint": "15kg is 3 times 5kg, so multiply cost by 3."
+        },
+        {
+          "problem_id": "dp_003",
+          "subtopic": "Direct Proportion",
+          "question": "Train covers 60 km in 1 hour. Distance in 3 hours?",
+          "correct_answer": "180",
+          "difficulty_score": 0.2,
+          "hint": "Multiply speed (60km/h) by time (3h)."
+        },
+        {
+          "problem_id": "dp_004",
+          "subtopic": "Direct Proportion",
+          "question": "Cost of 2 items ₹50, cost of 10 items?",
+          "correct_answer": "250",
+          "difficulty_score": 0.3,
+          "hint": "Calculate cost for 1 item, then multiply by 10."
+        },
+        {
+          "problem_id": "dp_005",
+          "subtopic": "Direct Proportion",
+          "question": "If petrol doubles, what happens to distance?",
+          "correct_answer": "Distance doubles",
+          "difficulty_score": 0.2,
+          "hint": "Distance and fuel are directly proportional."
+        },
+        {
+          "problem_id": "tdp_001",
+          "subtopic": "Testing Direct Proportion",
+          "question": "If x/y is constant, are they directly proportional?",
+          "correct_answer": "Yes",
+          "difficulty_score": 0.2,
+          "hint": "This is the mathematical definition of direct proportion."
+        },
+        {
+          "problem_id": "tdp_002",
+          "subtopic": "Testing Direct Proportion",
+          "question": "If x increases but ratio changes, direct proportion?",
+          "correct_answer": "No",
+          "difficulty_score": 0.3,
+          "hint": "The ratio x/y must remain constant for direct proportion."
+        },
+        {
+          "problem_id": "tdp_003",
+          "subtopic": "Testing Direct Proportion",
+          "question": "Is time and age directly proportional?",
+          "correct_answer": "No",
+          "difficulty_score": 0.3,
+          "hint": "Ratio of age to time changes as you get older."
+        },
+        {
+          "problem_id": "tdp_004",
+          "subtopic": "Testing Direct Proportion",
+          "question": "Is cost and quantity directly proportional?",
+          "correct_answer": "Yes",
+          "difficulty_score": 0.2,
+          "hint": "Assuming fixed unit price, more items always cost more proportionally."
+        },
+        {
+          "problem_id": "tdp_005",
+          "subtopic": "Testing Direct Proportion",
+          "question": "Does doubling x always double y in direct proportion?",
+          "correct_answer": "Yes",
+          "difficulty_score": 0.2,
+          "hint": "y = kx, so if x becomes 2x, y becomes 2y."
+        },
+        {
+          "problem_id": "adp_001",
+          "subtopic": "Direct Proportion Applications",
+          "question": "1 cm = 5 km. Find actual distance for 4 cm.",
+          "correct_answer": "20",
+          "difficulty_score": 0.2,
+          "hint": "Multiply map distance by the scale factor."
+        },
+        {
+          "problem_id": "adp_002",
+          "subtopic": "Direct Proportion Applications",
+          "question": "5 m costs ₹200. Cost of 20 m?",
+          "correct_answer": "800",
+          "difficulty_score": 0.2,
+          "hint": "20m is 4 times 5m, so the price also quadruples."
+        },
+        {
+          "problem_id": "adp_003",
+          "subtopic": "Direct Proportion Applications",
+          "question": "Height 10 m gives shadow 5 m. Shadow for 20 m?",
+          "correct_answer": "10",
+          "difficulty_score": 0.3,
+          "hint": "Object height and shadow length are directly proportional."
+        },
+        {
+          "problem_id": "adp_004",
+          "subtopic": "Direct Proportion Applications",
+          "question": "Map scale 1:1000, 2 cm → actual?",
+          "correct_answer": "2000 cm",
+          "difficulty_score": 0.3,
+          "hint": "Multiply 2 by the denominator of the scale ratio."
+        },
+        {
+          "problem_id": "adp_005",
+          "subtopic": "Direct Proportion Applications",
+          "question": "Train covers 100 km in 2 hrs. Distance in 6 hrs?",
+          "correct_answer": "300",
+          "difficulty_score": 0.3,
+          "hint": "6 hours is 3 times 2 hours, so distance is tripled."
+        },
+        {
+          "problem_id": "ip_001",
+          "subtopic": "Inverse Proportion",
+          "question": "If workers double, what happens to time?",
+          "correct_answer": "Time halves",
+          "difficulty_score": 0.2,
+          "hint": "More labor means a task finishes faster."
+        },
+        {
+          "problem_id": "ip_002",
+          "subtopic": "Inverse Proportion",
+          "question": "If speed doubles, what happens to time?",
+          "correct_answer": "Time halves",
+          "difficulty_score": 0.2,
+          "hint": "Faster speed results in less time to cover the same distance."
+        },
+        {
+          "problem_id": "ip_003",
+          "subtopic": "Inverse Proportion",
+          "question": "If x increases 3 times, y becomes?",
+          "correct_answer": "One-third",
+          "difficulty_score": 0.3,
+          "hint": "In inverse proportion, y = k / x."
+        },
+        {
+          "problem_id": "ip_004",
+          "subtopic": "Inverse Proportion",
+          "question": "If xy is constant, relation type?",
+          "correct_answer": "Inverse proportion",
+          "difficulty_score": 0.2,
+          "hint": "This is the mathematical definition of inverse proportion."
+        },
+        {
+          "problem_id": "ip_005",
+          "subtopic": "Inverse Proportion",
+          "question": "Do inverse quantities move in same direction?",
+          "correct_answer": "No",
+          "difficulty_score": 0.2,
+          "hint": "One goes up while the other goes down."
+        },
+        {
+          "problem_id": "tip_001",
+          "subtopic": "Testing Inverse Proportion",
+          "question": "If xy = constant, are they inversely proportional?",
+          "correct_answer": "Yes",
+          "difficulty_score": 0.2,
+          "hint": "Constant product equals inverse relationship."
+        },
+        {
+          "problem_id": "tip_002",
+          "subtopic": "Testing Inverse Proportion",
+          "question": "If product changes, inverse proportion?",
+          "correct_answer": "No",
+          "difficulty_score": 0.3,
+          "hint": "Inverse proportion requires the product x * y to stay same."
+        },
+        {
+          "problem_id": "tip_003",
+          "subtopic": "Testing Inverse Proportion",
+          "question": "Speed and time for fixed distance relation?",
+          "correct_answer": "Inverse proportion",
+          "difficulty_score": 0.3,
+          "hint": "Speed * Time = Distance (constant)."
+        },
+        {
+          "problem_id": "tip_004",
+          "subtopic": "Testing Inverse Proportion",
+          "question": "Price and number of items (fixed money)?",
+          "correct_answer": "Inverse proportion",
+          "difficulty_score": 0.3,
+          "hint": "Price * Quantity = Budget (constant)."
+        },
+        {
+          "problem_id": "tip_005",
+          "subtopic": "Testing Inverse Proportion",
+          "question": "Height and weight inverse?",
+          "correct_answer": "No",
+          "difficulty_score": 0.3,
+          "hint": "There is no constant product relationship between these two."
+        },
+        {
+          "problem_id": "aip_001",
+          "subtopic": "Inverse Proportion Applications",
+          "question": "10 workers finish work in 6 days. Days for 5 workers?",
+          "correct_answer": "12",
+          "difficulty_score": 0.4,
+          "hint": "Calculate total work (10 * 6 = 60), then divide by 5."
+        },
+        {
+          "problem_id": "aip_002",
+          "subtopic": "Inverse Proportion Applications",
+          "question": "100 students have food for 20 days. Days for 200?",
+          "correct_answer": "10",
+          "difficulty_score": 0.3,
+          "hint": "Double the students means food lasts half as long."
+        },
+        {
+          "problem_id": "aip_003",
+          "subtopic": "Inverse Proportion Applications",
+          "question": "8 pipes fill tank in 4 hrs. Time for 16 pipes?",
+          "correct_answer": "2",
+          "difficulty_score": 0.3,
+          "hint": "Double the pipes, half the time."
+        },
+        {
+          "problem_id": "aip_004",
+          "subtopic": "Inverse Proportion Applications",
+          "question": "20 workers → 10 days. Workers for 5 days?",
+          "correct_answer": "40",
+          "difficulty_score": 0.4,
+          "hint": "Half the days, double the workers."
+        },
+        {
+          "problem_id": "aip_005",
+          "subtopic": "Inverse Proportion Applications",
+          "question": "Car takes 2 hrs at 60 km/h. Time at 120 km/h?",
+          "correct_answer": "1",
+          "difficulty_score": 0.3,
+          "hint": "Double the speed, half the time."
+        }
+      ]
+    }
+  ]
+}

@@ -34,18 +34,22 @@ import {
   SubtopicContent,
   ChapterContent,
   SubtopicPerformance,
-  QuestionMetric
+  QuestionMetric,
+  PoolQuestion,
+  ChapterPool,
+  PoolData
 } from './types';
 import { generateProblem, getTutoringResponse, generateMCQOptions } from './services/gemini';
 import localContent from './data/content.json';
 import learningMaterial from './data/learning_material.json';
+import poolOfQuestions from './data/pool_of_questions.json';
 
 function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
 export default function App() {
-  const [view, setView] = useState<'home' | 'chapter' | 'learning' | 'tutoring' | 'summary' | 'history'>('home');
+  const [view, setView] = useState<'home' | 'chapter' | 'learning' | 'tutoring' | 'summary' | 'history' | 'quiz'>('home');
   const [lastPayload, setLastPayload] = useState<SessionInteractionPayload | null>(null);
   const [sessionHistory, setSessionHistory] = useState<SessionInteractionPayload[]>([]);
   const [currentContent, setCurrentContent] = useState<SubtopicContent | null>(null);
@@ -63,6 +67,20 @@ export default function App() {
   const [sessionSubtopicPerformances, setSessionSubtopicPerformances] = useState<SubtopicPerformance[]>([]);
   const [globalPerformance, setGlobalPerformance] = useState<SubtopicPerformance[]>([]);
   const [completionType, setCompletionType] = useState<'subtopic' | 'chapter'>('subtopic');
+  
+  // Quiz states
+  const [quizQuestions, setQuizQuestions] = useState<PoolQuestion[]>([]);
+  const [currentQuizQuestion, setCurrentQuizQuestion] = useState<PoolQuestion | null>(null);
+  const [currentQuizIndex, setCurrentQuizIndex] = useState(0);
+  const [consecutiveCorrect, setConsecutiveCorrect] = useState(0);
+  const [currentDifficultyLevel, setCurrentDifficultyLevel] = useState<'low' | 'medium' | 'high'>('low');
+  const [showCheer, setShowCheer] = useState(false);
+  const [quizAnswer, setQuizAnswer] = useState('');
+  const [quizIsCorrect, setQuizIsCorrect] = useState<boolean | null>(null);
+  const [quizSubmitted, setQuizSubmitted] = useState(false);
+  const [usedQuestions, setUsedQuestions] = useState<Set<string>>(new Set());
+  const [quizShowHint, setQuizShowHint] = useState(false);
+  const [readSubtopics, setReadSubtopics] = useState<Set<string>>(new Set());
   
   const [state, setState] = useState<TutoringState>({
     currentChapter: null,
@@ -105,6 +123,88 @@ export default function App() {
     setView('chapter');
   };
 
+  const startQuiz = (chapterId: string) => {
+    const chapterPool = (poolOfQuestions as PoolData).chapters.find(c => c.chapter_id === chapterId);
+    console.log('Chapter Pool:', chapterPool);
+    if (!chapterPool) return;
+    
+    setQuizQuestions(chapterPool.questions);
+    setUsedQuestions(new Set());
+    setCurrentQuizIndex(0);
+    setConsecutiveCorrect(0);
+    setCurrentDifficultyLevel('low');
+    setShowCheer(false);
+    setQuizAnswer('');
+    setQuizIsCorrect(null);
+    setQuizSubmitted(false);
+    setQuizShowHint(false);
+    
+    // Get first question
+    const firstQuestion = getNextQuizQuestion();
+    console.log('First Question:', firstQuestion);
+    setCurrentQuizQuestion(firstQuestion);
+    
+    setView('quiz');
+  };
+
+  const getNextQuizQuestion = (): PoolQuestion => {
+    const levelRanges: Record<'low' | 'medium' | 'high', [number, number]> = {
+      low: [0, 0.4],
+      medium: [0.4, 0.7],
+      high: [0.7, 1.1]
+    };
+    const [min, max] = levelRanges[currentDifficultyLevel];
+    const available = quizQuestions.filter(q => !usedQuestions.has(q.problem_id) && q.difficulty_score >= min && q.difficulty_score < max);
+    console.log('Available questions for level', currentDifficultyLevel, ':', available.length);
+    if (available.length === 0) {
+      // If no questions in level, take any unused
+      const anyAvailable = quizQuestions.filter(q => !usedQuestions.has(q.problem_id));
+      if (anyAvailable.length === 0) {
+        // All used, perhaps end, but for now, allow repeat or take first
+        return quizQuestions[0];
+      }
+      return anyAvailable[Math.floor(Math.random() * anyAvailable.length)];
+    }
+    return available[Math.floor(Math.random() * available.length)];
+  };
+
+  const submitQuizAnswer = () => {
+    if (!currentQuizQuestion) return;
+    const isCorrect = quizAnswer.trim().toLowerCase() === currentQuizQuestion.correct_answer.toLowerCase();
+    setQuizIsCorrect(isCorrect);
+    setQuizSubmitted(true);
+    
+    if (isCorrect) {
+      setConsecutiveCorrect(prev => {
+        const newConsec = prev + 1;
+        if (newConsec >= 3) {
+          setShowCheer(true);
+          return 0;
+        }
+        return newConsec;
+      });
+    } else {
+      setConsecutiveCorrect(0);
+      setCurrentDifficultyLevel('low');
+    }
+  };
+
+  const nextQuizQuestion = () => {
+    if (!currentQuizQuestion) return;
+    setUsedQuestions(prev => new Set(prev).add(currentQuizQuestion.problem_id));
+    setCurrentQuizIndex(prev => prev + 1);
+    const nextQuestion = getNextQuizQuestion();
+    setCurrentQuizQuestion(nextQuestion);
+    setQuizAnswer('');
+    setQuizIsCorrect(null);
+    setQuizSubmitted(false);
+    setQuizShowHint(false);
+  };
+
+  const showQuizHint = () => {
+    setQuizShowHint(true);
+  };
+
   const showLearningMaterial = (subtopic: Subtopic) => {
     const chapterData = (localContent as unknown as ChapterContent[]).find(c => c.chapter_id === state.currentChapter?.chapter_id);
     const subtopicData = chapterData?.subtopics.find(s => s.subtopic_id === subtopic.subtopic_id);
@@ -132,6 +232,7 @@ export default function App() {
       last_attempt_timestamp: new Date().toISOString(),
       expertise_level: 'novice'
     });
+    setReadSubtopics(prev => new Set(prev).add(subtopic.subtopic_id));
     setView('learning');
   };
 
@@ -523,6 +624,67 @@ export default function App() {
     setView('summary');
   };
 
+  const endSessionMidway = () => {
+    // Only save if there's an active session (in tutoring view or during chapter learning)
+    if (!state.currentChapter || view === 'home' || view === 'summary' || view === 'history' || view === 'quiz') {
+      return;
+    }
+
+    const timeSpent = Math.floor((Date.now() - state.metrics.startTime) / 1000);
+    
+    // Calculate topic_completion_ratio based on read subtopics
+    const totalSubtopics = state.currentChapter.subtopics.length || 1;
+    const completedSubtopics = readSubtopics.size;
+    const topicCompletionRatio = completedSubtopics / totalSubtopics;
+
+    const payload: SessionInteractionPayload = {
+      student_id: "student_123",
+      session_id: state.sessionId,
+      chapter_id: state.currentChapter.chapter_id,
+      timestamp: new Date().toISOString(),
+      session_status: SessionStatus.EXITED_MIDWAY,
+      correct_answers: state.metrics.correct,
+      wrong_answers: state.metrics.wrong,
+      questions_attempted: state.metrics.attempts,
+      total_questions: state.totalChapterQuestions,
+      retry_count: state.metrics.retries,
+      hints_used: state.metrics.hints,
+      total_hints_embedded: 10,
+      time_spent_seconds: timeSpent,
+      topic_completion_ratio: topicCompletionRatio
+    };
+
+    // Save session history
+    const updatedHistory = [payload, ...sessionHistory].slice(0, 50);
+    localStorage.setItem('polya_session_history', JSON.stringify(updatedHistory));
+    console.log('Session ended midway and saved:', payload);
+  };
+
+  const isSessionActive = () => {
+    return state.currentChapter !== null && !['home', 'summary', 'history'].includes(view);
+  };
+
+  // Handle beforeunload event - show confirmation when user tries to close tab
+  useEffect(() => {
+    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+      if (!isSessionActive()) return;
+
+      // Save session first (midway exit)
+      endSessionMidway();
+
+      // Set custom message for browser confirmation
+      e.returnValue = 'Save the session and close?';
+      return 'Save the session and close?';
+    };
+
+    // Use the older method for better browser compatibility
+    window.onbeforeunload = handleBeforeUnload;
+
+    return () => {
+      window.onbeforeunload = null;
+    };
+  }, [state.currentChapter, view, state.metrics, sessionHistory, readSubtopics]);
+
   return (
     <div className="min-h-screen bg-[#F5F5F0] text-[#1A1A1A] font-sans selection:bg-[#5A5A40] selection:text-white">
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-[#1A1A1A]/10 px-6 py-4">
@@ -541,7 +703,7 @@ export default function App() {
               <History size={16} />
               Session History
             </button>
-            {view !== 'home' && view !== 'summary' && view !== 'history' && (
+            {view !== 'home' && view !== 'summary' && view !== 'history' && view !== 'quiz' && (
               <button 
                 onClick={() => view === 'tutoring' ? setView('chapter') : setView('home')}
                 className="flex items-center gap-2 text-sm font-medium hover:opacity-70 transition-opacity"
@@ -682,6 +844,7 @@ export default function App() {
                         className="flex items-center justify-between p-5 bg-white rounded-2xl border border-[#1A1A1A]/5 hover:border-[#5A5A40] hover:shadow-md transition-all text-left group"
                       >
                         <div className="flex items-center gap-4">
+                          {readSubtopics.has(sub.subtopic_id) && <CheckCircle2 size={16} className="text-green-500" />}
                           <span className="font-medium">{sub.name}</span>
                           {globalPerformance.find(p => p.subtopic_id === sub.subtopic_id) && (
                             <span className={cn(
@@ -701,6 +864,27 @@ export default function App() {
                 </div>
 
                 <div className="space-y-6">
+                  <div className="bg-white p-6 rounded-[32px] border border-[#1A1A1A]/5">
+                    <h4 className="font-semibold flex items-center gap-2 mb-4">
+                      <Target size={20} />
+                      Final Assessment
+                    </h4>
+                    {state.currentChapter.subtopics.every(sub => readSubtopics.has(sub.subtopic_id)) ? (
+                      <button 
+                        onClick={() => startQuiz(state.currentChapter.chapter_id)}
+                        className="w-full p-4 bg-blue-500 text-white rounded-2xl font-semibold hover:bg-blue-600 transition-colors"
+                      >
+                        Take Final Quiz
+                      </button>
+                    ) : (
+                      <div className="text-center text-gray-500">
+                        <p className="text-sm mb-2">Complete all subtopics to unlock the final assessment</p>
+                        <div className="text-xs">
+                          {state.currentChapter.subtopics.filter(sub => readSubtopics.has(sub.subtopic_id)).length} / {state.currentChapter.subtopics.length} completed
+                        </div>
+                      </div>
+                    )}
+                  </div>
                   <div className="bg-[#5A5A40] text-white p-6 rounded-[32px] space-y-4">
                     <h4 className="font-semibold flex items-center gap-2">
                       <TrendingUp size={20} />
@@ -1217,6 +1401,86 @@ export default function App() {
                   >
                     Clear History
                   </button>
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          {view === 'quiz' && (
+            <motion.div
+              key="quiz"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6"
+            >
+              {showCheer ? (
+                <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8 text-center">
+                  <Sparkles className="w-16 h-16 text-yellow-500 mx-auto mb-4" />
+                  <h2 className="text-2xl font-bold text-gray-800 mb-4">Amazing! You solved 3 questions in a row!</h2>
+                  <p className="text-gray-600 mb-6">Now it's time for the next level of questions.</p>
+                  <button 
+                    onClick={() => {
+                      setShowCheer(false);
+                      if (currentDifficultyLevel === 'low') {
+                        setCurrentDifficultyLevel('medium');
+                      } else if (currentDifficultyLevel === 'medium') {
+                        setCurrentDifficultyLevel('high');
+                      }
+                    }} 
+                    className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600"
+                  >
+                    Continue
+                  </button>
+                </div>
+              ) : currentQuizIndex < 10 ? (
+                <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8">
+                  <div className="flex justify-between items-center mb-6">
+                    <h1 className="text-2xl font-bold text-gray-800">Final Quiz</h1>
+                    <div className="text-sm text-gray-500">Question {currentQuizIndex + 1} of 10</div>
+                  </div>
+                  {currentQuizQuestion && (
+                    <>
+                      <div className="mb-6">
+                        <p className="text-lg text-gray-700 mb-4">{currentQuizQuestion.question}</p>
+                        <input
+                          type="text"
+                          value={quizAnswer}
+                          onChange={(e) => setQuizAnswer(e.target.value)}
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                          placeholder="Enter your answer"
+                          disabled={quizSubmitted}
+                        />
+                      </div>
+                      {quizShowHint && (
+                        <div className="mb-4 p-4 bg-yellow-100 text-yellow-800 rounded-lg">
+                          <strong>Hint:</strong> {currentQuizQuestion.hint}
+                        </div>
+                      )}
+                      {quizIsCorrect !== null && (
+                        <div className={`p-4 rounded-lg mb-4 ${quizIsCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                          {quizIsCorrect ? 'Correct!' : `Incorrect. The answer is ${currentQuizQuestion.correct_answer}`}
+                        </div>
+                      )}
+                      <div className="flex justify-between">
+                        {!quizSubmitted ? (
+                          <>
+                            <button onClick={submitQuizAnswer} className="bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600">Submit</button>
+                            <button onClick={showQuizHint} className="bg-gray-500 text-white px-6 py-3 rounded-lg hover:bg-gray-600">Hint</button>
+                          </>
+                        ) : (
+                          <button onClick={nextQuizQuestion} className="bg-green-500 text-white px-6 py-3 rounded-lg hover:bg-green-600">Next</button>
+                        )}
+                      </div>
+                    </>
+                  )}
+                </div>
+              ) : (
+                <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8 text-center">
+                  <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
+                  <h2 className="text-2xl font-bold text-gray-800 mb-4">Quiz Completed!</h2>
+                  <p className="text-gray-600">You have finished the final quiz for this chapter.</p>
+                  <button onClick={() => setView('home')} className="mt-6 bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600">Back to Home</button>
                 </div>
               )}
             </motion.div>
