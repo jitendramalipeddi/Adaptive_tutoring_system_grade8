@@ -126,10 +126,11 @@ export default function App() {
   const startQuiz = (chapterId: string) => {
     const chapterPool = (poolOfQuestions as PoolData).chapters.find(c => c.chapter_id === chapterId);
     console.log('Chapter Pool:', chapterPool);
-    if (!chapterPool) return;
+    if (!chapterPool || chapterPool.questions.length === 0) return;
     
+    const usedQuestions = new Set<string>();
     setQuizQuestions(chapterPool.questions);
-    setUsedQuestions(new Set());
+    setUsedQuestions(usedQuestions);
     setCurrentQuizIndex(0);
     setConsecutiveCorrect(0);
     setCurrentDifficultyLevel('low');
@@ -139,8 +140,22 @@ export default function App() {
     setQuizSubmitted(false);
     setQuizShowHint(false);
     
-    // Get first question
-    const firstQuestion = getNextQuizQuestion();
+    // Get first question directly from chapterPool instead of relying on state update
+    const levelRanges: Record<'low' | 'medium' | 'high', [number, number]> = {
+      low: [0, 0.4],
+      medium: [0.4, 0.7],
+      high: [0.7, 1.1]
+    };
+    const [min, max] = levelRanges['low'];
+    const available = chapterPool.questions.filter(q => !usedQuestions.has(q.problem_id) && q.difficulty_score >= min && q.difficulty_score < max);
+    let firstQuestion: PoolQuestion | null = null;
+    
+    if (available.length > 0) {
+      firstQuestion = available[Math.floor(Math.random() * available.length)];
+    } else {
+      firstQuestion = chapterPool.questions[0];
+    }
+    
     console.log('First Question:', firstQuestion);
     setCurrentQuizQuestion(firstQuestion);
     
