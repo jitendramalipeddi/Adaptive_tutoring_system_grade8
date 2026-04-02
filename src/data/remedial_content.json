@@ -1,0 +1,172 @@
+[
+  {
+    "chapter_id": "comparing_quantities",
+    "subtopics": [
+      {
+        "subtopic_id": "ratios_percentages",
+        "remedial_title": "Understanding Ratios and Percentages Through Real-Life Examples",
+        "remedial_content": "### Remedial Learning: Ratios and Percentages\n\n![Ratios & Percentages Illustration](/images/1. Ratios & Percentages.png)\n\n**Let's break this down step by step with everyday examples:**\n\n**What is a Ratio?**\nA ratio compares two quantities. Think of it like sharing pizza with friends:\n- If you have 8 slices and 4 friends, the ratio is 8:4 (slices:friends)\n- This simplifies to 2:1 (each friend gets 2 slices)\n\n**What is a Percentage?**\nPercentage means 'per hundred'. It's like dividing a pizza into 100 equal pieces:\n- If you eat 25 pieces, you've eaten 25%\n- If your team scores 75 out of 100, that's 75%\n\n**Key Formula:**\n- To find what percentage one number is of another: $(part/whole) × 100 = percentage$\n\n**Practice Example:**\nIn a class of 40 students, 16 like cricket. What percentage likes cricket?\n- $(16/40) × 100 = 40%$\n\n**Remember:** Ratios use ':' while percentages use '%' and are always out of 100.",
+        "remedial_exercises": [
+          "If a bag has 12 red balls and 8 blue balls, what is the ratio of red to blue balls?",
+          "Convert the ratio 3:5 into a percentage.",
+          "If 35% of students in a class of 200 like mathematics, how many students like mathematics?"
+        ]
+      },
+      {
+        "subtopic_id": "percentage_increase_decrease",
+        "remedial_title": "Mastering Percentage Changes with Simple Calculations",
+        "remedial_content": "### Remedial Learning: Percentage Increase and Decrease\n\n![Percentage Increase Decrease Illustration](/images/2. Percentage Increase Decrease.png)\n\n**Think of percentage changes like temperature changes:**\n\n**Percentage Increase:**\n- Original price: ₹100\n- New price: ₹120\n- Increase = ₹20\n- Percentage Increase = $(20/100) × 100 = 20%$\n\n**Percentage Decrease:**\n- Original price: ₹100\n- Sale price: ₹80\n- Decrease = ₹20\n- Percentage Decrease = $(20/100) × 100 = 20%$\n\n**Important Formulas:**\n- **Increase = New Value - Original Value**\n- **% Increase = (Increase/Original Value) × 100**\n- **% Decrease = (Decrease/Original Value) × 100**\n\n**Real-life Example:**\nA shirt costs ₹500. It's on sale at 30% off.\n- Discount = 30% of ₹500 = ₹150\n- Sale price = ₹500 - ₹150 = ₹350\n\n**Tip:** Always calculate the percentage of the original amount first!",
+        "remedial_exercises": [
+          "A phone costs ₹8000. It increases by 15%. What is the new price?",
+          "A car's price decreases from ₹500000 to ₹400000. What is the percentage decrease?",
+          "If your salary increases by 25% from ₹20000, what is your new salary?"
+        ]
+      },
+      {
+        "subtopic_id": "discounts",
+        "remedial_title": "Understanding Discounts and Marked Prices",
+        "remedial_content": "### Remedial Learning: Discounts and Pricing\n\n![Discounts Illustration](/images/3. Discounts.png)\n\n**Shop Smart: Understanding Discounts**\n\n**Key Terms:**\n- **Marked Price (MP):** The price tag on the item\n- **Selling Price (SP):** The price you actually pay\n- **Discount:** The amount you save\n\n**How Discounts Work:**\n- Discount = Marked Price - Selling Price\n- Discount % = (Discount/Marked Price) × 100\n\n**Example:**\nA shirt is marked ₹1000 but sells for ₹800.\n- Discount = ₹1000 - ₹800 = ₹200\n- Discount % = (200/1000) × 100 = 20%\n\n**Quick Calculation Trick:**\nFor 10% discount: Move decimal one place left\nFor 20% discount: Double the 10% amount\nFor 5% discount: Half of 10%\n\n**Remember:** The discount percentage is always calculated on the marked price, not the selling price!",
+        "remedial_exercises": [
+          "A TV is marked ₹25000 and sold for ₹20000. What is the discount percentage?",
+          "Find the selling price of a bag marked ₹1200 with 15% discount.",
+          "A shop offers 25% discount on all items. If you buy something for ₹760 after discount, what was the marked price?"
+        ]
+      },
+      {
+        "subtopic_id": "profit_loss",
+        "remedial_title": "Business Basics: Profit and Loss Calculations",
+        "remedial_content": "### Remedial Learning: Profit and Loss\n\n![Profit & Loss Illustration](/images/4. Profit & Loss.png)\n\n**Business Decisions: Making Money or Losing Money**\n\n**Essential Terms:**\n- **Cost Price (CP):** What you paid to buy the item\n- **Selling Price (SP):** What you sell it for\n- **Profit:** When SP > CP\n- **Loss:** When CP > SP\n\n**Profit and Loss Formulas:**\n- Profit = SP - CP\n- Loss = CP - SP\n- Profit % = (Profit/CP) × 100\n- Loss % = (Loss/CP) × 100\n\n**Example:**\nYou buy a book for ₹100 and sell it for ₹120.\n- Profit = ₹120 - ₹100 = ₹20\n- Profit % = (20/100) × 100 = 20%\n\n**Important:** Always calculate percentages using the Cost Price as the base!\n\n**Overhead Costs:** Don't forget to add transportation, repairs, etc. to the buying price to get the true Cost Price.",
+        "remedial_exercises": [
+          "A shopkeeper buys a toy for ₹150 and sells it for ₹180. Find the profit and profit percentage.",
+          "A man buys a bicycle for ₹2000 and sells it for ₹1800. Find the loss and loss percentage.",
+          "If a trader wants 25% profit on an item he bought for ₹400, what should be the selling price?"
+        ]
+      },
+      {
+        "subtopic_id": "taxes_gst",
+        "remedial_title": "Government Taxes: GST and How It Works",
+        "remedial_content": "### Remedial Learning: Taxes and GST\n\n![Taxes GST Illustration](/images/5. Taxes  GST.png)\n\n**Why Do We Pay Taxes?**\n\nTaxes help build schools, roads, hospitals, and parks. GST (Goods and Services Tax) is a tax collected by the government on goods and services.\n\n**How GST Works:**\n- **Original Price:** What the item costs without tax\n- **GST Amount:** Tax added to the price\n- **Final Price:** Original Price + GST\n\n**GST Calculation:**\n- GST Amount = (GST Rate/100) × Original Price\n- Final Price = Original Price + GST Amount\n\n**Example:**\nA book costs ₹200. GST is 12%.\n- GST Amount = 12% of ₹200 = ₹24\n- Final Price = ₹200 + ₹24 = ₹224\n\n**Finding Original Price from Final Price:**\nIf you know the final price including GST, you can work backwards:\n- Original Price = Final Price × (100/(100 + GST Rate))\n\n**Remember:** GST rates vary for different goods and services!",
+        "remedial_exercises": [
+          "Calculate GST at 18% on a laptop costing ₹45000.",
+          "A phone costs ₹12000 including 12% GST. Find the original price.",
+          "If the GST rate increases from 12% to 18%, how much more tax will you pay on a ₹1000 item?"
+        ]
+      },
+      {
+        "subtopic_id": "simple_interest",
+        "remedial_title": "Banking Basics: Simple Interest Explained",
+        "remedial_content": "### Remedial Learning: Simple Interest\n\n![Simple Interest Illustration](/images/6. Simple Interest.png)\n\n**Money That Earns Money: Simple Interest**\n\n**What is Interest?**\nInterest is extra money you earn when you lend money to a bank, or extra money you pay when you borrow from a bank.\n\n**Simple Interest Formula:**\n**SI = (P × R × T) / 100**\n\nWhere:\n- **P** = Principal (the amount you deposit or borrow)\n- **R** = Rate of interest per year\n- **T** = Time in years\n\n**Total Amount = Principal + Interest**\n\n**Example:**\nYou deposit ₹1000 in a bank at 5% interest for 2 years.\n- Interest = (1000 × 5 × 2) / 100 = ₹100\n- Total Amount = ₹1000 + ₹100 = ₹1100\n\n**Key Point:** Simple interest is calculated only on the original principal amount, not on the interest earned in previous years.",
+        "remedial_exercises": [
+          "Calculate simple interest on ₹5000 at 6% per annum for 3 years.",
+          "Find the principal if the interest earned is ₹240 at 4% for 2 years.",
+          "How long will it take for ₹2000 to earn ₹400 at 5% simple interest?"
+        ]
+      },
+      {
+        "subtopic_id": "compound_interest",
+        "remedial_title": "Growing Money: Compound Interest Power",
+        "remedial_content": "### Remedial Learning: Compound Interest\n\n![Compound Interest Illustration](/images/7. Compound Interest.png)\n\n**The Magic of Compound Interest**\n\n**Simple vs Compound Interest:**\n- **Simple Interest:** Earned only on the original amount\n- **Compound Interest:** Earned on original amount PLUS previous interest\n\n**Compound Interest Formula:**\n**A = P(1 + R/100)^n**\n\nWhere:\n- **A** = Final amount\n- **P** = Principal\n- **R** = Rate of interest\n- **n** = Number of years\n\n**Compound Interest = A - P**\n\n**Example:**\n₹1000 at 10% compound interest for 2 years:\n- Year 1: ₹1000 + ₹100 = ₹1100\n- Year 2: ₹1100 + ₹110 = ₹1210\n- Using formula: 1000 × (1.1)² = ₹1210\n\n**Why is it powerful?** Your money grows faster because interest earns interest!",
+        "remedial_exercises": [
+          "Calculate compound interest on ₹2000 at 8% for 3 years.",
+          "Find the principal if compound interest is ₹926 at 10% for 2 years.",
+          "Compare simple and compound interest on ₹10000 at 5% for 3 years."
+        ]
+      },
+      {
+        "subtopic_id": "compounding_variations",
+        "remedial_title": "Advanced Compounding: Half-Yearly and Quarterly",
+        "remedial_content": "### Remedial Learning: Different Compounding Periods\n\n![Compounding Variations Illustration](/images/8. Compounding Variations.png)\n\n**Compounding More Frequently = More Money!**\n\n**Different Compounding Periods:**\n- **Annually:** Once a year\n- **Half-Yearly:** Twice a year\n- **Quarterly:** Four times a year\n\n**Half-Yearly Compounding Formula:**\n**A = P(1 + R/200)^(2n)**\n\n**Quarterly Compounding Formula:**\n**A = P(1 + R/400)^(4n)**\n\n**Example - Half-Yearly:**\n₹1000 at 10% compounded half-yearly for 1 year:\n- Rate per half = 5% (10%/2)\n- Number of halves = 2 (1 year × 2)\n- A = 1000 × (1.05)² = ₹1102.50\n\n**Key Insight:** More frequent compounding means more interest earned!\n\n**Annual vs Half-Yearly:** Half-yearly compounding gives more money than annual compounding at the same rate.",
+        "remedial_exercises": [
+          "Calculate amount for ₹5000 at 12% compounded half-yearly for 2 years.",
+          "Find the difference between annual and half-yearly compounding for ₹10000 at 8% for 1 year.",
+          "Calculate quarterly compounding for ₹8000 at 6% for 1 year."
+        ]
+      },
+      {
+        "subtopic_id": "applications_compound_interest",
+        "remedial_title": "Compound Interest in Real Life",
+        "remedial_content": "### Remedial Learning: Real-World Applications\n\n![Applications of Compound Interest Illustration](/images/9. Applications of Compound Interest.png)\n\n**Compound Interest Everywhere!**\n\n**1. Population Growth:**\nCities and countries grow like compound interest:\n- Population = Initial × (1 + growth rate)^years\n- Example: A city of 1 lakh people growing at 5% per year\n\n**2. Bacteria Growth:**\nBacteria multiply exponentially:\n- Just like compound interest, one bacterium becomes two, then four, then eight...\n\n**3. Depreciation:**\nThings lose value over time (opposite of compound interest):\n- **A = P(1 - R/100)^n**\n- Cars, computers, and machinery depreciate\n\n**4. Investment Growth:**\nYour savings grow with compound interest:\n- Regular investments + compound interest = wealth building\n\n**5. Loan Calculations:**\nUnderstanding how loans grow with compound interest\n\n**Real-Life Example:**\nA car bought for ₹500000 depreciates at 10% per year.\n- Value after 1 year = 500000 × (0.9) = ₹450000\n- Value after 2 years = 450000 × (0.9) = ₹405000\n\n**Remember:** Compound interest works both ways - it can make your money grow or make debts grow!",
+        "remedial_exercises": [
+          "A city's population of 50000 grows at 3% per year. Find population after 5 years.",
+          "A machine costs ₹100000 and depreciates at 8% per year. Find value after 3 years.",
+          "Compare growth of ₹10000 at 6% compound interest vs 6% simple interest for 5 years."
+        ]
+      }
+    ]
+  },
+  {
+    "chapter_id": "direct_inverse_proportion",
+    "subtopics": [
+      {
+        "subtopic_id": "introduction_variation",
+        "remedial_title": "Exploring How Things Change Together",
+        "remedial_content": "### Remedial Learning: Introduction to Variation\n\n![Introduction to Variation Illustration](/images/10. Introduction to Variation.png)\n\n**How Things Change: Direct and Inverse Variation**\n\n**What is Variation?**\nVariation shows how changes in one quantity affect another quantity.\n\n**Two Main Types:**\n\n**1. Direct Variation:**\n- Both quantities increase or decrease together\n- Example: More books = More weight\n- As one goes up, the other goes up too!\n\n**2. Inverse Variation:**\n- One quantity increases, the other decreases\n- Example: More workers = Less time to finish job\n- As one goes up, the other goes down!\n\n**Real-Life Examples:**\n- **Direct:** More study time = Better grades\n- **Inverse:** Faster speed = Less travel time\n\n**Key Question:** When you change one thing, what happens to the other thing?\n\n**Remember:** Not all changing quantities are related. Your age increases and your shoe size increases, but they're not in direct proportion!",
+        "remedial_exercises": [
+          "Give 3 examples of direct variation from daily life.",
+          "Give 3 examples of inverse variation from daily life.",
+          "Explain why age and height are not in direct proportion."
+        ]
+      },
+      {
+        "subtopic_id": "direct_proportion",
+        "remedial_title": "Direct Proportion: Things That Grow Together",
+        "remedial_content": "### Remedial Learning: Direct Proportion\n\n![Direct Proportion Illustration](/images/11. Direct Proportion.png)\n\n**Direct Proportion: Partners in Growth**\n\n**Definition:**\nTwo quantities are in direct proportion if their ratio remains constant.\n\n**Mathematical Form:**\n- **x/y = k** (constant ratio)\n- **x₁/y₁ = x₂/y₂**\n\n**Examples:**\n- **Shopping:** More items = More cost\n  - 2 kg sugar = ₹40\n  - 5 kg sugar = ₹100\n  - Ratio: 2/40 = 5/100 = 1/20\n\n- **Travel:** More distance = More petrol\n  - 100 km = 5 liters\n  - 200 km = 10 liters\n  - Ratio: 100/5 = 200/10 = 20\n\n**Testing Direct Proportion:**\nCheck if the ratios are equal for all pairs of values.\n\n**Unitary Method:**\nFind value for 1 unit, then multiply for required quantity.\n\n**Remember:** The ratio must be constant for direct proportion!",
+        "remedial_exercises": [
+          "If 3 kg of rice costs ₹90, find the cost of 7 kg of rice.",
+          "A car travels 240 km on 12 liters of petrol. How far will it go on 15 liters?",
+          "Check if the following are in direct proportion: (2,4), (3,6), (4,8)"
+        ]
+      },
+      {
+        "subtopic_id": "testing_direct_proportion",
+        "remedial_title": "Testing Direct Proportion Step by Step",
+        "remedial_content": "### Remedial Learning: Testing Direct Proportion\n\n![Testing Direct Proportion Illustration](/images/12. Testing Direct Proportion.png)\n\n**How to Test if Two Quantities are in Direct Proportion**\n\n**Step-by-Step Method:**\n\n**Step 1:** Take the first pair of values (x₁, y₁)\n**Step 2:** Calculate the ratio x₁/y₁\n**Step 3:** Take the second pair (x₂, y₂)\n**Step 4:** Calculate the ratio x₂/y₂\n**Step 5:** Compare the ratios\n**Step 6:** If ratios are equal, they are in direct proportion\n\n**Example:**\nCheck if (2,6) and (5,15) are in direct proportion:\n- Ratio 1: 2/6 = 1/3\n- Ratio 2: 5/15 = 1/3\n- Ratios are equal ✓ Direct proportion!\n\n**Example 2:**\nCheck if (3,9) and (6,12) are in direct proportion:\n- Ratio 1: 3/9 = 1/3\n- Ratio 2: 6/12 = 1/2\n- Ratios are different ✗ Not direct proportion!\n\n**Important:** All pairs must have the same ratio.\n\n**Common Mistake:** Just because both quantities increase doesn't mean they're in direct proportion!",
+        "remedial_exercises": [
+          "Test if (4,12) and (6,18) are in direct proportion.",
+          "Test if (5,20) and (8,30) are in direct proportion.",
+          "Why are age and height not in direct proportion?"
+        ]
+      },
+      {
+        "subtopic_id": "applications_direct_proportion",
+        "remedial_title": "Direct Proportion in Maps and Real Life",
+        "remedial_content": "### Remedial Learning: Applications of Direct Proportion\n\n![Applications of Direct Proportion Illustration](/images/13. Applications of Direct Proportion.png)\n\n**Direct Proportion in the Real World**\n\n**1. Maps and Scales:**\nMaps use direct proportion to show real distances:\n- Scale 1:1000000 means 1 cm on map = 1000000 cm in reality\n- If 5 cm on map = 5000000 cm = 50 km in reality\n\n**2. Speed and Distance:**\n- Constant speed means distance ∝ time\n- Faster speed = More distance in same time\n\n**3. Work and Time:**\n- More workers = More work done in same time\n- Same work, more workers = Less time needed\n\n**4. Cost and Quantity:**\n- More items = More cost (at same price)\n- Same item, more quantity = More total cost\n\n**Unitary Method vs Proportion Method:**\n\n**Unitary Method:**\n- Find value for 1 unit\n- Multiply by required quantity\n\n**Proportion Method:**\n- Set up ratios: x₁/y₁ = x₂/y₂\n- Cross multiply to solve\n\n**Example:**\nIf 3 workers build a wall in 12 days, how many days for 9 workers?\n- Method 1 (Unitary): 3 workers take 12 days, so 1 worker takes 36 days, 9 workers take 4 days\n- Method 2 (Proportion): 3/9 = days/12 → days = 4\n\n**Both methods work, but proportion method is often clearer for complex problems!**",
+        "remedial_exercises": [
+          "A map has scale 1:50000. If distance on map is 8 cm, find actual distance.",
+          "If 4 typists can type 240 pages in 6 hours, how many pages can 6 typists type in 8 hours?",
+          "A car travels 150 km in 2 hours. How far will it travel in 5 hours at same speed?"
+        ]
+      },
+      {
+        "subtopic_id": "inverse_proportion",
+        "remedial_title": "Inverse Proportion: One Up, One Down",
+        "remedial_content": "### Remedial Learning: Inverse Proportion\n\n![Inverse Proportion Illustration](/images/14. Inverse Proportion.png)\n\n**Inverse Proportion: Opposite Changes**\n\n**Definition:**\nTwo quantities are in inverse proportion if their product remains constant.\n\n**Mathematical Form:**\n- **x × y = k** (constant product)\n- **x₁ × y₁ = x₂ × y₂**\n- Written as: **x ∝ 1/y**\n\n**Examples:**\n- **Speed and Time:** Faster speed = Less time\n  - 60 km/h takes 2 hours for 120 km\n  - 80 km/h takes 1.5 hours for 120 km\n  - Product: 60×2 = 80×1.5 = 120\n\n- **Workers and Time:** More workers = Less time\n  - 4 workers take 10 days\n  - 8 workers take 5 days\n  - Product: 4×10 = 8×5 = 40\n\n**Testing Inverse Proportion:**\nCheck if the products are equal for all pairs.\n\n**Key Difference from Direct Proportion:**\n- Direct: Same direction change\n- Inverse: Opposite direction change",
+        "remedial_exercises": [
+          "If 6 men can dig a trench in 8 days, how many days will 12 men take?",
+          "A car travels 240 km at 60 km/h. How long will it take at 80 km/h?",
+          "Check if (2,8) and (4,4) are in inverse proportion."
+        ]
+      },
+      {
+        "subtopic_id": "testing_inverse_proportion",
+        "remedial_title": "Testing Inverse Proportion Methodically",
+        "remedial_content": "### Remedial Learning: Testing Inverse Proportion\n\n![Testing Inverse Proportion Illustration](/images/15. Testing Inverse Proportion.png)\n\n**How to Test for Inverse Proportion**\n\n**Step-by-Step Method:**\n\n**Step 1:** Take the first pair of values (x₁, y₁)\n**Step 2:** Calculate the product x₁ × y₁\n**Step 3:** Take the second pair (x₂, y₂)\n**Step 4:** Calculate the product x₂ × y₂\n**Step 5:** Compare the products\n**Step 6:** If products are equal, they are in inverse proportion\n\n**Example:**\nCheck if (3,6) and (6,3) are in inverse proportion:\n- Product 1: 3 × 6 = 18\n- Product 2: 6 × 3 = 18\n- Products equal ✓ Inverse proportion!\n\n**Example 2:**\nCheck if (2,10) and (5,4) are in inverse proportion:\n- Product 1: 2 × 10 = 20\n- Product 2: 5 × 4 = 20\n- Products equal ✓ Inverse proportion!\n\n**Example 3:**\nCheck if (4,8) and (6,5) are in inverse proportion:\n- Product 1: 4 × 8 = 32\n- Product 2: 6 × 5 = 30\n- Products different ✗ Not inverse proportion!\n\n**Important:** All pairs must have the same product.\n\n**Common Mistake:** Don't confuse inverse proportion with just any opposite changes!",
+        "remedial_exercises": [
+          "Test if (5,12) and (10,6) are in inverse proportion.",
+          "Test if (8,15) and (12,10) are in inverse proportion.",
+          "Why is speed and distance not inverse proportion?"
+        ]
+      },
+      {
+        "subtopic_id": "applications_inverse_proportion",
+        "remedial_title": "Inverse Proportion in Work and Life",
+        "remedial_content": "### Remedial Learning: Real-World Inverse Proportion\n\n![Applications of Inverse Proportion Illustration](/images/16. Applications of Inverse Proportion.png)\n\n**Inverse Proportion in Daily Life**\n\n**1. Speed and Time:**\n- Same distance, faster speed = less time\n- Formula: Speed × Time = Distance (constant)\n- Example: 60 km/h × 2 hours = 120 km\n         80 km/h × 1.5 hours = 120 km\n\n**2. Work and Time:**\n- More workers = less time for same work\n- Formula: Workers × Time = Work (constant)\n- Example: 5 workers × 12 days = 60 worker-days\n         10 workers × 6 days = 60 worker-days\n\n**3. Pressure and Area:**\n- Same force, larger area = less pressure\n- Formula: Pressure × Area = Force (constant)\n\n**4. Number of Coins and Value per Coin:**\n- More coins = less value per coin for same total\n- Formula: Coins × Value per coin = Total value\n\n**Solving Inverse Proportion Problems:**\n\n**Method:** Use the constant product relationship\n\n**Example:** 12 workers build a house in 20 days. How many days for 16 workers?\n- Workers₁ × Time₁ = Workers₂ × Time₂\n- 12 × 20 = 16 × Time₂\n- Time₂ = (12 × 20) / 16 = 15 days\n\n**Unitary Method for Inverse Proportion:**\n- Find what 1 unit of the varying quantity does\n- Then scale up or down\n\n**Remember:** Inverse proportion means the product stays constant!",
+        "remedial_exercises": [
+          "8 men can finish a job in 12 days. How many days will 12 men take?",
+          "A pipe fills a tank in 6 hours. How long will 2 pipes take?",
+          "A car covers 300 km at 75 km/h. How long at 60 km/h?"
+        ]
+      }
+    ]
+  }
+]

@@ -80,9 +80,16 @@ export interface SubtopicContent {
   problems: Problem[];
 }
 
-export interface ChapterContent {
+export interface RemedialSubtopicContent {
+  subtopic_id: string;
+  remedial_title: string;
+  remedial_content: string;
+  remedial_exercises: string[];
+}
+
+export interface RemedialChapterContent {
   chapter_id: string;
-  subtopics: SubtopicContent[];
+  subtopics: RemedialSubtopicContent[];
 }
 
 export interface TutoringState {

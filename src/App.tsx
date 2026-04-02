@@ -42,6 +42,7 @@ import {
 import { generateProblem, getTutoringResponse, generateMCQOptions } from './services/gemini';
 import localContent from './data/content.json';
 import learningMaterial from './data/learning_material.json';
+import remedialContent from './data/remedial_content.json';
 import poolOfQuestions from './data/pool_of_questions.json';
 
 function cn(...inputs: ClassValue[]) {
@@ -49,7 +50,7 @@ function cn(...inputs: ClassValue[]) {
 }
 
 export default function App() {
-  const [view, setView] = useState<'home' | 'chapter' | 'learning' | 'tutoring' | 'summary' | 'history' | 'quiz'>('home');
+  const [view, setView] = useState<'home' | 'chapter' | 'learning' | 'tutoring' | 'summary' | 'history' | 'quiz' | 'pretest'>('home');
   const [lastPayload, setLastPayload] = useState<SessionInteractionPayload | null>(null);
   const [sessionHistory, setSessionHistory] = useState<SessionInteractionPayload[]>([]);
   const [currentContent, setCurrentContent] = useState<SubtopicContent | null>(null);
@@ -81,6 +82,27 @@ export default function App() {
   const [usedQuestions, setUsedQuestions] = useState<Set<string>>(new Set());
   const [quizShowHint, setQuizShowHint] = useState(false);
   const [readSubtopics, setReadSubtopics] = useState<Set<string>>(new Set());
+  const [completedSubtopics, setCompletedSubtopics] = useState<Set<string>>(new Set());
+  const [currentQuestionCorrect, setCurrentQuestionCorrect] = useState(false);
+
+  const [pretestQuestions, setPretestQuestions] = useState<Problem[]>([]);
+  const [currentPretestIndex, setCurrentPretestIndex] = useState(0);
+  const [pretestAnswer, setPretestAnswer] = useState('');
+  const [pretestIsCorrect, setPretestIsCorrect] = useState<boolean | null>(null);
+  const [pretestSubmitted, setPretestSubmitted] = useState(false);
+  const [pretestScore, setPretestScore] = useState(0);
+  const [pretestCompleted, setPretestCompleted] = useState(false);
+  const [showQuestionCheer, setShowQuestionCheer] = useState(false);
+  const [masteredConceptMessage, setMasteredConceptMessage] = useState('');
+  const [explanationUsedForCurrentProblem, setExplanationUsedForCurrentProblem] = useState(false);
+  const [subtopicReviewRecommendations, setSubtopicReviewRecommendations] = useState<Record<string, boolean>>({});
+  const [isShowingRemedial, setIsShowingRemedial] = useState(false);
+  const [remedialExercises, setRemedialExercises] = useState<string[]>([]);
+  const [questionCompleted, setQuestionCompleted] = useState<Set<string>>(new Set());
+  const [similarAttempted, setSimilarAttempted] = useState<Set<string>>(new Set());
+  const [pretestTaken, setPretestTaken] = useState<Set<string>>(new Set());
+  const [subtopicProgress, setSubtopicProgress] = useState<Record<string, number>>({});
+  const [subtopicCorrectCount, setSubtopicCorrectCount] = useState<Record<string, number>>({});
   
   const [state, setState] = useState<TutoringState>({
     currentChapter: null,
@@ -109,10 +131,55 @@ export default function App() {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [state.messages]);
 
+  const generateSimilarProblem = (problem: Problem): Problem => {
+    let question = problem.question;
+    let answer = problem.correct_answer;
+    const numbers = question.match(/\d+(?:\.\d+)?/g);
+
+    if (numbers && numbers.length) {
+      let i = 0;
+      question = question.replace(/\d+(?:\.\d+)?/g, (match) => {
+        const num = parseFloat(match);
+        const next = num + Math.floor(Math.random() * 4 + 1);
+        i += 1;
+        return `${next}`;
+      });
+      if (/^-?\d+(?:\.\d+)?$/.test(problem.correct_answer.trim())) {
+        const ansNum = parseFloat(problem.correct_answer);
+        answer = `${ansNum + Math.floor(Math.random() * 4 + 1)}`;
+      }
+    } else {
+      question = `${question} (similar variation)`;
+    }
+
+    return {
+      ...problem,
+      problem_id: `${problem.problem_id}_sim_${Date.now()}`,
+      question,
+      correct_answer: answer,
+      options: problem.options ? [...problem.options] : undefined,
+      hints: problem.hints ? problem.hints.map((h) => `${h} (use previous strategy)`) : []
+    };
+  };
+
   const startChapter = (chapter: ChapterMetadata) => {
     const chapterData = (localContent as unknown as ChapterContent[]).find(c => c.chapter_id === chapter.chapter_id);
     const totalQuestions = chapterData?.subtopics.reduce((acc, sub) => acc + sub.problems.length, 0) || 0;
-    
+
+    const shouldRunPretest = !pretestTaken.has(chapter.chapter_id);
+    if (shouldRunPretest) {
+      const flatProblems = chapterData?.subtopics.flatMap(s => s.problems) || [];
+      const pretest = flatProblems.slice(0, 3).map((p, idx) => ({ ...p, problem_id: `pretest_${p.problem_id}_${idx}` }));
+      setPretestQuestions(pretest);
+      setCurrentPretestIndex(0);
+      setPretestAnswer('');
+      setPretestIsCorrect(null);
+      setPretestSubmitted(false);
+      setPretestScore(0);
+      setPretestCompleted(false);
+      setView('pretest');
+    }
+
     setState(prev => ({
       ...prev,
       currentChapter: chapter,
@@ -120,7 +187,13 @@ export default function App() {
       totalChapterQuestions: totalQuestions,
       metrics: { ...prev.metrics, startTime: Date.now() }
     }));
-    setView('chapter');
+    setReadSubtopics(new Set());
+    setCompletedSubtopics(new Set());
+    setSessionSubtopicPerformances([]);
+    setCurrentQuestionCorrect(false);
+    if (!shouldRunPretest) {
+      setView('chapter');
+    }
   };
 
   const startQuiz = (chapterId: string) => {
@@ -206,7 +279,16 @@ export default function App() {
 
   const nextQuizQuestion = () => {
     if (!currentQuizQuestion) return;
-    setUsedQuestions(prev => new Set(prev).add(currentQuizQuestion.problem_id));
+
+    const newUsed = new Set(usedQuestions).add(currentQuizQuestion.problem_id);
+    setUsedQuestions(newUsed);
+
+    if (newUsed.size >= quizQuestions.length) {
+      // Final assessment done, complete chapter
+      finishChapter();
+      return;
+    }
+
     setCurrentQuizIndex(prev => prev + 1);
     const nextQuestion = getNextQuizQuestion();
     setCurrentQuizQuestion(nextQuestion);
@@ -220,24 +302,79 @@ export default function App() {
     setQuizShowHint(true);
   };
 
+  const shouldShowRemedial = (subtopicId: string) => {
+    // Check if student has attempted this subtopic and performed poorly
+    const subtopicPerformances = sessionSubtopicPerformances.filter(p => p.subtopic_id === subtopicId);
+    if (subtopicPerformances.length === 0) return false;
+    
+    // Check if the latest performance shows poor understanding
+    const latestPerformance = subtopicPerformances[subtopicPerformances.length - 1];
+    return latestPerformance.expertise_level === 'novice' || latestPerformance.questions.some(q => !q.correct);
+  };
+
   const showLearningMaterial = (subtopic: Subtopic) => {
     const chapterData = (localContent as unknown as ChapterContent[]).find(c => c.chapter_id === state.currentChapter?.chapter_id);
     const subtopicData = chapterData?.subtopics.find(s => s.subtopic_id === subtopic.subtopic_id);
     
-    // Find learning material from the new file
-    const materialChapter = (learningMaterial as any).find((c: any) => c.chapter_id === state.currentChapter?.chapter_id);
-    const materialSubtopic = materialChapter?.subtopics.find((s: any) => s.subtopic_id === subtopic.subtopic_id);
+    // Check if remedial content should be shown
+    const needsRemedial = shouldShowRemedial(subtopic.subtopic_id);
     
-    const combinedContent = subtopicData ? {
-      ...subtopicData,
-      learning_material: materialSubtopic?.learning_material || subtopicData.learning_material,
-      story_hook: materialSubtopic?.story_hook
-    } : null;
+    let contentToShow;
+    
+    if (needsRemedial) {
+      // Find remedial content
+      const remedialChapter = (remedialContent as any).find((c: any) => c.chapter_id === state.currentChapter?.chapter_id);
+      const remedialSubtopic = remedialChapter?.subtopics.find((s: any) => s.subtopic_id === subtopic.subtopic_id);
+      
+      if (remedialSubtopic) {
+        contentToShow = {
+          ...subtopicData,
+          learning_material: remedialSubtopic.remedial_content,
+          story_hook: `🔄 **Remedial Learning: ${remedialSubtopic.remedial_title}**\n\nIt looks like you need some extra help with this topic. Don't worry - we'll go through it step by step with simpler explanations and more examples!`
+        };
+        setIsShowingRemedial(true);
+        setRemedialExercises(remedialSubtopic.remedial_exercises || []);
+      } else {
+        // Fallback to regular content if remedial not available
+        const materialChapter = (learningMaterial as any).find((c: any) => c.chapter_id === state.currentChapter?.chapter_id);
+        const materialSubtopic = materialChapter?.subtopics.find((s: any) => s.subtopic_id === subtopic.subtopic_id);
+        
+        contentToShow = subtopicData ? {
+          ...subtopicData,
+          learning_material: materialSubtopic?.learning_material || subtopicData.learning_material,
+          story_hook: materialSubtopic?.story_hook
+        } : null;
+        setIsShowingRemedial(false);
+        setRemedialExercises([]);
+      }
+    } else {
+      // Show regular content
+      const materialChapter = (learningMaterial as any).find((c: any) => c.chapter_id === state.currentChapter?.chapter_id);
+      const materialSubtopic = materialChapter?.subtopics.find((s: any) => s.subtopic_id === subtopic.subtopic_id);
+      
+      contentToShow = subtopicData ? {
+        ...subtopicData,
+        learning_material: materialSubtopic?.learning_material || subtopicData.learning_material,
+        story_hook: materialSubtopic?.story_hook
+      } : null;
+      setIsShowingRemedial(false);
+      setRemedialExercises([]);
+    }
 
-    setCurrentContent(combinedContent || null);
-    setCurrentProblemIndex(0);
+    setCurrentContent(contentToShow || null);
+    const resumeProblemIndex = subtopicProgress[subtopic.subtopic_id] ?? 0;
+    setCurrentProblemIndex(resumeProblemIndex);
     setState(prev => ({ ...prev, currentSubtopic: subtopic }));
-    setLearningStep(combinedContent?.story_hook ? 'story' : 'material');
+
+    if (explanationUsedForCurrentProblem) {
+      setState(prev => ({
+        ...prev,
+        messages: [...prev.messages, { role: 'model', text: 'You already used explanations on the previous question. Now try to solve directly without hints. Want to try some remedial content for a simpler explanation of this topic?' }]
+      }));
+      setExplanationUsedForCurrentProblem(false);
+    }
+
+    setLearningStep(contentToShow?.story_hook ? 'story' : 'material');
     setReadingStartTime(Date.now());
     setCurrentSubtopicPerformance({
       subtopic_id: subtopic.subtopic_id,
@@ -252,10 +389,13 @@ export default function App() {
   };
 
   const startTutoring = async (problemIdx = 0) => {
+    console.log('Starting tutoring with problemIdx:', problemIdx);
+    
     setIsTyping(true);
     setIsWrong(false);
     setExplanationShown(false);
     setShowHint(false);
+    setCurrentQuestionCorrect(false);
     try {
       // If we're starting tutoring from learning material, record reading time
       if (readingStartTime && currentSubtopicPerformance) {
@@ -266,10 +406,15 @@ export default function App() {
       let problem: Problem | null = null;
       
       const chapterData = (localContent as unknown as ChapterContent[]).find(c => c.chapter_id === state.currentChapter?.chapter_id);
+      console.log('Chapter data found:', !!chapterData);
+      
       const subtopicData = chapterData?.subtopics.find(s => s.subtopic_id === state.currentSubtopic?.subtopic_id);
+      console.log('Subtopic data found:', !!subtopicData);
+      console.log('Subtopic problems length:', subtopicData?.problems?.length);
       
       if (subtopicData && subtopicData.problems.length > problemIdx) {
         problem = { ...subtopicData.problems[problemIdx] };
+        console.log('Using local problem:', problem.problem_id);
         
         // Use mcq_options if present, otherwise generate if word-based
         const answerType = getAnswerType(problem);
@@ -281,6 +426,7 @@ export default function App() {
           }
         }
       } else {
+        console.log('Falling back to generated problem');
         // Fallback to Gemini generation
         const generated = await generateProblem(state.currentChapter!.chapter_name, state.currentSubtopic!.name);
         problem = {
@@ -290,21 +436,40 @@ export default function App() {
           correct_answer: generated.correct_answer,
           difficulty: generated.difficulty
         };
+        console.log('Generated problem:', problem.problem_id);
       }
 
+      if (!problem) {
+        console.error('No problem could be loaded');
+        // If still no problem, show error
+        setState(prev => ({
+          ...prev,
+          messages: [{ role: 'model', text: 'Sorry, I couldn\'t load a problem right now. Please try again or contact support.' }]
+        }));
+        setView('tutoring');
+        return;
+      }
+
+      console.log('Setting problem and view to tutoring');
+      setExplanationUsedForCurrentProblem(false);
       setState(prev => ({
         ...prev,
         currentProblem: problem,
         currentStep: 'QUESTION_ATTEMPT',
         isAnswered: false,
         hintIndex: -1,
-        messages: [{ role: 'model', text: `Here is your problem:\n\n**Problem:** ${problem!.question}\n\nTry to solve it directly! What is the answer?` }],
+        messages: [{ role: 'model', text: `Here is your problem:\n\n**Problem:** ${problem.question}\n\nTry to solve it directly! What is the answer?` }],
         metrics: { ...prev.metrics, attempts: prev.metrics.attempts + 1 }
       }));
       setView('tutoring');
       setQuestionStartTime(Date.now());
     } catch (error) {
       console.error("Failed to start tutoring:", error);
+      setState(prev => ({
+        ...prev,
+        messages: [{ role: 'model', text: 'An error occurred while starting the tutoring session. Please try again.' }]
+      }));
+      setView('tutoring');
     } finally {
       setIsTyping(false);
     }
@@ -318,7 +483,70 @@ export default function App() {
     return 'MCQ';
   };
 
+  const submitPretestAnswer = () => {
+    const question = pretestQuestions[currentPretestIndex];
+    if (!question) return;
+
+    const isCorrect = pretestAnswer.trim().toLowerCase().includes(question.correct_answer.toLowerCase().trim());
+    setPretestIsCorrect(isCorrect);
+    setPretestSubmitted(true);
+
+    if (isCorrect) {
+      setPretestScore(prev => prev + 1);
+      setQuestionCompleted(prev => new Set(prev).add(question.problem_id));
+      setShowQuestionCheer(true);
+      setTimeout(() => setShowQuestionCheer(false), 1600);
+    }
+  };
+
+  const advancePretest = () => {
+    const nextIndex = currentPretestIndex + 1;
+    if (nextIndex < pretestQuestions.length) {
+      setCurrentPretestIndex(nextIndex);
+      setPretestAnswer('');
+      setPretestIsCorrect(null);
+      setPretestSubmitted(false);
+    } else {
+      setPretestCompleted(true);
+      // Mark pretest as taken for this chapter
+      const newPretestTaken = new Set(pretestTaken).add(state.currentChapter!.chapter_id);
+      setPretestTaken(newPretestTaken);
+      localStorage.setItem('polya_pretest_taken', JSON.stringify([...newPretestTaken]));
+      setView('chapter');
+    }
+  };
+
+  const startSimilarQuestionForCurrent = () => {
+    if (!state.currentProblem) return;
+    const similar = generateSimilarProblem(state.currentProblem);
+    setState(prev => ({
+      ...prev,
+      currentProblem: similar,
+      currentStep: 'QUESTION_ATTEMPT',
+      isAnswered: false,
+      hintIndex: -1,
+      messages: [{ role: 'model', text: `Hey buddy, now you know how to solve it, give it a try for this new problem:\n\n**Problem:** ${similar.question}\n\nTry to solve it directly!` }],
+      metrics: { ...prev.metrics, attempts: prev.metrics.attempts + 1 }
+    }));
+    setIsSimilarQuestion(true);
+    setCurrentQuestionCorrect(false);
+    setExplanationShown(false);
+    setCurrentExplanationStep(0);
+    setIsWrong(false);
+    setQuestionStartTime(Date.now());
+    setSimilarAttempted(prev => new Set(prev).add(state.currentProblem!.problem_id));
+  };
+
+
   const nextQuestion = () => {
+    if (!currentQuestionCorrect) {
+      setState(prev => ({
+        ...prev,
+        messages: [...prev.messages, { role: 'model', text: 'Please answer the current question correctly before moving to the next one.' }]
+      }));
+      return;
+    }
+
     const nextIdx = currentProblemIndex + 1;
     
     const chapterData = (localContent as unknown as ChapterContent[]).find(c => c.chapter_id === state.currentChapter?.chapter_id);
@@ -330,6 +558,7 @@ export default function App() {
       setExplanationShown(false);
       setCurrentExplanationStep(0);
       setShowHint(false);
+      setCurrentQuestionCorrect(false);
       startTutoring(nextIdx);
     } else {
       // Subtopic completed
@@ -381,6 +610,7 @@ export default function App() {
 
   const showExplanation = () => {
     setExplanationShown(true);
+    setExplanationUsedForCurrentProblem(true);
     setCurrentExplanationStep(1);
     const polya = state.currentProblem?.polya_steps;
     const text = polya ? 
@@ -394,9 +624,26 @@ export default function App() {
     }));
   };
 
+  const completeExplanationAndPromptSimilar = () => {
+    if (!state.currentProblem) return;
+
+    setState(prev => ({
+      ...prev,
+      messages: [...prev.messages,
+        { role: 'model', text: "Hey buddy, now you know how to solve it, give it a try for this new problem." },
+        { role: 'model', text: "Tip: You already used explanations. Try to answer directly without hints. Want to try some remedial content for simple explanations of the topic?" }
+      ]
+    }));
+
+    startSimilarQuestionForCurrent();
+  };
+
   const nextExplanationStep = () => {
     const nextStep = currentExplanationStep + 1;
-    if (nextStep > 4) return;
+    if (nextStep > 4) {
+      completeExplanationAndPromptSimilar();
+      return;
+    }
 
     setCurrentExplanationStep(nextStep);
     const polya = state.currentProblem?.polya_steps;
@@ -444,8 +691,75 @@ export default function App() {
     try {
       // Check if direct answer is correct in QUESTION_ATTEMPT step
       if (state.currentStep === 'QUESTION_ATTEMPT') {
-        const isCorrect = currentInput.toLowerCase().trim().includes(state.currentProblem!.correct_answer.toLowerCase().trim());
+        const normalize = (text: string) => {
+          const raw = text.toLowerCase().trim();
+          const numeric = raw.replace(/[^0-9.]/g, '');
+          return { raw, numeric };
+        };
+
+        const userNorm = normalize(currentInput);
+        const correctNorm = normalize(state.currentProblem!.correct_answer);
+        const isNumericMatch = userNorm.numeric && correctNorm.numeric && userNorm.numeric === correctNorm.numeric;
+        const isTextMatch = userNorm.raw.includes(correctNorm.raw) || correctNorm.raw.includes(userNorm.raw);
+        const isCorrect = isNumericMatch || isTextMatch;
         if (isCorrect) {
+          setCurrentQuestionCorrect(true);
+          setQuestionCompleted(prev => new Set(prev).add(state.currentProblem?.problem_id ?? ''));
+          setShowQuestionCheer(true);
+          setTimeout(() => setShowQuestionCheer(false), 1400);
+
+          // Update subtopic progress
+          if (state.currentSubtopic) {
+            const subtopicId = state.currentSubtopic.subtopic_id;
+            const newCorrectCount = (subtopicCorrectCount[subtopicId] || 0) + 1;
+            setSubtopicCorrectCount(prev => ({
+              ...prev,
+              [subtopicId]: newCorrectCount
+            }));
+
+            // Calculate progress
+            const chapterData = (localContent as unknown as ChapterContent[]).find(c => c.chapter_id === state.currentChapter?.chapter_id);
+            const subtopicData = chapterData?.subtopics.find(s => s.subtopic_id === subtopicId);
+            const totalQuestions = subtopicData?.problems.length || 1;
+            const progress = Math.round((newCorrectCount / totalQuestions) * 100);
+            setSubtopicProgress(prev => ({
+              ...prev,
+              [subtopicId]: progress
+            }));
+
+            // Save to localStorage
+            localStorage.setItem('polya_subtopic_correct', JSON.stringify({
+              ...subtopicCorrectCount,
+              [subtopicId]: newCorrectCount
+            }));
+            localStorage.setItem('polya_subtopic_progress', JSON.stringify({
+              ...subtopicProgress,
+              [subtopicId]: progress
+            }));
+
+            // Check if subtopic is completed (all questions solved correctly)
+            if (newCorrectCount >= totalQuestions) {
+              setCompletedSubtopics(prev => new Set(prev).add(subtopicId));
+            }
+          }
+
+          if (isSimilarQuestion) {
+            setMasteredConceptMessage('You have mastered this concept');
+            setTimeout(() => setMasteredConceptMessage(''), 2400);
+            setIsSimilarQuestion(false);
+          }
+
+          if (explanationUsedForCurrentProblem && state.currentSubtopic) {
+            setSubtopicReviewRecommendations(prev => ({
+              ...prev,
+              [state.currentSubtopic!.subtopic_id]: true
+            }));
+            setState(prev => ({
+              ...prev,
+              messages: [...prev.messages, { role: 'model', text: 'You solved this after using explanations, so we recommend revisiting the module for stronger mastery.' }]
+            }));
+          }
+
           // Record question metrics
           if (questionStartTime && currentSubtopicPerformance && state.currentProblem) {
             const timeSpent = Math.floor((Date.now() - questionStartTime) / 1000);
@@ -470,12 +784,39 @@ export default function App() {
           }));
         } else {
           setIsWrong(true);
-          setState(prev => ({
-            ...prev,
-            metrics: { ...prev.metrics, wrong: prev.metrics.wrong + 1 },
-            messages: [...prev.messages, { role: 'model', text: "That's not quite right. Would you like to try again or see the step-by-step explanation?" }]
-          }));
+
+          if (explanationUsedForCurrentProblem && isSimilarQuestion && state.currentSubtopic) {
+            // Recommending remedial content and learning material after failing the similar question
+            setSubtopicReviewRecommendations(prev => ({
+              ...prev,
+              [state.currentSubtopic.subtopic_id]: true
+            }));
+
+            const remedialChapter = (remedialContent as any).find((c: any) => c.chapter_id === state.currentChapter?.chapter_id);
+            const remedialSubtopic = remedialChapter?.subtopics.find((s: any) => s.subtopic_id === state.currentSubtopic.subtopic_id);
+
+            if (remedialSubtopic) {
+              setIsShowingRemedial(true);
+              setRemedialExercises(remedialSubtopic.remedial_exercises || []);
+            }
+
+            setState(prev => ({
+              ...prev,
+              metrics: { ...prev.metrics, wrong: prev.metrics.wrong + 1 },
+              messages: [...prev.messages,
+                { role: 'model', text: "You already used explanations, and you're still stuck. Let's revisit the topic step-by-step: first remedial content, then the learning material." },
+                { role: 'model', text: "Would you like to jump to remedial and then main material now?" }
+              ]
+            }));
+          } else {
+            setState(prev => ({
+              ...prev,
+              metrics: { ...prev.metrics, wrong: prev.metrics.wrong + 1 },
+              messages: [...prev.messages, { role: 'model', text: "That's not quite right. Would you like to try again or see the step-by-step explanation?" }]
+            }));
+          }
         }
+
         setIsTyping(false);
         return;
       }
@@ -520,13 +861,33 @@ export default function App() {
       }
     }
 
-    // Load subtopic performance
-    const savedSubtopicPerf = localStorage.getItem('polya_subtopic_performance');
-    if (savedSubtopicPerf) {
+    // Load pretest taken status
+    const savedPretestTaken = localStorage.getItem('polya_pretest_taken');
+    if (savedPretestTaken) {
       try {
-        setGlobalPerformance(JSON.parse(savedSubtopicPerf));
+        setPretestTaken(new Set(JSON.parse(savedPretestTaken)));
       } catch (e) {
-        console.error("Failed to parse subtopic performance", e);
+        console.error("Failed to parse pretest taken", e);
+      }
+    }
+
+    // Load subtopic progress
+    const savedSubtopicProgress = localStorage.getItem('polya_subtopic_progress');
+    if (savedSubtopicProgress) {
+      try {
+        setSubtopicProgress(JSON.parse(savedSubtopicProgress));
+      } catch (e) {
+        console.error("Failed to parse subtopic progress", e);
+      }
+    }
+
+    // Load subtopic correct counts
+    const savedSubtopicCorrect = localStorage.getItem('polya_subtopic_correct');
+    if (savedSubtopicCorrect) {
+      try {
+        setSubtopicCorrectCount(JSON.parse(savedSubtopicCorrect));
+      } catch (e) {
+        console.error("Failed to parse subtopic correct counts", e);
       }
     }
   }, []);
@@ -562,7 +923,7 @@ export default function App() {
       }
       setGlobalPerformance(newGlobalPerformance);
       localStorage.setItem('polya_subtopic_performance', JSON.stringify(newGlobalPerformance));
-      
+      setCompletedSubtopics(prev => new Set(prev).add(finalPerformance.subtopic_id));
       setCurrentSubtopicPerformance(null);
     }
     
@@ -676,8 +1037,14 @@ export default function App() {
   };
 
   const isSessionActive = () => {
-    return state.currentChapter !== null && !['home', 'summary', 'history'].includes(view);
+    return state.currentChapter !== null && !['home', 'summary', 'history', 'quiz'].includes(view);
   };
+
+  const chapterSubtopicCompletion = state.currentChapter ? state.currentChapter.subtopics.filter(sub => completedSubtopics.has(sub.subtopic_id)).length : 0;
+  const chapterProgressRatio = state.currentChapter ? state.currentChapter.subtopics.reduce((acc, sub) => {
+    const progress = subtopicProgress[sub.subtopic_id] || 0;
+    return acc + (progress / 100);
+  }, 0) / (state.currentChapter.subtopics.length || 1) : 0;
 
   // Handle beforeunload event - show confirmation when user tries to close tab
   useEffect(() => {
@@ -825,6 +1192,56 @@ export default function App() {
             </motion.div>
           )}
 
+          {view === 'pretest' && state.currentChapter && pretestQuestions.length > 0 && (
+            <motion.div
+              key="pretest"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              className="max-w-3xl mx-auto space-y-8"
+            >
+              <div className="text-center space-y-3">
+                <h2 className="text-3xl font-semibold">Pretest for {state.currentChapter.chapter_name}</h2>
+                <p className="text-[#1A1A1A]/70">A quick diagnostic to personalize your learning path.</p>
+                <p className="text-sm text-[#5A5A40]">{currentPretestIndex + 1} / {pretestQuestions.length}</p>
+              </div>
+
+              <div className="bg-white p-8 rounded-3xl border border-[#1A1A1A]/10">
+                <h3 className="text-xl font-semibold mb-4">{pretestQuestions[currentPretestIndex].question}</h3>
+                <input
+                  value={pretestAnswer}
+                  onChange={(e) => setPretestAnswer(e.target.value)}
+                  onKeyDown={(e) => e.key === 'Enter' && submitPretestAnswer()}
+                  className="w-full p-3 border border-[#1A1A1A]/20 rounded-xl mb-4"
+                  placeholder="Your answer"
+                  disabled={pretestSubmitted}
+                />
+                {pretestSubmitted && (
+                  <div className={`p-4 rounded-xl ${pretestIsCorrect ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-700'}`}>
+                    {pretestIsCorrect ? 'Correct! Great start.' : `Incorrect. Correct answer: ${pretestQuestions[currentPretestIndex].correct_answer}.`}
+                  </div>
+                )}
+
+                <div className="flex justify-between gap-3 mt-4">
+                  <button
+                    onClick={submitPretestAnswer}
+                    disabled={pretestSubmitted}
+                    className="flex-1 bg-blue-500 text-white p-3 rounded-xl hover:bg-blue-600"
+                  >
+                    Submit
+                  </button>
+                  <button
+                    onClick={advancePretest}
+                    disabled={!pretestSubmitted}
+                    className="flex-1 bg-green-500 text-white p-3 rounded-xl hover:bg-green-600"
+                  >
+                    {currentPretestIndex < pretestQuestions.length - 1 ? 'Next' : 'Finish Pretest'}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          )}
+
           {view === 'chapter' && state.currentChapter && (
             <motion.div 
               key="chapter"
@@ -859,8 +1276,13 @@ export default function App() {
                         className="flex items-center justify-between p-5 bg-white rounded-2xl border border-[#1A1A1A]/5 hover:border-[#5A5A40] hover:shadow-md transition-all text-left group"
                       >
                         <div className="flex items-center gap-4">
-                          {readSubtopics.has(sub.subtopic_id) && <CheckCircle2 size={16} className="text-green-500" />}
+                          {completedSubtopics.has(sub.subtopic_id) && <CheckCircle2 size={16} className="text-green-500" />}
                           <span className="font-medium">{sub.name}</span>
+                          {subtopicProgress[sub.subtopic_id] !== undefined && (
+                            <span className="text-xs bg-blue-100 text-blue-700 px-2 py-1 rounded-full">
+                              {subtopicProgress[sub.subtopic_id]}% complete
+                            </span>
+                          )}
                           {globalPerformance.find(p => p.subtopic_id === sub.subtopic_id) && (
                             <span className={cn(
                               "text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full",
@@ -869,6 +1291,11 @@ export default function App() {
                               "bg-red-100 text-red-600"
                             )}>
                               {globalPerformance.find(p => p.subtopic_id === sub.subtopic_id)?.expertise_level}
+                            </span>
+                          )}
+                          {subtopicReviewRecommendations[sub.subtopic_id] && (
+                            <span className="text-[10px] font-bold uppercase tracking-widest px-2 py-1 rounded-full bg-red-100 text-red-600">
+                              Review Recommended
                             </span>
                           )}
                         </div>
@@ -884,7 +1311,7 @@ export default function App() {
                       <Target size={20} />
                       Final Assessment
                     </h4>
-                    {state.currentChapter.subtopics.every(sub => readSubtopics.has(sub.subtopic_id)) ? (
+                    {chapterProgressRatio >= 1 ? (
                       <button 
                         onClick={() => startQuiz(state.currentChapter.chapter_id)}
                         className="w-full p-4 bg-blue-500 text-white rounded-2xl font-semibold hover:bg-blue-600 transition-colors"
@@ -895,7 +1322,7 @@ export default function App() {
                       <div className="text-center text-gray-500">
                         <p className="text-sm mb-2">Complete all subtopics to unlock the final assessment</p>
                         <div className="text-xs">
-                          {state.currentChapter.subtopics.filter(sub => readSubtopics.has(sub.subtopic_id)).length} / {state.currentChapter.subtopics.length} completed
+                          {Math.round(chapterProgressRatio * 100)}% of questions solved correctly
                         </div>
                       </div>
                     )}
@@ -908,10 +1335,10 @@ export default function App() {
                     <div className="space-y-3">
                       <div className="flex justify-between text-sm opacity-80">
                         <span>Completion</span>
-                        <span>0%</span>
+                        <span>{Math.round(chapterProgressRatio * 100)}%</span>
                       </div>
                       <div className="w-full bg-white/20 h-2 rounded-full overflow-hidden">
-                        <div className="bg-white h-full w-0" />
+                        <div className="bg-white h-full" style={{ width: `${Math.round(chapterProgressRatio * 100)}%` }} />
                       </div>
                     </div>
                   </div>
@@ -997,6 +1424,29 @@ export default function App() {
                     </div>
                   </div>
                 )}
+                {isShowingRemedial && remedialExercises.length > 0 && (
+                  <div className="mt-8 p-6 bg-blue-50 border border-blue-100 rounded-3xl">
+                    <div className="flex items-start gap-4 mb-4">
+                      <div className="p-2 bg-blue-100 rounded-xl text-blue-600">
+                        <Target size={20} />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold text-blue-900">Practice Exercises</h4>
+                        <p className="text-sm text-blue-700">Try these exercises to reinforce your understanding:</p>
+                      </div>
+                    </div>
+                    <div className="space-y-3">
+                      {remedialExercises.map((exercise, index) => (
+                        <div key={index} className="flex items-start gap-3 p-3 bg-white rounded-xl border border-blue-100">
+                          <span className="flex-shrink-0 w-6 h-6 bg-blue-100 text-blue-700 rounded-full flex items-center justify-center text-sm font-semibold">
+                            {index + 1}
+                          </span>
+                          <p className="text-sm text-blue-900">{exercise}</p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
 
                 <div className="pt-8 flex gap-4">
                   {learningStep === 'story' ? (
@@ -1008,7 +1458,7 @@ export default function App() {
                     </button>
                   ) : (
                     <button 
-                      onClick={() => startTutoring(0)}
+                      onClick={() => startTutoring(subtopicProgress[state.currentSubtopic?.subtopic_id ?? ''] ?? 0)}
                       className="flex-1 p-6 bg-[#5A5A40] text-white rounded-[32px] font-semibold hover:opacity-90 transition-opacity shadow-lg flex items-center justify-center gap-2"
                     >
                       Start Practice Session <ChevronRight size={20} />
@@ -1025,7 +1475,7 @@ export default function App() {
             </motion.div>
           )}
 
-          {view === 'tutoring' && state.currentProblem && (
+          {view === 'tutoring' && (
             <motion.div 
               key="tutoring"
               initial={{ opacity: 0 }}
@@ -1044,12 +1494,17 @@ export default function App() {
                       <div 
                         key={prob.problem_id}
                         className={cn(
-                          "flex items-center gap-3 p-3 rounded-xl transition-all",
+                          "flex items-center justify-between gap-3 p-3 rounded-xl transition-all",
                           currentProblemIndex === idx ? "bg-[#5A5A40] text-white shadow-lg" : "opacity-40"
                         )}
                       >
-                        <Target size={18} />
-                        <span className="text-sm font-medium">Problem {idx + 1}</span>
+                        <div className="flex items-center gap-2">
+                          <Target size={18} />
+                          <span className="text-sm font-medium">Problem {idx + 1}</span>
+                        </div>
+                        {questionCompleted.has(prob.problem_id) && (
+                          <span className="text-[10px] font-semibold uppercase tracking-wider text-green-600">Done</span>
+                        )}
                       </div>
                     ))}
                   </div>
@@ -1058,13 +1513,35 @@ export default function App() {
                 <div className="space-y-2">
                   <button 
                     onClick={nextQuestion}
-                    className="w-full p-4 bg-white border border-[#1A1A1A]/10 text-[#1A1A1A] rounded-[24px] font-semibold hover:bg-[#F5F5F0] transition-colors flex items-center justify-center gap-2"
+                    disabled={!currentQuestionCorrect}
+                    className={cn(
+                      "w-full p-4 border rounded-[24px] font-semibold flex items-center justify-center gap-2",
+                      currentQuestionCorrect ? "bg-white border-[#1A1A1A]/10 text-[#1A1A1A] hover:bg-[#F5F5F0]" : "bg-gray-200 text-gray-500 cursor-not-allowed"
+                    )}
                   >
                     Next Question <ChevronRight size={18} />
                   </button>
                   <button 
+                    onClick={() => {
+                      if (state.currentSubtopic) {
+                        setSubtopicProgress(prev => ({
+                          ...prev,
+                          [state.currentSubtopic.subtopic_id]: currentProblemIndex,
+                        }));
+                      }
+                      setView('chapter');
+                    }}
+                    className="w-full p-4 bg-[#F5F5F0] text-[#1A1A1A] rounded-[24px] font-semibold hover:bg-[#E4E3E0] transition-colors"
+                  >
+                    Go Back to Subtopics
+                  </button>
+                  <button 
                     onClick={finishChapter}
-                    className="w-full p-4 bg-[#1A1A1A] text-white rounded-[24px] font-semibold hover:opacity-90 transition-opacity"
+                    disabled={chapterProgressRatio < 1}
+                    className={cn(
+                      "w-full p-4 rounded-[24px] font-semibold transition-opacity",
+                      chapterProgressRatio >= 1 ? "bg-[#1A1A1A] text-white hover:opacity-90" : "bg-gray-300 text-gray-500 cursor-not-allowed"
+                    )}
                   >
                     Finish Session
                   </button>
@@ -1073,68 +1550,81 @@ export default function App() {
 
               <div className="lg:col-span-3 bg-white rounded-[32px] border border-[#1A1A1A]/5 flex flex-col overflow-hidden shadow-sm">
                 <div className="flex-1 overflow-y-auto p-6 space-y-6">
-                  {state.messages.map((msg, i) => (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      className={cn(
-                        "flex",
-                        msg.role === 'user' ? "justify-end" : "justify-start"
-                      )}
-                    >
-                      <div className={cn(
-                        "max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed",
-                        msg.role === 'user' 
-                          ? "bg-[#5A5A40] text-white rounded-tr-none" 
-                          : "bg-[#F5F5F0] text-[#1A1A1A] rounded-tl-none"
-                      )}>
-                        <div className="prose prose-sm max-w-none">
-                          <Markdown 
-                            remarkPlugins={[remarkMath]} 
-                            rehypePlugins={[rehypeKatex]}
-                            components={{
-                              img: ({node, ...props}) => (
-                                <img 
-                                  {...props} 
-                                  className="rounded-xl shadow-sm mx-auto my-4 border border-[#1A1A1A]/5" 
-                                  referrerPolicy="no-referrer" 
-                                />
-                              )
-                            }}
+                  <>
+                    {state.messages.length > 0 ? (
+                      <>
+                        {state.messages.map((msg, i) => (
+                          <motion.div
+                            key={i}
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            className={cn(
+                              "flex",
+                              msg.role === 'user' ? "justify-end" : "justify-start"
+                            )}
                           >
-                            {msg.text}
-                          </Markdown>
+                            <div className={cn(
+                              "max-w-[85%] p-4 rounded-2xl text-sm leading-relaxed",
+                              msg.role === 'user' 
+                                ? "bg-[#5A5A40] text-white rounded-tr-none" 
+                                : "bg-[#F5F5F0] text-[#1A1A1A] rounded-tl-none"
+                            )}>
+                              <div className="prose prose-sm max-w-none">
+                                {msg.text}
+                              </div>
+                            </div>
+                          </motion.div>
+                        ))}
+                        
+                        {showQuestionCheer && (
+                          <div className="p-4 bg-green-100 border border-green-200 text-green-700 rounded-2xl text-center">
+                            🎉 Great job! Question solved correctly.
+                          </div>
+                        )}
+
+                        {masteredConceptMessage && (
+                          <div className="p-4 bg-blue-100 border border-blue-200 text-blue-700 rounded-2xl text-center">
+                            {masteredConceptMessage}
+                          </div>
+                        )}
+
+                        {showHint && state.currentProblem?.hints && state.hintIndex >= 0 && (
+                          <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="flex justify-start"
+                          >
+                            <div className="bg-amber-50 border border-amber-200 p-4 rounded-2xl text-amber-800 text-sm max-w-[85%]">
+                              <p className="font-bold flex items-center gap-2 mb-2">
+                                <Lightbulb size={16} /> Hint {state.hintIndex + 1}:
+                              </p>
+                              <p>{state.currentProblem.hints[state.hintIndex]}</p>
+                            </div>
+                          </motion.div>
+                        )}
+
+                        {isTyping && (
+                          <div className="flex justify-start">
+                            <div className="bg-[#F5F5F0] p-4 rounded-2xl rounded-tl-none flex gap-1">
+                              <div className="w-1.5 h-1.5 bg-[#5A5A40] rounded-full animate-bounce" />
+                              <div className="w-1.5 h-1.5 bg-[#5A5A40] rounded-full animate-bounce [animation-delay:0.2s]" />
+                              <div className="w-1.5 h-1.5 bg-[#5A5A40] rounded-full animate-bounce [animation-delay:0.4s]" />
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    ) : (
+                      <div className="flex items-center justify-center h-full">
+                        <div className="text-center">
+                          <div className="w-16 h-16 bg-[#F5F5F0] rounded-full flex items-center justify-center mx-auto mb-4">
+                            <Brain size={32} className="text-[#5A5A40]" />
+                          </div>
+                          <p className="text-[#1A1A1A]/60">Loading your problem...</p>
                         </div>
                       </div>
-                    </motion.div>
-                  ))}
-                  
-                  {showHint && state.currentProblem?.hints && state.hintIndex >= 0 && (
-                    <motion.div
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      className="flex justify-start"
-                    >
-                      <div className="bg-amber-50 border border-amber-200 p-4 rounded-2xl text-amber-800 text-sm max-w-[85%]">
-                        <p className="font-bold flex items-center gap-2 mb-2">
-                          <Lightbulb size={16} /> Hint {state.hintIndex + 1}:
-                        </p>
-                        <p>{state.currentProblem.hints[state.hintIndex]}</p>
-                      </div>
-                    </motion.div>
-                  )}
-
-                  {isTyping && (
-                    <div className="flex justify-start">
-                      <div className="bg-[#F5F5F0] p-4 rounded-2xl rounded-tl-none flex gap-1">
-                        <div className="w-1.5 h-1.5 bg-[#5A5A40] rounded-full animate-bounce" />
-                        <div className="w-1.5 h-1.5 bg-[#5A5A40] rounded-full animate-bounce [animation-delay:0.2s]" />
-                        <div className="w-1.5 h-1.5 bg-[#5A5A40] rounded-full animate-bounce [animation-delay:0.4s]" />
-                      </div>
-                    </div>
-                  )}
-                  <div ref={chatEndRef} />
+                    )}
+                    <div ref={chatEndRef} />
+                  </>
                 </div>
 
                 <div className="p-4 border-t border-[#1A1A1A]/5 bg-[#F5F5F0]/30 space-y-4">
@@ -1162,6 +1652,15 @@ export default function App() {
                         {currentExplanationStep === 1 ? 'Next: Plan' : 
                          currentExplanationStep === 2 ? 'Next: Solve' : 
                          'Next: Review'}
+                      </button>
+                    </div>
+                  ) : explanationShown && currentExplanationStep === 4 ? (
+                    <div className="flex gap-3 max-w-4xl mx-auto">
+                      <button 
+                        onClick={completeExplanationAndPromptSimilar}
+                        className="flex-1 p-4 bg-[#5A5A40] text-white rounded-2xl font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                      >
+                        Finish Explanation + Try Next Problem
                       </button>
                     </div>
                   ) : (
@@ -1448,11 +1947,11 @@ export default function App() {
                     Continue
                   </button>
                 </div>
-              ) : currentQuizIndex < 10 ? (
+              ) : currentQuizIndex < quizQuestions.length ? (
                 <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8">
                   <div className="flex justify-between items-center mb-6">
                     <h1 className="text-2xl font-bold text-gray-800">Final Quiz</h1>
-                    <div className="text-sm text-gray-500">Question {currentQuizIndex + 1} of 10</div>
+                    <div className="text-sm text-gray-500">Question {currentQuizIndex + 1} of {quizQuestions.length}</div>
                   </div>
                   {currentQuizQuestion && (
                     <>
@@ -1495,7 +1994,7 @@ export default function App() {
                   <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-4" />
                   <h2 className="text-2xl font-bold text-gray-800 mb-4">Quiz Completed!</h2>
                   <p className="text-gray-600">You have finished the final quiz for this chapter.</p>
-                  <button onClick={() => setView('home')} className="mt-6 bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600">Back to Home</button>
+                  <button onClick={() => finishChapter()} className="mt-6 bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600">Finish Chapter</button>
                 </div>
               )}
             </motion.div>
