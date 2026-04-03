@@ -1,0 +1,11 @@
+ont-medium', polyaStepMCQCorrect ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800')}>
+                        {polyaStepMCQCorrect ? 'ðŸŽ‰ Correct! You understood this step.' : `âŒ Not quite. The correct answer was: "${polyaStepMCQ?.options[polyaStepMCQ.correct_index]}"`}
+                      </div>
+                      {currentExplanationStep < 4 ? (
+                        <button
+                          onClick={nextExplanationStep}
+                          className="w-full p-4 bg-[#5A5A40] text-white rounded-2xl font-semibold hover:opacity-90 transition-opacity"
+                        >
+                          {currentExplanationStep === 1 ? 'Next: Plan' : currentExplanationStep === 2 ? 'Next: Solve' : 'Next: Review'}
+                        </button>
+    

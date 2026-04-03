@@ -95,8 +95,12 @@ export default function App() {
   const [showQuestionCheer, setShowQuestionCheer] = useState(false);
   const [masteredConceptMessage, setMasteredConceptMessage] = useState('');
   const [explanationUsedForCurrentProblem, setExplanationUsedForCurrentProblem] = useState(false);
+  const [isSimilarQuestion, setIsSimilarQuestion] = useState(false);
+  const [stepMcq, setStepMcq] = useState<{ options: string[]; correct: string; selected: string | null; submitted: boolean } | null>(null);
+  const [showSimilarPrompt, setShowSimilarPrompt] = useState(false);
   const [subtopicReviewRecommendations, setSubtopicReviewRecommendations] = useState<Record<string, boolean>>({});
   const [isShowingRemedial, setIsShowingRemedial] = useState(false);
+  const [showRemedialPrompt, setShowRemedialPrompt] = useState(false);
   const [remedialExercises, setRemedialExercises] = useState<string[]>([]);
   const [questionCompleted, setQuestionCompleted] = useState<Set<string>>(new Set());
   const [similarAttempted, setSimilarAttempted] = useState<Set<string>>(new Set());
@@ -130,6 +134,22 @@ export default function App() {
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [state.messages]);
+
+  const buildStepMcq = (stepText: string, correctAnswer: string) => {
+    // Generate 3 plausible wrong options by slightly altering the correct answer
+    const distractors: string[] = [];
+    const num = parseFloat(correctAnswer.replace(/[^0-9.]/g, ''));
+    if (!isNaN(num)) {
+      const prefix = correctAnswer.replace(/[0-9.]+/, '').trim();
+      distractors.push(`${prefix}${(num * 1.1).toFixed(num % 1 !== 0 ? 2 : 0)}`.trim());
+      distractors.push(`${prefix}${(num * 0.9).toFixed(num % 1 !== 0 ? 2 : 0)}`.trim());
+      distractors.push(`${prefix}${(num + Math.ceil(num * 0.2)).toFixed(0)}`.trim());
+    } else {
+      distractors.push('I am not sure', 'None of the above', 'Cannot be determined');
+    }
+    const options = [correctAnswer, ...distractors.slice(0, 3)].sort(() => Math.random() - 0.5);
+    return { options, correct: correctAnswer, selected: null, submitted: false };
+  };
 
   const generateSimilarProblem = (problem: Problem): Problem => {
     let question = problem.question;
@@ -396,6 +416,9 @@ export default function App() {
     setExplanationShown(false);
     setShowHint(false);
     setCurrentQuestionCorrect(false);
+    setStepMcq(null);
+    setShowSimilarPrompt(false);
+    setShowRemedialPrompt(false);
     try {
       // If we're starting tutoring from learning material, record reading time
       if (readingStartTime && currentSubtopicPerformance) {
@@ -600,6 +623,8 @@ export default function App() {
     setIsWrong(false);
     setExplanationShown(false);
     setCurrentExplanationStep(0);
+    setStepMcq(null);
+    setShowRemedialPrompt(false);
     setState(prev => ({
       ...prev,
       isAnswered: false,
@@ -612,30 +637,37 @@ export default function App() {
     setExplanationShown(true);
     setExplanationUsedForCurrentProblem(true);
     setCurrentExplanationStep(1);
+    setStepMcq(null);
+    setShowSimilarPrompt(false);
     const polya = state.currentProblem?.polya_steps;
-    const text = polya ? 
-      `**Step 1: Understand the Problem**\n\n${polya.understand}` :
-      "Let's break it down using Polya's method.\n\n**Step 1: Understand the Problem.** What information do we have?";
-      
+    const stepText = polya
+      ? `**Step 1: Understand the Problem**\n\n${polya.understand}`
+      : "Let's break it down using Polya's method.\n\n**Step 1: Understand the Problem.** What information do we have?";
+
+    const mcqCorrect = polya?.understand
+      ? polya.understand.split('.')[0].trim()
+      : state.currentProblem?.correct_answer ?? 'Understood';
+    setStepMcq(buildStepMcq(mcqCorrect, mcqCorrect));
+
     setState(prev => ({
       ...prev,
       currentStep: 'UNDERSTAND',
-      messages: [...prev.messages, { role: 'model', text }]
+      messages: [...prev.messages, { role: 'model', text: stepText }]
     }));
   };
 
   const completeExplanationAndPromptSimilar = () => {
     if (!state.currentProblem) return;
-
+    setShowSimilarPrompt(false);
     setState(prev => ({
       ...prev,
       messages: [...prev.messages,
-        { role: 'model', text: "Hey buddy, now you know how to solve it, give it a try for this new problem." },
-        { role: 'model', text: "Tip: You already used explanations. Try to answer directly without hints. Want to try some remedial content for simple explanations of the topic?" }
+        { role: 'model', text: '🎓 **Great work!** You have learned how to solve this problem using **Polya\'s 4-Step Problem Solving Approach**:\n\n1. **Understand** – Identify what is given and what is asked\n2. **Plan** – Choose a strategy\n3. **Solve** – Carry out the plan\n4. **Review** – Verify the answer\n\nNow let\'s see if you can apply this on your own!' },
       ]
     }));
-
-    startSimilarQuestionForCurrent();
+    setTimeout(() => {
+      startSimilarQuestionForCurrent();
+    }, 300);
   };
 
   const nextExplanationStep = () => {
@@ -646,24 +678,29 @@ export default function App() {
     }
 
     setCurrentExplanationStep(nextStep);
+    setStepMcq(null);
     const polya = state.currentProblem?.polya_steps;
     if (!polya) return;
 
     let text = "";
     let stepName: PolyaStep = 'UNDERSTAND';
+    let mcqCorrect = state.currentProblem?.correct_answer ?? '';
 
     switch(nextStep) {
       case 2:
         text = `**Step 2: Devise a Plan**\n\n${polya.plan}`;
         stepName = 'PLAN';
+        mcqCorrect = polya.plan.split('.')[0].trim();
         break;
       case 3:
         text = `**Step 3: Carry Out the Plan**\n\n${polya.solve}`;
         stepName = 'SOLVE';
+        mcqCorrect = state.currentProblem?.correct_answer ?? polya.solve.split('.')[0].trim();
         break;
       case 4:
         text = `**Step 4: Look Back (Review)**\n\n${polya.review}\n\nThe correct answer is: **${state.currentProblem?.correct_answer}**`;
         stepName = 'REVIEW';
+        mcqCorrect = state.currentProblem?.correct_answer ?? polya.review.split('.')[0].trim();
         break;
     }
 
@@ -672,6 +709,7 @@ export default function App() {
       currentStep: stepName,
       messages: [...prev.messages, { role: 'model', text }]
     }));
+    setStepMcq(buildStepMcq(mcqCorrect, mcqCorrect));
   };
 
   const handleSend = async (overrideInput?: string) => {
@@ -800,12 +838,12 @@ export default function App() {
               setRemedialExercises(remedialSubtopic.remedial_exercises || []);
             }
 
+            setShowRemedialPrompt(true);
             setState(prev => ({
               ...prev,
               metrics: { ...prev.metrics, wrong: prev.metrics.wrong + 1 },
               messages: [...prev.messages,
-                { role: 'model', text: "You already used explanations, and you're still stuck. Let's revisit the topic step-by-step: first remedial content, then the learning material." },
-                { role: 'model', text: "Would you like to jump to remedial and then main material now?" }
+                { role: 'model', text: "It looks like you're still finding this tricky even after the explanation. That's okay! 💡 We recommend going back to the **remedial material** to strengthen your foundation before trying again." },
               ]
             }));
           } else {
@@ -1643,28 +1681,103 @@ export default function App() {
                         Explanation
                       </button>
                     </div>
-                  ) : explanationShown && currentExplanationStep > 0 && currentExplanationStep < 4 ? (
-                    <div className="flex gap-3 max-w-4xl mx-auto">
-                      <button 
-                        onClick={nextExplanationStep}
-                        className="flex-1 p-4 bg-[#5A5A40] text-white rounded-2xl font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
-                      >
-                        {currentExplanationStep === 1 ? 'Next: Plan' : 
-                         currentExplanationStep === 2 ? 'Next: Solve' : 
-                         'Next: Review'}
-                      </button>
-                    </div>
-                  ) : explanationShown && currentExplanationStep === 4 ? (
-                    <div className="flex gap-3 max-w-4xl mx-auto">
-                      <button 
-                        onClick={completeExplanationAndPromptSimilar}
-                        className="flex-1 p-4 bg-[#5A5A40] text-white rounded-2xl font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
-                      >
-                        Finish Explanation + Try Next Problem
-                      </button>
+                  ) : explanationShown && currentExplanationStep > 0 && currentExplanationStep <= 4 ? (
+                    <div className="flex flex-col gap-3 max-w-4xl mx-auto">
+                      {stepMcq && !stepMcq.submitted ? (
+                        <>
+                          <p className="text-sm font-semibold text-[#1A1A1A]/70 px-1">
+                            {currentExplanationStep === 3
+                              ? `Quick check: What is the answer to this problem?`
+                              : `Quick check: Which best describes this step?`}
+                          </p>
+                          <div className="grid grid-cols-2 gap-2">
+                            {stepMcq.options.map((opt, i) => (
+                              <button
+                                key={i}
+                                onClick={() => setStepMcq(prev => prev ? { ...prev, selected: opt } : prev)}
+                                className={cn(
+                                  "p-3 rounded-xl border text-sm font-medium text-left transition-all",
+                                  stepMcq.selected === opt
+                                    ? "border-[#5A5A40] bg-[#5A5A40]/10"
+                                    : "border-[#1A1A1A]/10 bg-white hover:bg-[#F5F5F0]"
+                                )}
+                              >
+                                {opt}
+                              </button>
+                            ))}
+                          </div>
+                          <button
+                            disabled={!stepMcq.selected}
+                            onClick={() => {
+                              if (!stepMcq?.selected) return;
+                              setStepMcq(prev => prev ? { ...prev, submitted: true } : prev);
+                            }}
+                            className="p-3 bg-[#5A5A40] text-white rounded-xl font-semibold disabled:opacity-40"
+                          >
+                            Check Answer
+                          </button>
+                        </>
+                      ) : stepMcq?.submitted ? (
+                        <>
+                          <div className={cn(
+                            "p-3 rounded-xl text-sm font-medium",
+                            stepMcq.selected === stepMcq.correct
+                              ? "bg-green-100 text-green-700"
+                              : "bg-red-100 text-red-700"
+                          )}>
+                            {stepMcq.selected === stepMcq.correct
+                              ? "✅ Correct! Great understanding."
+                              : `❌ Not quite. The right answer is: ${stepMcq.correct}`}
+                          </div>
+                          <button
+                            onClick={() => {
+                              if (currentExplanationStep === 4) {
+                                completeExplanationAndPromptSimilar();
+                              } else {
+                                nextExplanationStep();
+                              }
+                            }}
+                            className="p-4 bg-[#5A5A40] text-white rounded-2xl font-semibold hover:opacity-90 transition-opacity"
+                          >
+                            {currentExplanationStep === 1 ? 'Next: Plan' :
+                             currentExplanationStep === 2 ? 'Next: Solve' :
+                             currentExplanationStep === 3 ? 'Next: Review' :
+                             'Finish Explanation + Try Similar Problem'}
+                          </button>
+                        </>
+                      ) : (
+                        <button
+                          onClick={() => {
+                            if (currentExplanationStep === 4) {
+                              completeExplanationAndPromptSimilar();
+                            } else {
+                              nextExplanationStep();
+                            }
+                          }}
+                          className="p-4 bg-[#5A5A40] text-white rounded-2xl font-semibold hover:opacity-90 transition-opacity"
+                        >
+                          {currentExplanationStep === 1 ? 'Next: Plan' :
+                           currentExplanationStep === 2 ? 'Next: Solve' :
+                           currentExplanationStep === 3 ? 'Next: Review' :
+                           'Finish Explanation + Try Similar Problem'}
+                        </button>
+                      )}
                     </div>
                   ) : (
                     <>
+                      {showRemedialPrompt && state.currentSubtopic && (
+                        <div className="flex gap-3 max-w-4xl mx-auto">
+                          <button
+                            onClick={() => {
+                              setShowRemedialPrompt(false);
+                              if (state.currentSubtopic) showLearningMaterial(state.currentSubtopic);
+                            }}
+                            className="flex-1 p-4 bg-red-500 text-white rounded-2xl font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                          >
+                            📚 Go Back to Remedial Material
+                          </button>
+                        </div>
+                      )}
                       <div className="flex gap-2 max-w-4xl mx-auto">
                         <button 
                           onClick={useHint}

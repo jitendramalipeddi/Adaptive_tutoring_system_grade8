@@ -1,0 +1,15 @@
+Name="flex gap-3 max-w-4xl mx-auto">
+                      <button
+                        onClick={retryQuestion}
+                        className="flex-1 p-4 bg-white border border-[#1A1A1A]/10 rounded-2xl font-semibold hover:bg-[#F5F5F0] transition-colors flex items-center justify-center gap-2"
+                      >
+                        Retry Question
+                      </button>
+                      <button
+                        onClick={showExplanation}
+                        className="flex-1 p-4 bg-[#5A5A40] text-white rounded-2xl font-semibold hover:opacity-90 transition-opacity flex items-center justify-center gap-2"
+                      >
+                        Explanation
+                      </button>
+                    </div>
+                  ) 

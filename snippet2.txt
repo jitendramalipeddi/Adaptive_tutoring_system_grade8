@@ -1,0 +1,10 @@
+Step > 0 && polyaStepMCQ && !polyaStepMCQAnswered ? (
+                    <div className="max-w-4xl mx-auto space-y-3">
+                      <p className="text-sm font-semibold text-[#5A5A40]">âœ… Answer this to continue:</p>
+                      <p className="text-sm font-medium text-[#1A1A1A]">{polyaStepMCQ.question}</p>
+                      <div className="grid grid-cols-1 gap-2">
+                        {polyaStepMCQ.options.map((opt, i) => (
+                          <button
+                            key={i}
+                            onClick={() => {
+                      
