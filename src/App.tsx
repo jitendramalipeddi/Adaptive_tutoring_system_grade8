@@ -940,7 +940,20 @@ export default function App() {
 
   // Retry any pending recommendation from a previous failed network attempt
   useEffect(() => {
-    if (!sessionParams.token) return;
+    const saved = localStorage.getItem('polya_pending_recommendation');
+    if (saved) {
+      try {
+        const { token } = JSON.parse(saved);
+        // Discard stale entries saved with the placeholder token
+        if (!token || token === 'default_token') {
+          localStorage.removeItem('polya_pending_recommendation');
+          return;
+        }
+      } catch {
+        localStorage.removeItem('polya_pending_recommendation');
+        return;
+      }
+    }
     retrySavedRecommendation().then(result => {
       if (result) {
         setRecommendationResult(result);

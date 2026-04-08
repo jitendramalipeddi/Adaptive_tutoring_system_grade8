@@ -31,7 +31,7 @@ export interface RecommendationResponse {
 }
 
 function buildPayload(raw: SessionInteractionPayload): Record<string, unknown> {
-  const p: Record<string, unknown> = {
+  return {
     student_id: raw.student_id,
     session_id: raw.session_id,
     chapter_id: raw.chapter_id,
@@ -39,16 +39,14 @@ function buildPayload(raw: SessionInteractionPayload): Record<string, unknown> {
     session_status: raw.session_status,
     total_questions: raw.total_questions,
     total_hints_embedded: raw.total_hints_embedded,
-    time_spent_seconds: raw.time_spent_seconds || null,
+    time_spent_seconds: raw.time_spent_seconds ?? 0,
     topic_completion_ratio: raw.topic_completion_ratio,
-    correct_answers: raw.correct_answers || null,
-    wrong_answers: raw.wrong_answers || null,
-    questions_attempted: raw.questions_attempted || null,
-    retry_count: raw.retry_count || null,
-    hints_used: raw.hints_used || null,
+    correct_answers: raw.correct_answers ?? 0,
+    wrong_answers: raw.wrong_answers ?? 0,
+    questions_attempted: raw.questions_attempted ?? 0,
+    retry_count: raw.retry_count ?? 0,
+    hints_used: raw.hints_used ?? 0,
   };
-  // Remove explicit nulls for 0-value fields per spec ("don't include 0, use null")
-  return p;
 }
 
 async function postWithRetry(
@@ -82,8 +80,10 @@ export async function sendRecommendation(
   token: string
 ): Promise<RecommendationResponse> {
   const payload = buildPayload(raw);
-  // Persist locally before sending so we can retry on reload
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({ payload, token }));
+  // Only persist for retry if we have a real token
+  if (token && token !== 'default_token') {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ payload, token }));
+  }
   return postWithRetry(payload, token);
 }
 
