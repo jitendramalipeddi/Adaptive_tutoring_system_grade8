@@ -31,7 +31,7 @@ export interface RecommendationResponse {
 }
 
 const CHAPTER_ID_MAP: Record<string, string> = {
-  comparing_quantities: 'grade8_comparing_quantities',
+  comparing_quantities: 'grade8_comparing_qty',
   direct_inverse_proportion: 'grade8_direct_inverse_proportion',
 };
 
