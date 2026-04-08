@@ -40,6 +40,9 @@ import {
   PoolData
 } from './types';
 import { generateProblem, getTutoringResponse, generateMCQOptions } from './services/gemini';
+import { sendRecommendation, retrySavedRecommendation, RecommendationResponse } from './services/recommendation';
+import { useSessionParams } from './hooks/useSession';
+import RecommendationResult from './components/RecommendationResult';
 import localContent from './data/content.json';
 import learningMaterial from './data/learning_material.json';
 import remedialContent from './data/remedial_content.json';
@@ -50,8 +53,11 @@ function cn(...inputs: ClassValue[]) {
 }
 
 export default function App() {
-  const [view, setView] = useState<'home' | 'chapter' | 'learning' | 'tutoring' | 'summary' | 'history' | 'quiz' | 'pretest'>('home');
+  const [view, setView] = useState<'home' | 'chapter' | 'learning' | 'tutoring' | 'summary' | 'history' | 'quiz' | 'pretest' | 'recommendation'>('home');
   const [lastPayload, setLastPayload] = useState<SessionInteractionPayload | null>(null);
+  const [recommendationResult, setRecommendationResult] = useState<RecommendationResponse | null>(null);
+  const [recommendationLoading, setRecommendationLoading] = useState(false);
+  const sessionParams = useSessionParams();
   const [sessionHistory, setSessionHistory] = useState<SessionInteractionPayload[]>([]);
   const [currentContent, setCurrentContent] = useState<SubtopicContent | null>(null);
   const [currentProblemIndex, setCurrentProblemIndex] = useState(0);
@@ -930,6 +936,16 @@ export default function App() {
     }
   }, []);
 
+  // Retry any pending recommendation from a previous failed network attempt
+  useEffect(() => {
+    if (!sessionParams.token) return;
+    retrySavedRecommendation().then(result => {
+      if (result) {
+        setRecommendationResult(result);
+      }
+    });
+  }, []);
+
   const finishSubtopic = () => {
     // Finalize current subtopic performance if it exists
     if (currentSubtopicPerformance) {
@@ -1010,8 +1026,8 @@ export default function App() {
 
     // Create session payload WITHOUT subtopic_performances field
     const payload: SessionInteractionPayload = {
-      student_id: "student_123", 
-      session_id: state.sessionId,
+      student_id: sessionParams.student_id ?? "student_123", 
+      session_id: sessionParams.session_id ?? state.sessionId,
       chapter_id: state.currentChapter?.chapter_id || "",
       timestamp: new Date().toISOString(),
       session_status: SessionStatus.COMPLETED,
@@ -1035,7 +1051,21 @@ export default function App() {
     setCurrentSubtopicPerformance(null);
     setSessionSubtopicPerformances([]);
     setCompletionType('chapter');
-    setView('summary');
+
+    // Send to recommendation API
+    if (sessionParams.token) {
+      setRecommendationLoading(true);
+      setView('summary');
+      sendRecommendation(payload, sessionParams.token)
+        .then(result => {
+          setRecommendationResult(result);
+          setView('recommendation');
+        })
+        .catch(() => setView('summary'))
+        .finally(() => setRecommendationLoading(false));
+    } else {
+      setView('summary');
+    }
   };
 
   const endSessionMidway = () => {
@@ -1052,8 +1082,8 @@ export default function App() {
     const topicCompletionRatio = completedSubtopics / totalSubtopics;
 
     const payload: SessionInteractionPayload = {
-      student_id: "student_123",
-      session_id: state.sessionId,
+      student_id: sessionParams.student_id ?? "student_123",
+      session_id: sessionParams.session_id ?? state.sessionId,
       chapter_id: state.currentChapter.chapter_id,
       timestamp: new Date().toISOString(),
       session_status: SessionStatus.EXITED_MIDWAY,
@@ -1093,8 +1123,8 @@ export default function App() {
       endSessionMidway();
 
       // Set custom message for browser confirmation
-      e.returnValue = 'Save the session and close?';
-      return 'Save the session and close?';
+      e.returnValue = 'Your progress will be saved. Are you sure you want to leave?';
+      return 'Your progress will be saved. Are you sure you want to leave?';
     };
 
     // Use the older method for better browser compatibility
@@ -1855,6 +1885,11 @@ export default function App() {
               animate={{ opacity: 1, scale: 1 }}
               className="max-w-3xl mx-auto space-y-8"
             >
+              {recommendationLoading && (
+                <div className="text-center py-4 text-[#5A5A40] font-medium animate-pulse">
+                  Analyzing your session and generating recommendations...
+                </div>
+              )}
               <div className="text-center space-y-4">
                 <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto">
                   <CheckCircle2 size={40} />
@@ -2110,6 +2145,19 @@ export default function App() {
                   <button onClick={() => finishChapter()} className="mt-6 bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600">Finish Chapter</button>
                 </div>
               )}
+            </motion.div>
+          )}
+          {view === 'recommendation' && recommendationResult && (
+            <motion.div
+              key="recommendation"
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              className="max-w-3xl mx-auto"
+            >
+              <RecommendationResult
+                result={recommendationResult}
+                onHome={() => setView('home')}
+              />
             </motion.div>
           )}
         </AnimatePresence>
