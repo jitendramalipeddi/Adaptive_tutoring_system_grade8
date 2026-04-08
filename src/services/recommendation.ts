@@ -30,11 +30,16 @@ export interface RecommendationResponse {
   };
 }
 
+const CHAPTER_ID_MAP: Record<string, string> = {
+  comparing_quantities: 'grade8_comparing_quantities',
+  direct_inverse_proportion: 'grade8_direct_inverse_proportion',
+};
+
 function buildPayload(raw: SessionInteractionPayload): Record<string, unknown> {
   return {
     student_id: raw.student_id,
     session_id: raw.session_id,
-    chapter_id: raw.chapter_id,
+    chapter_id: CHAPTER_ID_MAP[raw.chapter_id] ?? raw.chapter_id,
     timestamp: raw.timestamp,
     session_status: raw.session_status,
     total_questions: raw.total_questions,
