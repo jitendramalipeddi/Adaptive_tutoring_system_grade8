@@ -303,13 +303,15 @@ export default function App() {
     }
   };
 
+  const QUIZ_QUESTION_LIMIT = 10;
+
   const nextQuizQuestion = () => {
     if (!currentQuizQuestion) return;
 
     const newUsed = new Set(usedQuestions).add(currentQuizQuestion.problem_id);
     setUsedQuestions(newUsed);
 
-    if (newUsed.size >= quizQuestions.length) {
+    if (newUsed.size >= QUIZ_QUESTION_LIMIT || newUsed.size >= quizQuestions.length) {
       // Final assessment done, complete chapter
       finishChapter();
       return;
@@ -946,6 +948,62 @@ export default function App() {
     });
   }, []);
 
+  const exitAndSave = () => {
+    if (!state.currentChapter) return;
+    const timeSpent = Math.floor((Date.now() - state.metrics.startTime) / 1000);
+
+    let finalSubtopicPerformances = [...sessionSubtopicPerformances];
+    if (currentSubtopicPerformance && !finalSubtopicPerformances.find(p => p.subtopic_id === currentSubtopicPerformance.subtopic_id)) {
+      const correctCount = currentSubtopicPerformance.questions.filter(q => q.is_correct && q.attempts === 1).length;
+      const totalQ = currentSubtopicPerformance.questions.length;
+      const ratio = totalQ > 0 ? correctCount / totalQ : 0;
+      const avgHints = totalQ > 0 ? currentSubtopicPerformance.questions.reduce((acc, q) => acc + q.hints_used, 0) / totalQ : 0;
+      let expertise: 'novice' | 'intermediate' | 'expert' = 'novice';
+      if (ratio >= 0.8 && avgHints <= 0.5) expertise = 'expert';
+      else if (ratio >= 0.5) expertise = 'intermediate';
+      finalSubtopicPerformances.push({ ...currentSubtopicPerformance, expertise_level: expertise, last_attempt_timestamp: new Date().toISOString() });
+    }
+
+    const totalSubtopics = state.currentChapter.subtopics.length || 1;
+    const topicCompletionRatio = finalSubtopicPerformances.length / totalSubtopics;
+
+    const payload: SessionInteractionPayload = {
+      student_id: sessionParams.student_id ?? 'student_123',
+      session_id: sessionParams.session_id ?? state.sessionId,
+      chapter_id: state.currentChapter.chapter_id,
+      timestamp: new Date().toISOString(),
+      session_status: SessionStatus.EXITED_MIDWAY,
+      correct_answers: state.metrics.correct,
+      wrong_answers: state.metrics.wrong,
+      questions_attempted: state.metrics.attempts,
+      total_questions: state.totalChapterQuestions,
+      retry_count: state.metrics.retries,
+      hints_used: state.metrics.hints,
+      total_hints_embedded: 10,
+      time_spent_seconds: timeSpent,
+      topic_completion_ratio: topicCompletionRatio,
+    };
+
+    const updatedHistory = [payload, ...sessionHistory].slice(0, 50);
+    setSessionHistory(updatedHistory);
+    localStorage.setItem('polya_session_history', JSON.stringify(updatedHistory));
+    setLastPayload(payload);
+    setCurrentSubtopicPerformance(null);
+    setSessionSubtopicPerformances([]);
+    setCompletionType('chapter');
+
+    const token = sessionParams.token ?? 'default_token';
+    setRecommendationLoading(true);
+    setView('summary');
+    sendRecommendation(payload, token)
+      .then(result => {
+        setRecommendationResult(result);
+        setView('recommendation');
+      })
+      .catch(() => setView('summary'))
+      .finally(() => setRecommendationLoading(false));
+  };
+
   const finishSubtopic = () => {
     // Finalize current subtopic performance if it exists
     if (currentSubtopicPerformance) {
@@ -1053,19 +1111,16 @@ export default function App() {
     setCompletionType('chapter');
 
     // Send to recommendation API
-    if (sessionParams.token) {
-      setRecommendationLoading(true);
-      setView('summary');
-      sendRecommendation(payload, sessionParams.token)
-        .then(result => {
-          setRecommendationResult(result);
-          setView('recommendation');
-        })
-        .catch(() => setView('summary'))
-        .finally(() => setRecommendationLoading(false));
-    } else {
-      setView('summary');
-    }
+    const token = sessionParams.token ?? 'default_token';
+    setRecommendationLoading(true);
+    setView('summary');
+    sendRecommendation(payload, token)
+      .then(result => {
+        setRecommendationResult(result);
+        setView('recommendation');
+      })
+      .catch(() => setView('summary'))
+      .finally(() => setRecommendationLoading(false));
   };
 
   const endSessionMidway = () => {
@@ -1374,8 +1429,8 @@ export default function App() {
                 </div>
 
                 <div className="space-y-6">
-                  <div className="bg-white p-6 rounded-[32px] border border-[#1A1A1A]/5">
-                    <h4 className="font-semibold flex items-center gap-2 mb-4">
+                  <div className="bg-white p-6 rounded-[32px] border border-[#1A1A1A]/5 space-y-3">
+                    <h4 className="font-semibold flex items-center gap-2">
                       <Target size={20} />
                       Final Assessment
                     </h4>
@@ -1393,6 +1448,14 @@ export default function App() {
                           {Math.round(chapterProgressRatio * 100)}% of questions solved correctly
                         </div>
                       </div>
+                    )}
+                    {(state.metrics.attempts > 0 || readSubtopics.size > 0) && (
+                      <button
+                        onClick={exitAndSave}
+                        className="w-full p-4 bg-red-50 text-red-600 border border-red-200 rounded-2xl font-semibold hover:bg-red-100 transition-colors text-sm"
+                      >
+                        Save Progress &amp; Exit
+                      </button>
                     )}
                   </div>
                   <div className="bg-[#5A5A40] text-white p-6 rounded-[32px] space-y-4">
@@ -2095,11 +2158,11 @@ export default function App() {
                     Continue
                   </button>
                 </div>
-              ) : currentQuizIndex < quizQuestions.length ? (
+              ) : currentQuizIndex < QUIZ_QUESTION_LIMIT ? (
                 <div className="max-w-2xl mx-auto bg-white rounded-xl shadow-lg p-8">
                   <div className="flex justify-between items-center mb-6">
                     <h1 className="text-2xl font-bold text-gray-800">Final Quiz</h1>
-                    <div className="text-sm text-gray-500">Question {currentQuizIndex + 1} of {quizQuestions.length}</div>
+                    <div className="text-sm text-gray-500">Question {currentQuizIndex + 1} of {QUIZ_QUESTION_LIMIT}</div>
                   </div>
                   {currentQuizQuestion && (
                     <>
