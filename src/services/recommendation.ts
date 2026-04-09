@@ -31,8 +31,8 @@ export interface RecommendationResponse {
 }
 
 const CHAPTER_ID_MAP: Record<string, string> = {
-  comparing_quantities: 'grade8_comparing_qty',
-  direct_inverse_proportion: 'grade8_direct_inverse_proportion',
+  comparing_quantities: 'grade8_comparing_qty_and_proportions',
+  direct_inverse_proportion: 'grade8_comparing_qty_and_proportions',
 };
 
 function buildPayload(raw: SessionInteractionPayload): Record<string, unknown> {
