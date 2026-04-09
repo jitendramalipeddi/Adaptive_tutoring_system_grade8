@@ -36,21 +36,22 @@ const CHAPTER_ID_MAP: Record<string, string> = {
 };
 
 function buildPayload(raw: SessionInteractionPayload): Record<string, unknown> {
+  const int = (v: number | undefined | null): number | null => (v == null || v === 0) ? null : Math.round(v);
   return {
     student_id: raw.student_id,
     session_id: raw.session_id,
     chapter_id: CHAPTER_ID_MAP[raw.chapter_id] ?? raw.chapter_id,
     timestamp: raw.timestamp,
     session_status: raw.session_status,
-    total_questions: raw.total_questions,
-    total_hints_embedded: raw.total_hints_embedded,
-    time_spent_seconds: raw.time_spent_seconds || null,
-    topic_completion_ratio: raw.topic_completion_ratio,
-    correct_answers: raw.correct_answers || null,
-    wrong_answers: raw.wrong_answers || null,
-    questions_attempted: raw.questions_attempted || null,
-    retry_count: raw.retry_count || null,
-    hints_used: raw.hints_used || null,
+    correct_answers: int(raw.correct_answers),
+    wrong_answers: int(raw.wrong_answers),
+    questions_attempted: int(raw.questions_attempted),
+    total_questions: Math.round(raw.total_questions ?? 0),
+    retry_count: int(raw.retry_count),
+    hints_used: int(raw.hints_used),
+    total_hints_embedded: Math.round(raw.total_hints_embedded ?? 0),
+    time_spent_seconds: int(raw.time_spent_seconds),
+    topic_completion_ratio: raw.topic_completion_ratio ?? 0,
   };
 }
 
