@@ -490,7 +490,7 @@ export default function App() {
         isAnswered: false,
         hintIndex: -1,
         messages: [{ role: 'model', text: `Here is your problem:\n\n**Problem:** ${problem.question}\n\nTry to solve it directly! What is the answer?` }],
-        metrics: { ...prev.metrics, attempts: prev.metrics.attempts + 1 }
+        metrics: { ...prev.metrics }
       }));
       setView('tutoring');
       setQuestionStartTime(Date.now());
@@ -557,7 +557,7 @@ export default function App() {
       isAnswered: false,
       hintIndex: -1,
       messages: [{ role: 'model', text: `Hey buddy, now you know how to solve it, give it a try for this new problem:\n\n**Problem:** ${similar.question}\n\nTry to solve it directly!` }],
-      metrics: { ...prev.metrics, attempts: prev.metrics.attempts + 1 }
+      metrics: { ...prev.metrics }
     }));
     setIsSimilarQuestion(true);
     setCurrentQuestionCorrect(false);
@@ -748,6 +748,7 @@ export default function App() {
         const isNumericMatch = userNorm.numeric && correctNorm.numeric && userNorm.numeric === correctNorm.numeric;
         const isTextMatch = userNorm.raw.includes(correctNorm.raw) || correctNorm.raw.includes(userNorm.raw);
         const isCorrect = isNumericMatch || isTextMatch;
+        setState(prev => ({ ...prev, metrics: { ...prev.metrics, attempts: prev.metrics.attempts + 1 } }));
         if (isCorrect) {
           setCurrentQuestionCorrect(true);
           setQuestionCompleted(prev => new Set(prev).add(state.currentProblem?.problem_id ?? ''));
