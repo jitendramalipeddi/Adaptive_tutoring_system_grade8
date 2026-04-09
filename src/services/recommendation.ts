@@ -36,7 +36,7 @@ const CHAPTER_ID_MAP: Record<string, string> = {
 };
 
 function buildPayload(raw: SessionInteractionPayload): Record<string, unknown> {
-  const int = (v: number | undefined | null): number | null => (v == null || v === 0) ? null : Math.round(v);
+  const int = (v: number | undefined | null): number => Math.round(v ?? 0);
   return {
     student_id: raw.student_id,
     session_id: raw.session_id,
@@ -46,10 +46,10 @@ function buildPayload(raw: SessionInteractionPayload): Record<string, unknown> {
     correct_answers: int(raw.correct_answers),
     wrong_answers: int(raw.wrong_answers),
     questions_attempted: int(raw.questions_attempted),
-    total_questions: Math.round(raw.total_questions ?? 0),
+    total_questions: int(raw.total_questions),
     retry_count: int(raw.retry_count),
     hints_used: int(raw.hints_used),
-    total_hints_embedded: Math.round(raw.total_hints_embedded ?? 0),
+    total_hints_embedded: int(raw.total_hints_embedded),
     time_spent_seconds: int(raw.time_spent_seconds),
     topic_completion_ratio: raw.topic_completion_ratio ?? 0,
   };
