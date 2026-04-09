@@ -44,13 +44,13 @@ function buildPayload(raw: SessionInteractionPayload): Record<string, unknown> {
     session_status: raw.session_status,
     total_questions: raw.total_questions,
     total_hints_embedded: raw.total_hints_embedded,
-    time_spent_seconds: raw.time_spent_seconds ?? 0,
+    time_spent_seconds: raw.time_spent_seconds || null,
     topic_completion_ratio: raw.topic_completion_ratio,
-    correct_answers: raw.correct_answers ?? 0,
-    wrong_answers: raw.wrong_answers ?? 0,
-    questions_attempted: raw.questions_attempted ?? 0,
-    retry_count: raw.retry_count ?? 0,
-    hints_used: raw.hints_used ?? 0,
+    correct_answers: raw.correct_answers || null,
+    wrong_answers: raw.wrong_answers || null,
+    questions_attempted: raw.questions_attempted || null,
+    retry_count: raw.retry_count || null,
+    hints_used: raw.hints_used || null,
   };
 }
 
